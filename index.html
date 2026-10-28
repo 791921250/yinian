@@ -1,0 +1,3886 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no,viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="一念人间">
+<meta name="color-scheme" content="light">
+<meta name="theme-color" content="#eef6ea">
+<title>修仙还是游戏人间</title>
+<style>
+/* ============================================================
+   修仙还是游戏人间
+   清新绿意：嫩叶底 + 竹青 + 苔色
+   ============================================================ */
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent;}
+html{color-scheme:light;height:100%;-webkit-text-size-adjust:100%;}
+body{font-family:"KaiTi","STKaiti","Songti SC","PingFang SC","Microsoft YaHei",serif;
+  color:#2c3a30;background:#eff7ea;line-height:1.75;font-size:16px;
+  height:100%;overflow:hidden;transition:background .8s;}
+body.s-spring{background:#eff8ea;}
+body.s-summer{background:#e8f4e8;}
+body.s-autumn{background:#f2f3e6;}
+body.s-winter{background:#ecf1ee;}
+#fx{position:fixed;inset:0;pointer-events:none;overflow:hidden;z-index:0;}
+#fx span{position:absolute;top:-8vh;will-change:transform;}
+@keyframes sway{
+  0%{transform:translate(0,-10vh) rotate(0deg);}
+  25%{transform:translate(34px,26vh) rotate(70deg);}
+  50%{transform:translate(-26px,52vh) rotate(150deg);}
+  75%{transform:translate(40px,78vh) rotate(240deg);}
+  100%{transform:translate(-14px,112vh) rotate(340deg);}
+}
+.wrap{position:relative;z-index:1;max-width:1120px;margin:0 auto;
+  padding:8px;height:100vh;height:100dvh;display:flex;flex-direction:column;
+  gap:8px;overflow:hidden;}
+.topbar{background:rgba(252,255,250,.92);border:1px solid #cfe2c9;border-radius:14px;
+  padding:9px 15px;display:flex;flex-wrap:wrap;gap:8px;
+  align-items:center;justify-content:space-between;
+  box-shadow:0 2px 12px rgba(79,138,91,.10);flex-shrink:0;}
+.topbar h1{font-size:19px;font-weight:normal;letter-spacing:3px;color:#3f7a52;}
+.topbar h1 small{font-size:13px;color:#88a08c;letter-spacing:1px;margin-left:6px;}
+.chips{display:flex;flex-wrap:wrap;gap:6px;}
+.cgroup{display:flex;flex-wrap:wrap;gap:6px;}
+.chip{background:#eef7ea;border:1px solid #cfe2c9;border-radius:20px;
+  padding:4px 12px;font-size:13.5px;color:#4d6153;white-space:nowrap;line-height:1.7;}
+.chip b{color:#3f7a52;font-weight:normal;font-size:15px;}
+.chip.money{background:#f7f5e6;border-color:#e0dcb8;color:#8a7c3a;}
+.chip.egg{background:#f8edf4;border-color:#e2c3d8;color:#9b5a86;}
+.main{flex:1;min-height:0;display:flex;gap:8px;overflow:hidden;}
+.side{flex:0 0 264px;min-height:0;display:flex;overflow:hidden;}
+.content{flex:1;min-height:0;display:flex;overflow:hidden;}
+.panel{background:rgba(252,255,250,.94);border:1px solid #cfe2c9;border-radius:14px;
+  padding:12px 14px;box-shadow:0 2px 10px rgba(79,138,91,.07);
+  display:flex;flex-direction:column;min-height:0;}
+.panel h3{font-size:15px;font-weight:normal;letter-spacing:3px;color:#3f7a52;
+  border-bottom:1px dashed #cfe2c9;padding-bottom:6px;margin-bottom:9px;
+  flex-shrink:0;display:flex;justify-content:space-between;align-items:center;}
+.panel h3 em{font-style:normal;font-size:13px;color:#88a08c;letter-spacing:0;}
+.log-body{flex:1;min-height:0;overflow-y:auto;overflow-x:hidden;font-size:14.5px;
+  line-height:1.8;color:#4d6153;overscroll-behavior:contain;}
+.log-body p{padding:5px 0;border-bottom:1px dotted #e3efe0;word-break:break-word;}
+.log-body p:last-child{border-bottom:none;}
+.log-body .dt{color:#88a08c;font-size:13px;margin-right:6px;}
+.log-body .gd{color:#4f8a5b;}
+.log-body .bd{color:#b35446;}
+.log-body .gd2{color:#3f7a52;}
+.log-body .pink{color:#b36a8c;}
+.log-body .gold{color:#a08a3e;}
+.page-title{font-size:18px;letter-spacing:3px;color:#3f7a52;margin-bottom:3px;}
+.page-sub{font-size:14px;color:#88a08c;margin-bottom:11px;letter-spacing:.5px;}
+.hint{font-size:13.5px;color:#a58b3e;background:#faf7e8;border:1px dashed #e2d8ae;
+  border-radius:9px;padding:6px 10px;margin:-4px 0 10px;letter-spacing:.5px;}
+.hint.secret{color:#9b5a86;background:#faf0f6;border-color:#e2c3d8;}
+.acts{flex:1;min-height:0;overflow-y:auto;overflow-x:hidden;display:grid;
+  grid-template-columns:repeat(auto-fill,minmax(168px,1fr));
+  gap:8px;align-content:start;overscroll-behavior:contain;}
+.act{display:flex;gap:8px;align-items:flex-start;
+  background:#fdfffb;border:1px solid #cfe2c9;border-radius:12px;
+  padding:11px 13px 13px;text-align:left;cursor:pointer;font-family:inherit;
+  font-size:15.5px;color:#2c3a30;transition:all .15s;-webkit-appearance:none;
+  min-height:76px;width:100%;align-self:start;}
+.act:hover{border-color:#a7c9a9;background:#f3faf0;}
+.act:active{transform:scale(.98);}
+.act.off{opacity:.42;pointer-events:none;}
+.act .ic{font-size:22px;line-height:1.15;flex-shrink:0;}
+.act .bd{display:flex;flex-direction:column;gap:3px;flex:1;min-width:0;}
+.act .t1{font-size:15.5px;letter-spacing:.5px;}
+.act .t2{font-size:13.5px;color:#88a08c;line-height:1.5;}
+.act .t3{font-size:13px;color:#6f9a76;margin-top:2px;}
+.money{font-size:14px;color:#3f7a52;margin-bottom:8px;}
+.money b{font-size:21px;font-weight:normal;color:#2f6644;}
+.tags{display:flex;flex-wrap:wrap;gap:5px;margin-bottom:10px;}
+.tags span{background:#eef7ea;border:1px solid #cfe2c9;border-radius:10px;
+  padding:3px 10px;font-size:13px;color:#4d6153;}
+.stat-row{display:flex;justify-content:space-between;font-size:14px;padding:3px 0;color:#4d6153;}
+.stat-row b{font-weight:normal;color:#3f7a52;font-size:14.5px;}
+.bar{height:6px;background:#e6f1e2;border-radius:4px;overflow:hidden;margin:1px 0 6px;}
+.bar i{display:block;height:100%;background:linear-gradient(90deg,#9ecfa4,#4f8a5b);border-radius:4px;}
+.footbar{background:rgba(252,255,250,.92);border:1px solid #cfe2c9;border-radius:14px;
+  padding:7px 12px;display:flex;flex-wrap:wrap;gap:8px;justify-content:space-between;
+  align-items:center;flex-shrink:0;box-shadow:0 2px 10px rgba(79,138,91,.08);}
+.nav{display:flex;flex-wrap:wrap;gap:6px;flex:1 1 520px;}
+.nav button,.timebox button{min-height:46px;font-family:inherit;font-size:14.5px;
+  letter-spacing:.5px;border-radius:10px;cursor:pointer;
+  border:1px solid #cfe2c9;background:#f5fbf2;color:#4d6153;
+  padding:8px 12px;-webkit-appearance:none;transition:all .15s;}
+.nav button:hover{background:#e9f5e5;}
+.nav button.on{background:#4f8a5b;color:#fff;border-color:#4f8a5b;}
+.timebox{display:flex;gap:8px;flex-wrap:wrap;}
+.timebox button.primary{background:linear-gradient(135deg,#7fb887,#4f8a5b);color:#fff;border-color:transparent;}
+.timebox button:disabled{opacity:.4;}
+.overlay{position:fixed;inset:0;z-index:40;background:rgba(38,52,40,.45);
+  display:none;align-items:flex-start;justify-content:center;padding:30px 14px;overflow-y:auto;}
+.overlay.show{display:flex;}
+.modal{background:#fdfffc;border:1px solid #c6dcc0;border-radius:16px;max-width:620px;width:100%;
+  padding:20px 22px;box-shadow:0 16px 50px rgba(40,60,45,.3);position:relative;}
+.modal-x{position:absolute;right:10px;top:10px;width:32px;height:32px;border:none;border-radius:50%;
+  background:#eef6ea;color:#5b7a60;font-size:16px;line-height:1;cursor:pointer;font-family:inherit;}
+.modal-x:hover{background:#e0efe0;}
+.modal-title{font-size:17px;letter-spacing:3px;color:#3f7a52;margin-bottom:12px;padding-right:36px;
+  border-bottom:1px dashed #cfe2c9;padding-bottom:9px;}
+.modal-body{font-size:15px;color:#3b4b40;line-height:1.95;max-height:62vh;overflow-y:auto;}
+.modal-body p{margin-bottom:8px;}
+.buy{font-family:inherit;font-size:15px;min-height:48px;border-radius:10px;
+  border:1px solid #c6dcc0;background:#f2f9ef;color:#3b4b40;cursor:pointer;
+  padding:9px 14px;margin-top:10px;-webkit-appearance:none;transition:all .15s;}
+.buy:hover{background:#e9f5e5;}
+.buy.primary{background:linear-gradient(135deg,#7fb887,#4f8a5b);color:#fff;border-color:transparent;}
+.qty-input{width:100%;display:block;font-family:inherit;font-size:19px;padding:11px 12px;
+  border:1px solid #c6dcc0;border-radius:10px;background:#fff;color:#2c3a30;margin-top:8px;
+  text-align:center;}
+.pair-row{display:flex;flex-wrap:wrap;gap:10px;margin-top:10px;}
+.pair-row .buy{flex:1 1 160px;margin-top:0;}
+.tiny{font-size:13px;color:#88a08c;}
+.hl{color:#3f7a52;}
+.em{color:#b35446;}
+.secret{color:#9b5a86;}
+.boot{position:fixed;inset:0;z-index:30;display:flex;align-items:center;justify-content:center;
+  padding:26px;background:transparent;}
+/* 开局：竹叶飘落。竹叶为细长披针形，两头尖、中间略宽，叶脉平行 */
+.bootleaves{position:fixed;inset:0;z-index:29;pointer-events:none;overflow:hidden;
+  transition:opacity .8s;}
+.bootleaves.bootbg{background:radial-gradient(circle at 50% 20%,#f6fdf1,#e4f2dd 70%);}
+.bootleaves.ingame{z-index:35;opacity:.24;}
+.bootleaves span{position:absolute;top:-70px;display:block;
+  border-radius:0 100% 0 100%;
+  box-shadow:inset 0 0 0 1px rgba(255,255,255,.14);
+  will-change:transform;}
+.bootleaves span:after{content:'';position:absolute;left:16%;top:14%;
+  width:1px;height:70%;background:rgba(88,126,88,.28);
+  transform:rotate(45deg);transform-origin:0 0;}
+@keyframes leafFall{
+  0%{transform:translate3d(0,-8vh,0) rotate(0deg);}
+  20%{transform:translate3d(26px,20vh,0) rotate(110deg);}
+  40%{transform:translate3d(-22px,42vh,0) rotate(215deg);}
+  60%{transform:translate3d(30px,64vh,0) rotate(330deg);}
+  80%{transform:translate3d(-26px,88vh,0) rotate(455deg);}
+  100%{transform:translate3d(12px,114vh,0) rotate(580deg);}
+}
+.boot-card{max-width:560px;width:100%;text-align:center;background:rgba(253,255,252,.95);
+  border:1px solid #cfe2c9;border-radius:20px;padding:40px 34px;
+  box-shadow:0 18px 60px rgba(60,110,70,.18);}
+.boot-card .logo{font-size:40px;letter-spacing:6px;color:#3f7a52;margin-bottom:8px;line-height:1.4;}
+.boot-card .sub{font-size:14px;color:#88a08c;letter-spacing:5px;margin-bottom:26px;}
+.boot-card .desc{font-size:15px;color:#3b4b40;line-height:2;margin-bottom:28px;}
+.btn-row{display:flex;gap:12px;flex-wrap:wrap;justify-content:center;}
+.btn-row button{min-width:168px;min-height:54px;font-family:inherit;font-size:16px;
+  letter-spacing:2px;border-radius:12px;cursor:pointer;-webkit-appearance:none;}
+.btn-primary{background:linear-gradient(135deg,#7fb887,#4f8a5b);color:#fff;border:1px solid transparent;}
+.btn-ghost{background:#f2f9ef;color:#3b4b40;border:1px solid #c6dcc0;}
+.story-panel{background:#fdfffc;border:1px solid #cfe2c9;border-radius:12px;padding:14px 16px;}
+.story-title{font-size:17px;letter-spacing:5px;color:#3f7a52;text-align:center;margin-bottom:12px;}
+.story-text{font-size:15px;line-height:2;}
+/* 悬浮属性小球 */
+.orb{position:fixed;right:16px;bottom:18px;z-index:38;width:54px;height:54px;border-radius:50%;
+  border:1px solid #a7c9a9;background:radial-gradient(circle at 35% 30%,#eef9e9,#bfe0bf);
+  color:#2f6644;font-family:inherit;font-size:17px;letter-spacing:1px;cursor:pointer;
+  box-shadow:0 6px 18px rgba(60,110,70,.28);display:none;align-items:center;justify-content:center;
+  -webkit-appearance:none;animation:orbFloat 3.6s ease-in-out infinite;}
+@keyframes orbFloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-6px)}}
+.orb:active{transform:scale(.94);}
+.orb-list{font-size:14px;color:#4d6153;line-height:1.85;}
+.orb-scroll{max-height:46vh;overflow-y:auto;padding-right:2px;}
+.orb-list b{font-weight:normal;color:#3f7a52;}
+/* ===== 手机竖屏：整页滚动、分区排列 ===== */
+@media (max-width:820px){
+  html,body{height:auto;}
+  body{overflow-y:auto;overflow-x:hidden;}
+  .wrap{height:auto;min-height:100dvh;overflow:visible;padding:6px;gap:6px;}
+
+  /* 标题单独置顶，略大加深 */
+  .topbar{flex-direction:column;align-items:stretch;gap:6px;padding:8px 10px;border-radius:12px;}
+  .topbar h1{font-size:19px;letter-spacing:2px;color:#2f6644;}
+  .topbar h1 small{display:none;}
+  /* 岁/性别/日期 一行，其余数值另起一行并自动换行（不横滑） */
+  .chips{flex-direction:column;gap:5px;}
+  .cgroup{gap:5px;}
+  .chip{padding:3px 9px;font-size:12.5px;line-height:1.6;}
+  .chip b{font-size:13.5px;}
+
+  /* 面板纵向顺排，不再互相挤压 */
+  .main{flex:none;flex-direction:column;gap:6px;overflow:visible;}
+  .side{flex:none;max-height:none;overflow:visible;}
+  .side>.panel{width:100%;}
+  .content{flex:none;min-height:0;overflow:visible;}
+  .main>.content:last-child{flex:0 0 auto !important;min-height:0;}
+  .panel{padding:10px 11px;border-radius:12px;min-height:0;}
+  .panel h3{font-size:14px;margin-bottom:6px;padding-bottom:5px;}
+  .page-title{font-size:17px;}
+  .page-sub{font-size:13px;margin-bottom:8px;}
+  .hint{font-size:12.5px;padding:5px 9px;margin-bottom:8px;}
+
+  /* 场所选项：单列竖排，随页面滚 */
+  .acts{grid-template-columns:1fr;gap:7px;flex:none;overflow:visible;}
+  .act{min-height:64px;padding:9px 11px 10px;}
+  .act .ic{font-size:20px;}
+
+  /* 浮生记要：五六行之后才滚动 */
+  .log-body{flex:none;max-height:180px;overflow-y:auto;font-size:13.5px;line-height:1.75;}
+
+  /* 底部导航常驻：两行各自横滑，不撑宽页面 */
+  .footbar{position:sticky;bottom:0;z-index:20;flex-direction:column;align-items:stretch;
+    padding:6px 9px;gap:6px;border-radius:12px;
+    background:rgba(252,255,250,.97);box-shadow:0 -4px 14px rgba(79,138,91,.10);}
+  .nav{flex:none;width:100%;min-width:0;flex-wrap:nowrap;overflow-x:auto;gap:5px;}
+  .timebox{flex:none;width:100%;min-width:0;flex-wrap:nowrap;overflow-x:auto;gap:5px;}
+  .nav::-webkit-scrollbar,.timebox::-webkit-scrollbar{display:none;}
+  .nav button,.timebox button{min-height:38px;font-size:12.5px;padding:6px 10px;border-radius:9px;flex:0 0 auto;}
+
+  /* 开局取名弹窗：加高，让「开始此生」不用滑 */
+  .overlay{padding:14px 10px;}
+  .modal{padding:14px 15px;border-radius:14px;max-width:520px;}
+  .modal-title{font-size:15px;margin-bottom:8px;padding-bottom:6px;}
+  .modal-body{font-size:14px;max-height:66vh;}
+  .modal-body p{margin-bottom:6px;}
+  .qty-input{font-size:16px;padding:8px 10px;margin-top:6px;}
+  .buy{min-height:44px;font-size:14.5px;margin-top:8px;padding:8px 12px;}
+  .tiny{font-size:12px;}
+
+  .boot{padding:16px;overflow-y:auto;}
+  .boot-card{padding:26px 18px;border-radius:16px;}
+  .boot-card .logo{font-size:28px;letter-spacing:2px;}
+  .boot-card .sub{font-size:12px;letter-spacing:3px;margin-bottom:18px;}
+  .boot-card .desc{font-size:14px;margin-bottom:20px;}
+  .btn-row{gap:9px;}
+  .btn-row button{min-width:0;flex:1 1 42%;min-height:48px;font-size:15px;letter-spacing:1px;}
+  .story-text{font-size:14.5px;line-height:1.9;}
+  .orb{right:12px;bottom:104px;width:50px;height:50px;font-size:16px;}
+}
+</style>
+<meta name="theme-color" content="#101014">
+</head>
+<body>
+<div id="fx"></div>
+<div class="bootleaves" id="bootleaves"></div>
+
+<div class="boot" id="boot"></div>
+<button class="orb" id="orb" onclick="openOrb()">属</button>
+
+<div class="wrap" id="wrap" style="display:none">
+  <div class="topbar">
+    <h1>修仙还是游戏人间<small>一念入世 · 一念出世</small></h1>
+    <div class="chips" id="topchips"></div>
+  </div>
+  <div class="main">
+    <div class="side"><div class="panel"><h3>一生 <em id="modeTag"></em></h3><div id="sideBody" style="overflow-y:auto"></div></div></div>
+    <div class="content"><div class="panel"><div id="pageHead"></div><div class="acts" id="acts"></div></div></div>
+    <div class="content" style="flex:0 0 36%;"><div class="panel"><h3>浮生记要</h3><div class="log-body" id="logBody"></div></div></div>
+  </div>
+  <div class="footbar">
+    <div class="nav" id="nav"></div>
+    <div class="timebox">
+      <button onclick="advanceDay()">⏳ 过一天</button>
+      <button onclick="advanceMonth()">⇧ 过一月</button>
+      <button class="primary" onclick="advanceYear()">⏩ 快进一年</button>
+      <button onclick="save()">💾 存档</button>
+      <button onclick="exportSave()">📤 导出</button>
+      <button onclick="askRestart()">🔄 重开</button>
+      <button onclick="openEndingAsk()">🌙 结束此生</button>
+    </div>
+  </div>
+</div>
+
+<div class="overlay" id="overlay"><div class="modal" id="modal">
+  <button class="modal-x" onclick="closeModal()" aria-label="关闭">✕</button>
+  <div class="modal-title" id="modalTitle"></div>
+  <div class="modal-body" id="modalBody"></div>
+</div></div>
+
+<script>
+/* ================= 工具 ================= */
+function ri(a,b){return Math.floor(Math.random()*(b-a+1))+a;}
+function pk(a){return a[Math.floor(Math.random()*a.length)];}
+function cl(v,a,b){return Math.max(a,Math.min(b,v));}
+function num(n){return String(n).replace(/\B(?=(\d{3})+(?!\d))/g,',');}
+var MN=['正','二','三','四','五','六','七','八','九','十','冬','腊'];
+var SEASON={1:'winter',2:'winter',3:'spring',4:'spring',5:'spring',6:'summer',7:'summer',8:'summer',9:'autumn',10:'autumn',11:'autumn',12:'winter'};
+
+/* ================= 人物 ================= */
+var NPCS={
+  shen:{name:'沈疏放',g:'m',tag:'自称江南商贾，眉宇却有天子气',place:'cha',ic:'👁',pers:'霸道'},
+  xiao:{name:'萧七',g:'m',tag:'背一柄旧剑的独行游侠',place:'wu',ic:'⚔',pers:'疯子'},
+  xuan:{name:'玄真',g:'m',tag:'观澜道观里辨不清年岁的道人',place:'guan',ic:'☯',pers:'文雅'},
+  wanyue:{name:'苏挽月',g:'f',tag:'风雅楼的琴师，指下有山河',place:'feng',ic:'🎼',pers:'文静'},
+  qingwu:{name:'顾青梧',g:'f',tag:'暗阁的女刺客，笑起来很淡',place:'an',ic:'🗡',pers:'疯批'},
+  baiheng:{name:'白蘅',g:'f',tag:'春楼清倌人，只唱曲不陪酒',place:'chun',ic:'🏮',pers:'花心'},
+  yelan:{name:'夜阑',g:'?',tag:'夜里来的客人，从不留名',place:'home',ic:'🕯',pers:'病娇'}
+};
+var NPC_IDS=['shen','xiao','xuan','wanyue','qingwu','baiheng'];
+
+/* 相亲名录：十八岁仍无良人时，长辈替你/替孩子定下 */
+var MATCH_NPCS=[
+  {id:'liuzhiwei',name:'柳知微',g:'m',tag:'城南书院的书生，说话极轻',place:'cha',ic:'📜',pers:'文雅'},
+  {id:'yanshou',name:'严守拙',g:'m',tag:'镖局少东家，一身硬骨头',place:'wu',ic:'🛡',pers:'暴躁'},
+  {id:'heqingzhou',name:'贺清舟',g:'m',tag:'药堂掌柜，温和寡言',place:'shan',ic:'🌿',pers:'闷骚'},
+  {id:'shenmu',name:'沈牧',g:'m',tag:'县衙主簿，规矩人',place:'cha',ic:'🖋',pers:'地雷'},
+  {id:'tangyin',name:'唐寅生',g:'m',tag:'画舫上的琴客，风流不羁',place:'feng',ic:'🎐',pers:'花心'},
+  {id:'luyan',name:'陆砚',g:'m',tag:'书院教习，古板却细心',place:'shu',ic:'📚',pers:'文静'},
+  {id:'wenshu',name:'温淑',g:'f',tag:'绣坊的女儿，手极巧',place:'cha',ic:'🧵',pers:'文静'},
+  {id:'peiyun',name:'裴云娘',g:'f',tag:'茶楼掌柜，爽利能干',place:'cha',ic:'🍵',pers:'霸道'},
+  {id:'jiangwan',name:'江晚',g:'f',tag:'医馆女医，性子冷',place:'shan',ic:'🌿',pers:'病娇'},
+  {id:'suqinghuan',name:'苏清欢',g:'f',tag:'风雅楼歌者，声如清泉',place:'feng',ic:'🎼',pers:'文雅'},
+  {id:'gu_ning',name:'顾宁',g:'f',tag:'织坊管事，眉眼温顺',place:'shu',ic:'📖',pers:'闷骚'},
+  {id:'yelan_y',name:'叶澜',g:'f',tag:'镖局女镖师，骑马比男子快',place:'wu',ic:'🐎',pers:'狂气'}
+];
+for(var _mi=0;_mi<MATCH_NPCS.length;_mi++){
+  var _m=MATCH_NPCS[_mi];
+  NPCS[_m.id]={name:_m.name,g:_m.g,tag:_m.tag,place:_m.place,ic:_m.ic,pers:_m.pers};
+}
+/* 宫中人物：入宫后才遇得到 */
+NPCS.hanlie={name:'韩烈',g:'m',tag:'御前带刀侍卫，话少，刀不离身',place:'pal_garden',ic:'🗡',pers:'狂气'};
+NPCS.shenminglan={name:'沈明澜',g:'m',tag:'太医院年轻太医，诊脉时不敢抬眼',place:'pal_medical',ic:'💊',pers:'文雅'};
+NPCS.liucaier={name:'柳才人',g:'f',tag:'同住一宫的才人，笑起来很甜',place:'pal_quarter',ic:'🏮',pers:'地雷'};
+NPCS.cuimomo={name:'崔嬷嬷',g:'f',tag:'尚宫局掌事，眼里揉不得沙',place:'pal_bureau',ic:'📜',nr:1};
+NPCS.fushun={name:'福顺',g:'m',tag:'内廷小太监，嘴碎心软',place:'pal_bureau',ic:'🧹',nr:1};
+NPCS.jingci={name:'静慈',g:'f',tag:'守佛堂的老太妃，不问世事',place:'pal_temple',ic:'🕯',nr:1};
+NPC_IDS.push('hanlie','shenminglan','liucaier','cuimomo','fushun','jingci');
+
+/* ================= 场所 ================= */
+var PLACES={
+  home:{name:'小院',ic:'🏡'},
+  shu:{name:'书楼',ic:'📚'},
+  feng:{name:'风雅楼',ic:'🎼'},
+  cha:{name:'茶楼',ic:'🍵'},
+  market:{name:'集市',ic:'🏪'},
+  an:{name:'暗阁',ic:'🗡'},
+  wu:{name:'武器阁',ic:'⚔'},
+  chun:{name:'春楼',ic:'🏮'},
+  shan:{name:'苍岚山',ic:'🌲'},
+  guan:{name:'观澜道观',ic:'☯'},
+  people:{name:'人物',ic:'👥'},
+  pal_quarter:{name:'寝宫',ic:'🛏'},
+  pal_bureau:{name:'尚宫局',ic:'📜'},
+  pal_garden:{name:'御花园',ic:'🌸'},
+  pal_medical:{name:'太医院',ic:'💊'},
+  pal_temple:{name:'佛堂',ic:'🕯'},
+  pal_cold:{name:'冷宫',ic:'🧱'}
+};
+/* 埋在地里、摊上、山里的东西 */
+var TREASURE_POOL=[
+  {n:'半枚古玉',v:120},{n:'生锈的铜钱串',v:60},{n:'一小块灵石',v:200},
+  {n:'一支旧银钗',v:90},{n:'残破的剑穗',v:50},{n:'陶罐里的碎银',v:150},
+  {n:'缺角的铜镜',v:110},{n:'不知名的骨珠',v:180}
+];
+
+/* ================= 状态 ================= */
+var G=null;
+function newGame(mode,name,age,egg,sex){
+  G={
+    mode:mode, hero:name, sex:sex||'f', age:age, year:1, month:3, day:1, page:'home',
+    hp:80, sp:90, exp:0, ling:0, learn:0, art:0, charm:0, sword:0,
+    money:600, herb:0, food:3,
+    elem:[], elemTry:{}, wash:0,
+    treasure:[], seeds:1, lingzhi:0, pill:0, root:null, followers:0,
+    married:null, wives:[], mianshou:[], acc:[],
+    career:'folk', cStage:0, clout:0, chill:false, role:'',
+    dark:0, vow:false, vowPaid:false, guard:0,
+    plots:0, plotsDone:0, actionsToday:0,
+    npcs:{}, lovers:[], children:[], pets:[], ndark:{}, robFail:0,
+    met:{}, logs:[], egg:!!egg, totalDays:0, ended:false
+  };
+  var bonus=Math.max(0,age-10);
+  G.exp=bonus*6; G.learn=bonus*5; G.sp=90; G.hp=80;
+  G.money=600+bonus*60;
+  addLog('🌿 春日迟迟，院里的老槐抽了新芽。','gd2');
+  addLog('你叫'+name+'，今年'+age+'岁，是个'+(sex==='m'?'男孩':'女孩')+'。','');
+  addLog('父母早年散尽家财远游，只留这半亩小院与一册残卷。','');
+  addLog('📖 残卷首页只写八个字：入世一场，修仙一念。','gd2');
+  G.flags={matchYear:0,evCd:-99,stCd:-999};
+  if(G.egg){
+    addLog('🕯 灯下多了一封无名的信，火漆未拆，只说：二十岁这年，我在夜里等你。','secret');
+  }
+  spawnFx(3);
+}
+
+/* ================= 日志 ================= */
+function dtStr(){return MN[G.month-1]+'月'+G.day+'日';}
+function addLog(t,c){
+  G.logs.push({d:dtStr(),t:t,c:c||''});
+  if(G.logs.length>220)G.logs=G.logs.slice(-220);
+}
+function drawLog(){
+  var b=document.getElementById('logBody');
+  var h='';
+  for(var i=G.logs.length-1;i>=0;i--){
+    var l=G.logs[i];
+    h+='<p><span class="dt">'+l.d+'</span><span class="'+l.c+'">'+l.t+'</span></p>';
+  }
+  b.innerHTML=h; b.scrollTop=0;
+}
+
+/* ================= 落叶 ================= */
+function spawnFx(month){
+  var season=SEASON[month];
+  var pool=season==='winter'?['🍃','❄','🌿']:(season==='autumn'?['🍂','🍃','🌾']:['🍃','🌿','🍀']);
+  var fx=document.getElementById('fx'); fx.innerHTML='';
+  for(var i=0;i<9;i++){
+    var s=document.createElement('span');
+    s.textContent=pk(pool);
+    s.style.left=ri(0,97)+'%';
+    s.style.fontSize=ri(15,30)+'px';
+    s.style.animation='sway '+ri(11,22)+'s linear infinite';
+    s.style.animationDelay=(ri(0,14)/1.4)+'s';
+    s.style.opacity=(ri(35,85)/100);
+    fx.appendChild(s);
+  }
+  document.body.className='s-'+season;
+}
+
+/* ================= 提示 ================= */
+var toastTimer=null;
+function toast(msg){
+  var el=document.getElementById('toast');
+  if(!el){
+    el=document.createElement('div'); el.id='toast';
+    el.style.cssText='position:fixed;left:50%;top:20px;transform:translateX(-50%);'+
+      'background:rgba(40,60,45,.94);color:#fff;padding:10px 22px;border-radius:10px;'+
+      'z-index:60;font-size:15px;letter-spacing:1px;max-width:80%;text-align:center;';
+    document.body.appendChild(el);
+  }
+  el.textContent=msg; el.style.display='block';
+  clearTimeout(toastTimer);
+  toastTimer=setTimeout(function(){el.style.display='none';},1900);
+}
+
+/* ================= 数值 ================= */
+function stat(v){
+  if(v>=240)return '通神';
+  if(v>=160)return '登峰';
+  if(v>=100)return '小成';
+  if(v>=50)return '初窥';
+  return '未入门';
+}
+function renderTop(){
+  var c=document.getElementById('topchips');
+  var h='<span class="cgroup">';
+  h+='<span class="chip">岁<b>'+G.age+'</b></span>';
+  h+='<span class="chip">'+(G.sex==='m'?'少男':'少女')+'</span>';
+  h+='<span class="chip">'+MN[G.month-1]+'月<b>'+G.day+'日</b></span>';
+  h+='</span><span class="cgroup">';
+  h+='<span class="chip">气血<b>'+G.hp+'</b></span>';
+  h+='<span class="chip">精力<b>'+G.sp+'</b></span>';
+  h+='<span class="chip">修为<b>'+G.exp+'</b></span>';
+  h+='<span class="chip money">银两<b>'+num(G.money)+'</b></span>';
+  if(G.egg)h+='<span class="chip egg">彩蛋</span>';
+  h+='</span>';
+  c.innerHTML=h;
+}
+function renderSide(){
+  document.getElementById('modeTag').textContent=
+    G.mode==='mom'?'（母亲视角）':(G.mode==='dad'?'（父亲视角）':'（亲自入世）');
+  var b=document.getElementById('sideBody');
+  var h='<div class="money">银两 <b>'+num(G.money)+'</b></div>';
+  h+='<div class="tags"><span>气血 '+G.hp+'</span><span>精力 '+G.sp+'</span>'+
+     '<span>身份 '+identityText()+'</span>'+
+     '<span>儿女 '+(G.children.length)+'</span><span>宠物 '+G.pets.length+'</span>'+
+     '<span>心悦 '+G.lovers.length+'</span>'+
+     (G.dark?'<span>黑化 '+G.dark+'</span>':'')+
+     (G.guard?'<span>暗卫 1</span>':'')+
+     (G.followers?'<span>随从 '+G.followers+'</span>':'')+
+     ((G.root||(G.elem&&G.elem.length))?'<span>灵根 '+rootText()+'</span>':'')+'</div>';
+  h+=row('修为',G.exp,300)+bar(G.exp,300);
+  h+=row('灵力',G.ling,200)+bar(G.ling,200);
+  h+=row('文墨',G.learn,240)+bar(G.learn,240);
+  h+=row('技艺',G.art,240)+bar(G.art,240);
+  h+=row('风仪',G.charm,240)+bar(G.charm,240);
+  h+=row('武艺',G.sword,240)+bar(G.sword,240);
+  b.innerHTML=h;
+}
+function row(n,v,m){return '<div class="stat-row"><span>'+n+'　'+stat(v)+'</span><b>'+v+'</b></div>';}
+function bar(v,m){return '<div class="bar"><i style="width:'+Math.min(100,Math.round(v/m*100))+'%"></i></div>';}
+
+/* 悬浮小球：点开看全部属性 */
+function spouseIds(){
+  if(G.wives&&G.wives.length)return G.wives.slice();
+  return G.married?[G.married]:[];
+}
+/* 命途身份 */
+function identityText(){
+  if(!G)return '';
+  if(G.career==='palace'){
+    if(G.flags.queen)return '女帝';
+    if(G.flags.taihou)return '太后';
+    if(G.chill)return '冷宫';
+    if(G.role==='prince')return '亲王';
+    if(G.role==='chief')return '内廷掌印';
+    if(G.role==='eunuch')return '内侍';
+    if(G.role==='guard')return '带刀侍卫';
+    if(G.role==='concubine')return PAL_RANKS[G.cStage]||'秀女';
+    if(G.role==='army')return '边军';
+  }
+  if(G.career==='martial')return JH_RANKS[G.cStage]||'江湖散人';
+  if(G.career==='xia')return '侠客';
+  if(G.career==='dancer')return '舞姬';
+  if(G.career==='sect')return '仙门弟子';
+  if(G.career==='exile')return '和亲远嫁';
+  return '人间';
+}
+function openOrb(){
+  if(!G)return;
+  var h='<div class="orb-list orb-scroll">';
+  h+='<div class="money">银两 <b>'+num(G.money)+'</b></div>';
+  h+='<div class="tags"><span>气血 '+G.hp+'</span><span>精力 '+G.sp+'</span>'+
+     '<span>儿女 '+G.children.length+'</span><span>宠物 '+G.pets.length+'</span>'+
+     '<span>心悦 '+G.lovers.length+'</span>'+
+     (G.followers?'<span>随从 '+G.followers+'</span>':'')+'</div>';
+  h+='<div class="stat-row"><span>身份</span><b>'+identityText()+'</b></div>';
+  if(G.career==='palace'&&!G.flags.queen&&!G.flags.taihou)
+    h+='<div class="stat-row"><span>圣宠</span><b>'+G.clout+' / 100</b></div>';
+  if(G.career==='martial')
+    h+='<div class="stat-row"><span>江湖名望</span><b>'+G.clout+' / 100</b></div>';
+  h+=row('修为',G.exp,300)+bar(G.exp,300);
+  h+=row('灵力',G.ling,200)+bar(G.ling,200);
+  h+=row('文墨',G.learn,240)+bar(G.learn,240);
+  h+=row('技艺',G.art,240)+bar(G.art,240);
+  h+=row('风仪',G.charm,240)+bar(G.charm,240);
+  h+=row('武艺',G.sword,240)+bar(G.sword,240);
+  h+='<div class="stat-row" style="margin-top:4px"><span>灵根</span><b>'+rootText()+'</b></div>';
+  if(G.flags&&G.flags.sect)h+='<div class="stat-row"><span>宗门</span><b>'+G.flags.sect+'</b></div>';
+  h+='<div class="stat-row"><span>草药 / 灵植 / 丹药 / 种子</span><b>'+G.herb+' / '+G.lingzhi+' / '+(G.pill||0)+' / '+G.seeds+'</b></div>';
+  if(G.wash)h+='<div class="stat-row"><span>洗髓丹</span><b>'+(G.wash||0)+' 枚</b></div>';
+  h+='<div class="stat-row"><span>宝物</span><b>'+G.treasure.length+' 件</b></div>';
+  if(G.pets.length){
+    h+='<div class="tiny" style="margin-top:8px">灵宠</div>';
+    for(var pi=0;pi<G.pets.length;pi++){
+      var pt=G.pets[pi];
+      var md=(pt.mood===undefined?70:pt.mood);
+      var mdTxt=(md<=25?'<span class="bd">抑郁 '+md+'</span>':'心情 '+md)+' / 100';
+      h+='<div class="stat-row"><span>'+pt.name+'（'+pt.kind+'）</span><b>饱食 '+(pt.full==null?100:pt.full)+'　'+mdTxt+'</b></div>';
+    }
+  }
+  var sp=spouseIds();
+  h+='<div class="stat-row"><span>'+(G.sex==='m'?'妻室':'夫婿')+'</span><b>'+(sp.length?sp.map(function(k){return NPCS[k]?NPCS[k].name:'?';}).join('、'):'尚无')+'</b></div>';
+  if((G.mianshou||[]).length){
+    h+='<div class="stat-row"><span>面首</span><b>'+G.mianshou.map(function(k){return NPCS[k]?NPCS[k].name:'?';}).join('、')+'</b></div>';
+  }
+  if(G.acc.length){
+    h+='<div class="tiny" style="margin-top:8px">随身附件</div>';
+    for(var i=0;i<G.acc.length;i++){
+      h+='<div class="stat-row"><span>'+G.acc[i].n+'</span><b>'+({charm:'风仪+',sword:'武艺+',learn:'文墨+',exp:'修为+',ling:'灵力+'}[G.acc[i].k])+G.acc[i].v+'</b></div>';
+    }
+  }
+  h+='</div><button class="buy primary" style="width:100%" onclick="closeModal()">收 起</button>';
+  openModal('属 性',h);
+}
+
+/* ================= 场所暗示 ================= */
+function hintOf(p){
+  var un=Object.keys(NPCS).filter(function(k){return k!=='yelan'&&NPCS[k].place===p&&!G.met[k];});
+  if(p==='home'){
+    if(G.egg&&!G.flags.night1)return '🕯 夜里似乎有人会来。灯别熄。';
+    if(un.length)return '🍃 院墙外像有人徘徊，也许是'+NPCS[un[0]].name+'。';
+    return '🌱 翻土时，指尖好像碰到过硬物。';
+  }
+  if(p==='people'){
+    if(G.married&&G.sex==='m'&&(G.wives||[]).length>1)return '🏮 院里住着'+G.wives.length+'位娘子，圆桌已经坐不下了。';
+    return G.married?'🏮 你已与'+NPCS[G.married].name+'结为夫妻。':'👥 见过的人，此处皆有记。';
+  }
+  if(un.length)return '🍃 这里好像会遇见'+NPCS[un[0]].name+'——'+NPCS[un[0]].tag+'。';
+  var extra={
+    cha:'🍵 楼上雅间常坐着不愿露面的贵人。',
+    feng:'🎼 听说今夜有贵客来听琴。',
+    an:'🗡 后巷有人递话，说是笔大买卖。',
+    wu:'⚔ 阁里新到一批来路不明的兵器。',
+    chun:'🏮 灯影里似乎有人在等你开口。',
+    shan:'⛰ 崖下有灵光闪了一下，像是宝物。',
+    guan:'☯ 丹房缺一味药，道人正发愁。',
+    market:'🏪 摊子底下压着来路不明的东西，兴许能捡漏。',
+    pal_quarter:'🛏 窗纸外有人影晃了一下，又没了。',
+    pal_bureau:'📜 掌事姑姑今日心情不好，说话当心。',
+    pal_garden:'🌸 花丛深处传来环佩声。',
+    pal_medical:'💊 药柜最下层那只抽屉，一直锁着。',
+    pal_temple:'🕯 佛前那盏灯，昨夜自己亮了一回。',
+    pal_cold:'🧱 送饭的人今日多放了一只碗。',
+    shu:'📚 书架深处有本落了灰的旧册。'
+  };
+  return extra[p]||'';
+}
+
+/* ================= 主渲染 ================= */
+function render(){
+  if(!G)return;
+  renderTop(); renderSide(); drawLog();
+  var head=document.getElementById('pageHead');
+  var acts=document.getElementById('acts');
+  var p=PLACES[G.page];
+  if(!p){G.page=G.career==='palace'?(G.chill?'pal_cold':'pal_quarter'):'home';p=PLACES[G.page];}
+  if(G.career==='palace'&&G.chill&&G.page!=='pal_cold'&&G.page!=='people'){G.page='pal_cold';p=PLACES.pal_cold;}
+  if(G.career==='palace'&&!G.chill&&G.page==='pal_cold'){G.page='pal_quarter';p=PLACES.pal_quarter;}
+  var title=G.page==='people'?'人物往来':p.name;
+  var sub={
+    home:'一方小院，四季烟火。',
+    shu:'书香满架，静可养心。',
+    feng:'琴棋书画，风雅之地。',
+    cha:'人来人往，消息最灵。',
+    an:'见不得光的买卖，也见得了人心。',
+    wu:'刀剑森然，兵器与身手。',
+    chun:'灯影摇红，只卖艺不卖身。',
+    shan:'林深雾重，兽与药同生。',
+    guan:'清修问道，丹火不熄。',
+    people:'相遇过的人，都在此处。',
+    pal_quarter:'一榻一镜，宫墙外的声音传不进来。',
+    pal_bureau:'六局二十四司，规矩都在这里。',
+    pal_garden:'四时花木，也是宫里唯一像春天的地方。',
+    pal_medical:'院判与司药，一方一证都有数。',
+    pal_temple:'青灯古佛，宫里最安静的一角。',
+    pal_cold:'墙比别处高，草从砖缝里长出来。'
+  }[G.page];
+  head.innerHTML='<div class="page-title">'+p.ic+' '+title+'</div><div class="page-sub">'+sub+'</div>'+(hintOf(G.page)?'<div class="hint'+(G.page==='home'&&G.egg?' secret':'')+'">'+hintOf(G.page)+'</div>':'');
+  var list=(G.page==='people')?peopleActs():actsOf(G.page);
+  var h='';
+  for(var i=0;i<list.length;i++){
+    var it=list[i];
+    var off=(it.cond&&!it.cond())?' off':'';
+    h+='<button class="act'+off+'" data-id="'+it.id+'">'+
+       '<span class="ic">'+it.ic+'</span><span class="bd">'+
+       '<span class="t1">'+it.t1+'</span><span class="t2">'+it.t2+'</span>'+
+       (it.t3?'<span class="t3">'+it.t3+'</span>':'')+'</span></button>';
+  }
+  acts.innerHTML=h||'<div class="tiny">此处暂无可为。</div>';
+  var btns=acts.querySelectorAll('.act');
+  for(var j=0;j<btns.length;j++){
+    btns[j].onclick=function(){ doAct(this.getAttribute('data-id')); };
+  }
+  drawFoot();
+  autoSave();
+}
+/* 页面历史：点空白处返回上一级 */
+var PAGE_HIST=[];
+function goPage(p){
+  if(!G)return;
+  if(!pageAllowed(p)){toast(G.career==='palace'?'宫门不是你随意走的地方。':'');return;}
+  if(p!==G.page){
+    PAGE_HIST.push(G.page);
+    if(PAGE_HIST.length>30)PAGE_HIST.shift();
+  }
+  G.page=p; render();
+}
+/* 命途决定能去的地方 */
+function pageAllowed(p){
+  if(!G)return false;
+  if(!PLACES[p])return false;
+  if(G.career==='palace'){
+    if(G.chill)return p==='pal_cold'||p==='people';
+    return p.indexOf('pal_')===0?p!=='pal_cold':p==='people';
+  }
+  return p.indexOf('pal_')!==0;
+}
+function goBack(){
+  if(G&&G.page!=='home'&&PAGE_HIST.length){
+    G.page=PAGE_HIST.pop(); render(); return true;
+  }
+  return false;
+}
+function drawFoot(){
+  var nav=document.getElementById('nav');
+  var h='';
+  var keys;
+  if(G.career==='palace'){
+    keys=G.chill?['pal_cold','people']:['pal_quarter','pal_bureau','pal_garden','pal_medical','pal_temple','people'];
+  }else{
+    keys=[];
+    for(var kk in PLACES){if(kk.indexOf('pal_')!==0)keys.push(kk);}
+  }
+  for(var i=0;i<keys.length;i++){
+    var k=keys[i];
+    h+='<button data-p="'+k+'" class="'+(G.page===k?'on':'')+'">'+PLACES[k].ic+' '+PLACES[k].name+'</button>';
+  }
+  nav.innerHTML=h;
+  var bs=nav.querySelectorAll('button');
+  for(var i=0;i<bs.length;i++){
+    bs[i].onclick=function(){ goPage(this.getAttribute('data-p')); };
+  }
+}
+
+/* ================= 行为 ================= */
+function checkAct(){
+  if(G.actionsToday>=5){toast('今日已倦，明日再安排。');return false;}
+  return true;
+}
+function spend(n){
+  G.sp=cl(G.sp-n,0,100);
+  if(G.sp<=0){G.hp=cl(G.hp-4,0,100);toast('强撑伤身，气血损了。');}
+}
+function done(txt){G.actionsToday++;addLog(txt,'');render();if(G.sp<10)setTimeout(forceSleep,600);}
+function gain(k,n,m){G[k]=cl((G[k]||0)+n,0,m||999);}
+function tiredCheck(){ if(G.sp<=6)G.hp=cl(G.hp-3,0,100); }
+/* 精力耗尽，什么都做不了，只能睡过去 */
+function forceSleep(){
+  addLog('😴 眼皮沉得抬不起来，你连茶盏都没端稳，倒头睡了一整天。','');
+  G.sp=cl(G.sp+46,0,100); G.hp=cl(G.hp+6,0,100);
+  G.actionsToday=0;
+  toast('精力耗尽，睡了一整天');
+  advance(1);
+}
+
+/* 翻土时偶尔能刨出旧物 */
+function digUp(){
+  if(ri(1,100)>22)return false;
+  var t=pk(TREASURE_POOL);
+  G.treasure.push({n:t.n,v:t.v});
+  addLog('💰 锄头磕到硬物，你挖出一'+t.n+'，泥还热着。','gold');
+  toast('挖到宝物：'+t.n);
+  return true;
+}
+
+/* 观澜道观测灵根：一生一次 */
+function testRoot(){
+  if(G.root){toast('灵根已测过。');return;}
+  var r=ri(1,100), nm, ex, li, txt;
+  if(r<=5){nm='天灵根';ex=ri(40,60);li=ri(20,30);
+    txt='道人捏着你的腕脉，手忽然一顿。<br>「天灵根……这世道，竟还有。」';}
+  else if(r<=25){nm='双灵根';ex=ri(24,36);li=ri(12,20);
+    txt='石上灵光分成两道，一青一白，缠着不肯散。';}
+  else if(r<=60){nm='三灵根';ex=ri(14,22);li=ri(6,12);
+    txt='三道灵光起落，算不上顶好，却也难得。';}
+  else{nm='杂灵根';ex=ri(6,12);li=ri(2,6);
+    txt='石面只浮起一层薄雾。<br>道人沉吟片刻：「杂灵根，走得慢，也能走。」';}
+  G.root=nm;
+  gain('exp',ex,300);gain('ling',li,200);
+  addLog('🔮 灵石上显出你的灵根：'+nm+'。','gd2');
+  openModal('测 灵 根','<div class="story-panel"><div class="story-title">'+G.hero+'</div>'+
+    '<div class="story-text"><p>'+txt+'</p>'+
+    '<p class="hl">灵根：'+nm+'</p>'+
+    '<p class="tiny">修为 +'+ex+'　灵力 +'+li+'</p></div></div>');
+  render();
+}
+
+/* 五行灵根：由日常行事里慢慢醒过来 */
+var ELEM_SRC={herbplot:'土',flower:'土',seed:'土',
+  dao:'水',breathe:'水',sc_meditate:'水',rest:'水',
+  cook:'火',dan:'火',sc_alchemy:'火',
+  train:'风',dance:'风',dc_prac:'风',
+  kill:'雷',jh_fight:'雷',xia_help:'雷',jh_challenge:'雷'};
+function rootText(){
+  if(!G)return '';
+  var s=G.root||'未测';
+  if(G.elem&&G.elem.length)s+='·'+G.elem.join('·');
+  return s;
+}
+function elemChance(id){
+  var e=ELEM_SRC[id];
+  if(!e)return;
+  if(!G.elem)G.elem=[];
+  if(!G.elemTry)G.elemTry={};
+  if(G.elem.indexOf(e)>=0)return;
+  var t=G.elemTry[e]||0;
+  var base=(e==='火'||e==='风'||e==='雷')?8:7;
+  var p=Math.min(32,base+t*2);
+  G.elemTry[e]=t+1;
+  if(ri(1,100)<=p){
+    G.elem.push(e);
+    gain('ling',{土:6,水:7,火:8,风:9,雷:10}[e],240);
+    addLog('🔮 你怔了一下——掌心底下，好像有什么醒了过来。<b>灵根：'+e+'</b>。','gold');
+    toast('灵根觉醒：'+e);
+  }else if(ri(1,100)<=10){
+    var hint={土:'指尖沾了一层土，怎么也拍不掉。',
+      水:'手心里凉了一瞬，像刚摸过井水。',
+      火:'有东西烫了一下，你却没觉得疼。',
+      风:'风从袖口穿过去，好像绕着你转了一圈。',
+      雷:'耳边嗡了一声，四下忽然静了。'}[e];
+    addLog('🔮 '+hint,'gd2');
+  }
+}
+function washUse(){
+  if(!G.wash){toast('没有洗髓丹。');return;}
+  G.wash--;G.root=null;G.elem=[];G.elemTry={};
+  var r=ri(1,100),nm,ex,li;
+  if(r<=12){nm='天灵根';ex=ri(40,60);li=ri(20,30);}
+  else if(r<=38){nm='双灵根';ex=ri(24,36);li=ri(12,20);}
+  else if(r<=72){nm='三灵根';ex=ri(14,22);li=ri(6,12);}
+  else{nm='杂灵根';ex=ri(6,12);li=ri(2,6);}
+  G.root=nm;
+  gain('exp',ex,300);gain('ling',li,200);
+  addLog('💠 洗髓的痛过去了，你重新摸到自己的根骨：<b>'+nm+'</b>。','gold');
+  openModal('洗 髓','<div class="story-panel"><div class="story-title">重 塑</div>'+
+    '<div class="story-text"><p>旧根骨一寸寸化开，像水洗过石灰。</p>'+
+    '<p class="hl">新的灵根：'+nm+'</p>'+
+    '<p class="tiny">修为 +'+ex+'　灵力 +'+li+'　此前的五行灵根已尽数散去</p></div></div>');
+  render();
+}
+
+function actsOf(place){
+  var A=[];
+  if(place==='home'){
+    A.push({id:'flower',ic:'🌸',t1:'种花',t2:'半畦花畦，增风仪与心境',t3:'风仪+4~7　精力-8　偶得宝物'});
+    A.push({id:'veg',ic:'🥬',t1:'种菜',t2:'换些菜金，添些口粮',t3:'银两+8~16　口粮+2~4　精力-8'});
+    A.push({id:'herbplot',ic:'🌱',t1:'种灵植',t2:'一株灵植，可入丹炉',t3:'灵植+1~2　修为+2~4　种子-1　精力-10'});
+    A.push({id:'cook',ic:'🍲',t1:'生火做饭',t2:'补气血、回精力',t3:'气血+6~11　精力+6~10'});
+    A.push({id:'rest',ic:'🍵',t1:'檐下小憩',t2:'静静坐一会儿',t3:'精力+18'});
+    A.push({id:'adopt',ic:'🧸',t1:'收养孩童',t2:'自此多一声唤你',t3:'银两-400　儿女+1',cond:function(){return G.money>=400;}});
+    A.push({id:'pet',ic:'🐾',t1:'收养宠物',t2:'院里添个毛团',t3:'银两-120　宠物+1',cond:function(){return G.money>=120;}});
+    A.push({id:'feedpet',ic:'🍖',t1:'喂养灵宠',t2:'喂丹药或灵植，别让它们饿着',t3:'丹药-1 或 灵植-1　饱食+40',cond:function(){return G.pets.length>0;}});
+    A.push({id:'playpet',ic:'🎾',t1:'陪灵宠玩',t2:'逗它追着光斑跑，心情会好些',t3:'心情+10~18　饱食-3　精力-10',cond:function(){return G.pets.length>0;}});
+    A.push({id:'namepet',ic:'🏷',t1:'给灵宠取名',t2:'名字要跟它一辈子',t3:'改名',cond:function(){return G.pets.length>0;}});
+    if(G.egg&&G.age>=20)A.push({id:'night',ic:'🪔',t1:'夜半，灯下有人',t2:'那封无名的信，今夜或许有人来',t3:'彩蛋'});
+    if(!G.married&&(G.wives||[]).length===0&&(G.mianshou||[]).length===0&&!G.vow)
+      A.push({id:'vow',ic:'🕯',t1:'立誓不婚不嫁',t2:'此生只为自己活，不要人家',t3:'此后不结亲　长辈仍会催促'});
+    if(G.vow&&!G.vowPaid&&G.money>=10000)
+      A.push({id:'payquiet',ic:'💰',t1:'奉上万金',t2:'堵住族老的嘴，换一辈子清静',t3:'银两-10000　从此无人再催'});
+  }
+  if(place==='shu'){
+    A.push({id:'read',ic:'📖',t1:'读书',t2:'增文墨，静心养气',t3:'文墨+6~10　修为+2~4　精力-9'});
+    A.push({id:'copy',ic:'✍',t1:'抄书换钱',t2:'字里挣些银两',t3:'银两+22~40　文墨+3~5　精力-10'});
+    A.push({id:'wen',ic:'🎋',t1:'赴文会',t2:'需文墨五十以上',t3:'文墨+6~10　风仪+4~8　银两+30~60　精力-12',cond:function(){return G.learn>=50;}});
+  }
+  if(place==='feng'){
+    A.push({id:'qin',ic:'🎼',t1:'学琴',t2:'增技艺，也增风仪',t3:'技艺+5~9　风仪+3~6　精力-9'});
+    A.push({id:'painting',ic:'🖌',t1:'习画',t2:'笔下生风，增技艺',t3:'技艺+6~10　精力-9'});
+    A.push({id:'yaji',ic:'🍶',t1:'赴雅集',t2:'广结风雅之人',t3:'风仪+5~9　银两+10~30　精力-12'});
+  }
+  if(place==='cha'){
+    A.push({id:'gossip',ic:'👂',t1:'打探消息',t2:'江湖与庙堂的风声',t3:'文墨+2~5　精力-7'});
+    A.push({id:'tea',ic:'🍵',t1:'品茶听书',t2:'回精力，听一段旧事',t3:'精力+8'});
+    if(G.career==='folk'||!G.career){
+      if(G.sex==='f')A.push({id:'enterpalace',ic:'🏯',t1:'应选入宫',t2:'一入宫门深似海，斗到哪一步看你自己',t3:'命途：宫斗　精力-6',cond:function(){return G.age>=14&&!G.role;}});
+      else A.push({id:'enterpalace',ic:'🏯',t1:'投效王庭',t2:'带刀侍卫、内廷、边军，各有各的命',t3:'命途：宫斗　精力-6',cond:function(){return G.age>=14&&!G.role;}});
+      A.push({id:'jianghu',ic:'🗡',t1:'闯荡江湖',t2:'以武扬名，争一争那盟主之位',t3:'命途：武林　精力-10',cond:function(){return G.age>=14&&!G.role;}});
+      A.push({id:'xialine',ic:'⚖',t1:'仗剑行侠',t2:'路见不平，拔刀相助',t3:'命途：侠客　精力-8',cond:function(){return G.age>=14&&!G.role;}});
+    }
+    if(G.career==='xia'){
+      A.push({id:'xia_hear',ic:'👂',t1:'听一桩不平事',t2:'茶馆里总有人压着嗓子说话',t3:'文墨+2~4　侠义+2~5　精力-6'});
+      A.push({id:'xia_help',ic:'⚖',t1:'拔刀相助',t2:'打得过就打，打不过也要站出去',t3:'武艺+3~6　侠义+3~7　气血-4~10　精力-10'});
+      A.push({id:'xia_swear',ic:'🍶',t1:'与义士结拜',t2:'一碗酒，一条命',t3:'风仪+3~6　侠义+2~6　精力-8'});
+    }
+    if(G.career==='palace'){
+      A.push({id:'pl_greet',ic:'🏯',t1:'请安当值',t2:'规矩里的每一步，都是往上走的台阶',t3:'圣宠+4~9　精力-6'});
+      A.push({id:'pl_ally',ic:'🤝',t1:'结交宫人',t2:'姑姑、宫女、太监，人人都有一张嘴',t3:'风仪+3~6　圣宠+2~5　精力-7'});
+      A.push({id:'pl_plot',ic:'🕯',t1:'谋一局',t2:'圣宠二十五以上方可落子',t3:'或晋位，或失宠，或入冷宫　精力-12',cond:function(){return G.clout>=25&&!G.chill;}});
+      A.push({id:'pl_rest',ic:'🍵',t1:'廊下静养',t2:'宫里的风，先躲一躲',t3:'精力+14　圣宠-1'});
+      if(G.role==='prince')A.push({id:'pl_wife',ic:'🏮',t1:'纳一房妾室',t2:'王府里总要有人应门',t3:'银两-300　妻室+1',cond:function(){return G.money>=300&&(G.wives||[]).length<4;}});
+      if(G.flags.queen)A.push({id:'pl_mianhou',ic:'🕯',t1:'养一个面首',t2:'朝臣的折子，随他们堆着',t3:'银两-200　心悦+1',cond:function(){return G.money>=200&&(G.mianshou||[]).length<4;}});
+      if(!G.chill&&G.role==='concubine'){
+        A.push({id:'pl_poison',ic:'🧪',t1:'下一味药',t2:'放在谁的汤里，你自己挑',t3:'黑化+6~12　或晋位，或事发　精力-10',cond:function(){return G.herb>0||G.money>=120;}});
+        A.push({id:'pl_scar',ic:'🕳',t1:'毁她一张脸',t2:'宫里最狠的不是杀，是让人活着',t3:'黑化+10~18　银两-150　精力-12',cond:function(){return G.money>=150;}});
+        A.push({id:'pl_miscarry',ic:'🩸',t1:'动一动手脚',t2:'有人怀了，就有人不想她生下来',t3:'黑化+14~22　或反噬　精力-14',cond:function(){return G.clout>=30;}});
+      }
+    }
+  }
+  if(place==='an'){
+    A.push({id:'intel',ic:'🕵',t1:'接情报活计',t2:'轻险，得银钱与机敏',t3:'银两+60~110　武艺+3~6　精力-11'});
+    A.push({id:'kill',ic:'🗡',t1:'接一桩刺杀',t2:'重险，或伤及自身',t3:'银两+150~300　武艺+6~11　气血-6~18　精力-18'});
+    if(G.dark>=60){
+      A.push({id:'dk_frame',ic:'🧷',t1:'栽一桩脏',t2:'把刀递到别人手里，让你自己干净',t3:'黑化+5~10　银两+100~260　精力-12'});
+      A.push({id:'dk_silence',ic:'🪦',t1:'灭一个口',t2:'知道太多的人，不该再开口',t3:'黑化+14~22　银两+200~400　气血-10~20　精力-16'});
+    }
+  }
+  if(place==='wu'){
+    A.push({id:'train',ic:'⚔',t1:'练武',t2:'增武艺，强筋骨，书墨略疏',t3:'武艺+7~12　气血+3　文墨-1~2　精力-12'});
+    A.push({id:'buyw',ic:'🗡',t1:'购一柄剑',t2:'银两-180，武艺大进',t3:'银两-180　武艺+10~18',cond:function(){return G.money>=180;}});
+    if(G.career==='martial'){
+      A.push({id:'jh_fight',ic:'🥊',t1:'上台比武',t2:'拳脚底下见名望',t3:'名望+1~12　武艺+3~6　精力-12'});
+      A.push({id:'jh_ally',ic:'🍶',t1:'结交豪杰',t2:'破庙一坛酒，抵得过十年交情',t3:'风仪+3~6　名望+1~4　精力-8'});
+      A.push({id:'jh_challenge',ic:'🏆',t1:'挑战盟主',t2:'名望六十、武艺一百二，才有资格',t3:'胜则执掌江湖　精力-16',cond:function(){return G.clout>=60&&G.sword>=120;}});
+      if(!G.guard)A.push({id:'bg_hire',ic:'🥷',t1:'收一名暗卫',t2:'白日不见人，夜里替你走一趟',t3:'银两-500　此后战力常驻',cond:function(){return G.money>=500;}});
+    }
+  }
+  if(place==='chun'){
+    A.push({id:'listen',ic:'🏮',t1:'听曲',t2:'听人唱一段，风仪渐长',t3:'风仪+3~6　精力-8'});
+    if(G.sex==='m')
+      A.push({id:'dance',ic:'💃',t1:'观舞',t2:'灯下看一支舞，眼力也跟着长',t3:'风仪+6~10　技艺+4~8　精力-12'});
+    else
+      A.push({id:'dance',ic:'💃',t1:'学舞',t2:'身段与风仪俱进',t3:'风仪+6~10　技艺+4~8　精力-12'});
+    if((G.career==='folk'||!G.career)&&G.sex==='f')
+      A.push({id:'dancerline',ic:'💃',t1:'入楼学舞',t2:'一支舞，换半座城的目光',t3:'命途：舞姬　精力-9',cond:function(){return G.age>=14&&!G.role;}});
+    if(G.career==='dancer'){
+      A.push({id:'dc_prac',ic:'🩰',t1:'练一支新舞',t2:'台下十年，台上一夜',t3:'技艺+6~11　风仪+4~8　精力-12'});
+      A.push({id:'dc_show',ic:'🎭',t1:'登台献艺',t2:'贵人席上，有人为你添了酒',t3:'银两+80~260　名望+2~6　精力-14'});
+      A.push({id:'dc_tempt',ic:'🌹',t1:'勾一位贵人',t2:'话要说得软，眼要抬得慢',t3:'银两+150~400　名声-1~4　精力-16'});
+      A.push({id:'dc_married',ic:'🖤',t1:'勾一个有妇之夫',t2:'明知那院里有别人，你还是伸手了',t3:'黑化+8~16　银两+200~500　名声-3~7　精力-18'});
+    }
+  }
+  if(place==='shan'){
+    A.push({id:'herb',ic:'🌿',t1:'采药',t2:'得草药，可炼丹',t3:'草药+2~5　银两+5~15　精力-10'});
+    A.push({id:'tame',ic:'🦊',t1:'驯兽',t2:'与林中生灵结缘',t3:'修为+4~8　风仪+2~5　精力-12　或得灵兽'});
+    A.push({id:'breathe',ic:'⛰',t1:'崖间吐纳',t2:'增修为与灵力',t3:'修为+9~16　灵力+4~8　精力-12'});
+    A.push({id:'ruin',ic:'🕳',t1:'入山寻秘境',t2:'一层比一层深，见好就收',t3:'精力-6起　越深机缘越厚，也越险'});
+  }
+  if(place==='market'){
+    A.push({id:'seed',ic:'🌱',t1:'买灵植种子',t2:'三枚种子，可种灵植',t3:'银两-60　灵植种子+3',cond:function(){return G.money>=60;}});
+    A.push({id:'sellherb',ic:'🌿',t1:'卖草药',t2:'一筐草药换现钱',t3:'银两+9×草药　草药清空',cond:function(){return G.herb>0;}});
+    A.push({id:'auction',ic:'🏺',t1:'拍卖宝物',t2:'把挖来的东西出手',t3:'银两+宝物价　宝物清空',cond:function(){return G.treasure.length>0;}});
+    A.push({id:'haggle',ic:'🔍',t1:'逛摊捡漏',t2:'摊子底下也许压着好东西',t3:'银两-40　四成得宝物',cond:function(){return G.money>=40;}});
+    A.push({id:'inquiry',ic:'👂',t1:'打听行情',t2:'知道哪里收什么、卖什么',t3:'文墨+2~4　银两+5~20　精力-6'});
+    A.push({id:'acc',ic:'📿',t1:'淘一件法宝',t2:'佩在身上，属性立涨',t3:'银两-220　随机附件',cond:function(){return G.money>=220;}});
+  }
+  if(place==='guan'){
+    A.push({id:'dao',ic:'☯',t1:'听道',t2:'修为大进，灵台清明',t3:'修为+11~18　灵力+4~9　精力-10'});
+    A.push({id:'dan',ic:'🔥',t1:'开炉炼丹',t2:'炼气养身，需草药或灵植',t3:'修为+14~34　灵力+5~14　气血+5~15　精力-14',cond:function(){return G.herb>0||G.lingzhi>0;}});
+    A.push({id:'root',ic:'🔮',t1:'测灵根',t2:'十二岁后，可验一次根骨',t3:'灵根定根　一生一次',cond:function(){return G.age>=12&&!G.root;}});
+    if(G.flags&&G.flags.sect)A.push({id:'sectjob',ic:'📜',t1:'领宗门差事',t2:'替'+G.flags.sect+'跑一趟腿',t3:'银两+80~160　修为+10~20　灵力+5~10　精力-14'});
+    if((G.career==='folk'||!G.career)&&G.age>=12&&!G.role)
+      A.push({id:'joinsect',ic:'☯',t1:'拜入仙门',t2:'灵根越好，门开得越大',t3:'命途：仙侠　精力-10'});
+    A.push({id:'wash_buy',ic:'⚗',t1:'求一枚洗髓丹',t2:'道人不问用处，只收银子',t3:'银两-600　洗髓丹+1',cond:function(){return G.money>=600;}});
+    if(G.wash>0)A.push({id:'wash_use',ic:'💠',t1:'服下洗髓丹',t2:'旧根骨化开，新的自己长出来',t3:'洗髓丹-1　灵根重塑'});
+    if(G.career==='sect'){
+      A.push({id:'sc_meditate',ic:'🧘',t1:'打坐吐纳',t2:'一日不坐，尘念就多一分',t3:'修为+7~13　灵力+3~7　精力-8'});
+      A.push({id:'sc_spell',ic:'✨',t1:'修习仙术',t2:'指尖凝光，先凝得住再说',t3:'修为+12~22　灵力+5~10　精力-14'});
+      A.push({id:'sc_alchemy',ic:'🔥',t1:'炼一炉丹',t2:'灵植入炉，可延寿数',t3:'修为+16~30　寿元+1　精力-16',cond:function(){return G.lingzhi>0;}});
+    }
+  }
+  if(place==='pal_quarter'){
+    if(G.sex==='m'){
+      A.push({id:'pq_dress',ic:'🎩',t1:'束冠整衣',t2:'宫里第一眼，看的就是这身衣冠',t3:'风仪+3~6　精力-5'});
+      A.push({id:'pq_sew',ic:'✍',t1:'替人代笔',t2:'替贵人写几封信，也攒点私房',t3:'技艺+4~8　银两+8~20　精力-6'});
+    }else{
+      A.push({id:'pq_dress',ic:'💄',t1:'对镜梳妆',t2:'宫里第一眼，看的就是这张脸',t3:'风仪+3~6　精力-5'});
+      A.push({id:'pq_sew',ic:'🧵',t1:'做针线活',t2:'给贵人绣个荷包，也攒点私房',t3:'技艺+4~8　银两+8~20　精力-6'});
+    }
+    A.push({id:'pq_letter',ic:'✉',t1:'写一封家书',t2:'递不出去，也还是要写',t3:'文墨+2~4　精力+4'});
+    A.push({id:'pq_rest',ic:'🛏',t1:'早早歇下',t2:'宫里的夜，睡足了才熬得住',t3:'精力+16'});
+    A.push({id:'pl_rest',ic:'🍵',t1:'廊下静养',t2:'宫里的风，先躲一躲',t3:'精力+14　圣宠-1'});
+    if(G.role==='prince')A.push({id:'pl_wife',ic:'🏮',t1:'纳一房妾室',t2:'王府里总要有人应门',t3:'银两-300　妻室+1',cond:function(){return G.money>=300&&(G.wives||[]).length<4;}});
+    if(G.flags.queen)A.push({id:'pl_mianhou',ic:'🕯',t1:'养一个面首',t2:'朝臣的折子，随他们堆着',t3:'银两-200　心悦+1',cond:function(){return G.money>=200&&(G.mianshou||[]).length<4;}});
+    if(!G.chill&&G.role==='concubine'){
+      A.push({id:'pl_poison',ic:'🧪',t1:'下一味药',t2:'放在谁的汤里，你自己挑',t3:'黑化+6~12　或晋位，或事发　精力-10',cond:function(){return G.herb>0||G.money>=120;}});
+      A.push({id:'pl_scar',ic:'🕳',t1:'毁她一张脸',t2:'宫里最狠的不是杀，是让人活着',t3:'黑化+10~18　银两-150　精力-12',cond:function(){return G.money>=150;}});
+      A.push({id:'pl_miscarry',ic:'🩸',t1:'动一动手脚',t2:'有人怀了，就有人不想她生下来',t3:'黑化+14~22　或反噬　精力-14',cond:function(){return G.clout>=30;}});
+    }
+  }
+  if(place==='pal_bureau'){
+    if(G.role==='guard'){
+      A.push({id:'gb_patrol',ic:'🗡',t1:'巡逻宫墙',t2:'刀在手，这一圈就得走完',t3:'银两+20~50　圣宠+2~5　精力-9'});
+      A.push({id:'gb_drill',ic:'⚔',t1:'校场操练',t2:'刀要磨，人要练',t3:'武艺+4~8　精力-10'});
+      A.push({id:'gb_mates',ic:'🍶',t1:'与同伍吃酒',t2:'一起值过夜的人，才算同伍',t3:'风仪+2~5　圣宠+1~3　精力-6'});
+      A.push({id:'gb_reward',ic:'💰',t1:'领一份赏银',t2:'当值当得好，上头看得见',t3:'银两+40~90　精力-4'});
+    }else if(G.role==='prince'){
+      A.push({id:'pc_affairs',ic:'🏮',t1:'过问府务',t2:'一府的账、人、事，都得有人管',t3:'银两+80~200　精力-8'});
+      A.push({id:'pc_court',ic:'🤝',t1:'结交朝臣',t2:'朝堂上的路，是一顿顿饭铺出来的',t3:'圣宠+4~8　精力-9'});
+      A.push({id:'pc_banquet',ic:'🍶',t1:'设一席宴',t2:'请谁来、坐哪一席，都有讲究',t3:'银两-120　圣宠+3~7　风仪+2~5　精力-10',cond:function(){return G.money>=150;}});
+      A.push({id:'pc_memorial',ic:'📜',t1:'递一道折子',t2:'话要写得软，意思要落得稳',t3:'圣宠+3~7　文墨+2~4　精力-8'});
+    }else if(G.role==='army'){
+      A.push({id:'ab_drill',ic:'⚔',t1:'操练军阵',t2:'风沙里站住的人，才配骑马',t3:'武艺+5~9　精力-11'});
+      A.push({id:'ab_patrol',ic:'🐎',t1:'巡边',t2:'边墙很长，眼睛得放亮',t3:'银两+30~70　圣宠+2~5　精力-10'});
+      A.push({id:'ab_mates',ic:'🍶',t1:'与同袍饮酒',t2:'一碗酒下肚，风沙也没那么硬',t3:'风仪+2~5　圣宠+1~3　精力-6'});
+      A.push({id:'ab_merit',ic:'📜',t1:'递军功折子',t2:'刀口上挣来的功，得有人替你报',t3:'圣宠+3~8　精力-8',cond:function(){return G.clout>=25;}});
+    }else if(G.role==='concubine'){
+      A.push({id:'cb_gift',ic:'💰',t1:'打点六局',t2:'银钱递得巧，六局的门就好开',t3:'银两-60　圣宠+3~7　精力-6',cond:function(){return G.money>=60;}});
+      A.push({id:'cb_spy',ic:'👂',t1:'探听六局消息',t2:'宫里的风，先吹到六局',t3:'文墨+2~4　圣宠+2~5　精力-6'});
+      A.push({id:'cb_ally',ic:'🤝',t1:'施恩宫人',t2:'今日一包糖，明日一条路',t3:'风仪+3~6　圣宠+2~5　精力-7'});
+      A.push({id:'pl_greet',ic:'🏯',t1:'请安当值',t2:'规矩里的每一步，都是往上走的台阶',t3:'圣宠+4~9　精力-6'});
+    }else{
+      A.push({id:'pb_duty',ic:'🧹',t1:'领差事',t2:'洒扫、掌灯、奉茶、传话',t3:'银两+30~70　圣宠+1~4　精力-8'});
+      A.push({id:'pb_rule',ic:'📜',t1:'学规矩',t2:'走路的步幅、跪的角度，都有数',t3:'文墨+4~8　风仪+2~5　精力-7'});
+      A.push({id:'pb_ledger',ic:'🧾',t1:'对牌采买',t2:'内务府的账，水很深',t3:'银两+40~90　或被人拿住把柄　精力-9'});
+      A.push({id:'pb_ally',ic:'🤝',t1:'结交宫人',t2:'姑姑、宫女、太监，人人都有一张嘴',t3:'风仪+3~6　圣宠+2~5　精力-7'});
+      A.push({id:'pl_greet',ic:'🏯',t1:'请安当值',t2:'规矩里的每一步，都是往上走的台阶',t3:'圣宠+4~9　精力-6'});
+    }
+    A.push({id:'pl_plot',ic:'🕯',t1:'谋一局',t2:'圣宠二十五以上方可落子',t3:'或晋位，或失宠，或入冷宫　精力-12',cond:function(){return G.clout>=25&&!G.chill;}});
+  }
+  if(place==='pal_garden'){
+    A.push({id:'pg_flower',ic:'🌸',t1:'园中赏花',t2:'花开得比人自在',t3:'风仪+3~6　精力-4'});
+    A.push({id:'pg_dew',ic:'💧',t1:'采花露',t2:'黎明最好，趁没人看见',t3:'草药+1~2　风仪+2　精力-6'});
+    A.push({id:'pg_swing',ic:'🎋',t1:'荡秋千',t2:(G.sex==='m'?'衣角飞起来，像还在家里':'裙角飞起来，像还在家里'),t3:'精力+10　风仪+2~4'});
+    A.push({id:'pg_eaves',ic:'👂',t1:'听墙根',t2:'宫里最值钱的是话',t3:'文墨+2~4　圣宠+2~6　或被人撞见　精力-5'});
+  }
+  if(place==='pal_medical'){
+    A.push({id:'pm_pulse',ic:'💊',t1:'请一回平安脉',t2:'太医问得细，答得也细',t3:'气血+8~15　精力-3'});
+    A.push({id:'pm_herb',ic:'🌿',t1:'按方抓药',t2:'司药局按证给药，不见方子',t3:'银两-20　草药+2~4'});
+    A.push({id:'pm_learn',ic:'📖',t1:'认几味药',t2:'药性记熟了，往后有用',t3:'文墨+3~6　草药+1　精力-6'});
+  }
+  if(place==='pal_temple'){
+    A.push({id:'pt_sutra',ic:'📿',t1:'抄一卷经',t2:'笔尖落下去，心也跟着静',t3:'文墨+4~7　修为+3~6　精力-8'});
+    A.push({id:'pt_incense',ic:'🕯',t1:'上一炷香',t2:'求的不是神佛，是个念想',t3:'圣宠+2~5　精力-4'});
+    A.push({id:'pt_talk',ic:'🍵',t1:'陪老太妃说话',t2:'宫里活得最久的，最知道轻重',t3:'风仪+2~5　文墨+2~4　精力-5'});
+  }
+  if(place==='pal_cold'){
+    A.push({id:'pc_bribe',ic:'💰',t1:'递话出去',t2:'银两六十，换一句回音',t3:'银两-60　或能翻身',cond:function(){return G.money>=60;}});
+    A.push({id:'pc_endure',ic:'🧱',t1:'就着冷饭读书',t2:'墙再高，也关不住心气',t3:'文墨+3~6　修为+4~9'});
+    A.push({id:'pc_wait',ic:'🌙',t1:'等一个春天',t2:'熬着，也是一种活法',t3:'精力+12　气血-2'});
+  }
+  return A;
+}
+
+function doAct(id){
+  if(!G||G.ended)return;
+  if(id!=='none' && G.sp<10){ forceSleep(); return; }
+  if(id.indexOf('date_')===0){ if(!checkAct())return; dateWho(id); return; }
+  if(id.indexOf('gift_')===0){ giftWho(id); return; }
+  if(id.indexOf('wed_')===0){ wedWho(id); return; }
+  if(id==='none')return;
+  var needs=['flower','veg','herbplot','read','copy','qin','painting','yaji','gossip','intel','kill','train','listen','dance','herb','tame','breathe','dao','dan','seed','haggle','inquiry','ruin','sectjob','enterpalace','jianghu','pl_greet','pl_ally','pl_wife','pl_mianhou','jh_fight','jh_ally','jh_challenge',
+    'xialine','xia_hear','xia_help','xia_swear','dancerline','dc_prac','dc_show','dc_tempt','dc_married','joinsect','sc_meditate','sc_spell','sc_alchemy','bg_hire','vow','payquiet','pl_poison','pl_scar','pl_miscarry','dk_frame','dk_silence','wash_buy','wash_use',
+    'pq_dress','pq_sew','pq_letter','pq_rest','pb_duty','pb_rule','pb_ledger','pb_ally',
+    'gb_patrol','gb_drill','gb_mates','gb_reward','pc_affairs','pc_court','pc_banquet','pc_memorial',
+    'ab_drill','ab_patrol','ab_mates','ab_merit','cb_gift','cb_spy','cb_ally','pg_flower','pg_dew','pg_swing','pg_eaves','pm_pulse','pm_herb','pm_learn','pt_sutra','pt_incense','pt_talk','pc_bribe','pc_endure','pc_wait'];
+  if(needs.indexOf(id)>=0 && !checkAct())return;
+  switch(id){
+    case 'flower':
+      spend(8);gain('charm',ri(4,7),240);G.plots++;G.plotsDone=1;
+      digUp();done('🌸 播下半畦花种，指尖沾了泥，心里却松快。');break;
+    case 'veg':
+      spend(8);G.food+=ri(2,4);G.money+=ri(8,16);
+      digUp();done('🥬 摘了一篮青菜，换了些散碎银钱。');break;
+    case 'herbplot':
+      if(G.seeds<=0){toast('没有灵植种子，先去集市买');return;}
+      spend(10);G.seeds--;G.lingzhi+=ri(1,2);gain('exp',ri(2,4),300);
+      done('🌱 灵植破土，叶片上凝着一层薄薄的青光。');break;
+    case 'cook':
+      G.hp=cl(G.hp+ri(6,11),0,100);G.sp=cl(G.sp+ri(6,10),0,100);
+      done('🍲 一灶烟火起，饭菜香漫过整个院子。');break;
+    case 'rest':
+      G.sp=cl(G.sp+18,0,100);
+      done('🍵 檐下坐了一会儿，听风过槐叶。');break;
+    case 'adopt':
+      G.money-=400;
+      var cn=pk(['阿棠','小满','砚生','青禾','知乐','念安','小簟','阿糯']);
+      G.children.push({name:cn,age:ri(4,9)});
+      done('🧸 你牵回了一个孩子，从此院里多了一声唤你。');break;
+    case 'pet':
+      G.money-=120;
+      var pn=pk(['团子','雪球','阿橘','墨团','阿灰']);
+      G.pets.push({name:pn,kind:pk(['猫','狗','兔','小狐']),full:100,mood:75});
+      done('🐾 一只'+G.pets[G.pets.length-1].kind+'蜷进你怀里，赖着不走了。');break;
+    case 'feedpet':
+      if(!G.pets.length){toast('院里没有灵宠。');return;}
+      var pf=null;
+      for(var pi=0;pi<G.pets.length;pi++){
+        if(!pf||(G.pets[pi].full||0)<(pf.full||0))pf=G.pets[pi];
+      }
+      pf.full=pf.full||0;
+      if(pf.full>=95){toast(pf.name+'还不饿，晚些再喂。');return;}
+      if(G.pill>0){
+        G.pill--;pf.full=Math.min(100,pf.full+40);
+        done('🍖 你碾碎一枚丹药喂给'+pf.name+'，它含在嘴里，眼睛一下亮了。');
+      }else if(G.lingzhi>0){
+        G.lingzhi--;pf.full=Math.min(100,pf.full+28);
+        done('🌱 你掰了半株灵植喂'+pf.name+'，它吃得连叶脉都不剩。');
+      }else{
+        toast('没有丹药也没有灵植，先去炼丹或采药');return;
+      }break;
+    case 'playpet':
+      if(!G.pets.length){toast('院里没有灵宠。');return;}
+      if(G.sp<10){toast('实在没力气了，先歇一歇。');return;}
+      var pp=pk(G.pets);
+      if(pp.mood===undefined)pp.mood=70;
+      spend(10);
+      pp.mood=cl(pp.mood+ri(10,18),0,100);
+      pp.full=cl((pp.full===undefined?100:pp.full)-3,0,100);
+      for(var _pi=0;_pi<G.pets.length;_pi++){
+        var _op=G.pets[_pi];
+        if(_op===pp)continue;
+        if(_op.mood===undefined)_op.mood=70;
+        _op.mood=cl(_op.mood+ri(3,6),0,100);
+      }
+      var pMsg=pp.mood>=70?'尾巴摇得像要飞起来':'终于肯抬头看你了';
+      done('🎾 你拿草茎逗'+pp.name+'，它追着光斑跑了满院，'+pMsg+'。');break;
+    case 'namepet':
+      openPetName();return;
+    case 'read':
+      spend(9);gain('learn',ri(6,10),240);gain('exp',ri(2,4),300);
+      done('📖 读到日落，书页边被你翻得卷了角。');break;
+    case 'copy':
+      spend(10);G.money+=ri(22,40);gain('learn',ri(3,5),240);
+      done('✍ 抄了半日书，腕子酸，袋子鼓了些。');break;
+    case 'wen':
+      spend(12);gain('learn',ri(6,10),240);gain('charm',ri(4,8),240);G.money+=ri(30,60);
+      done('🎋 文会上你一句压了满座，有人悄悄记了你的名字。');break;
+    case 'qin':
+      spend(9);gain('art',ri(5,9),240);gain('charm',ri(3,6),240);
+      done('🎼 一曲终了，苏挽月在你身侧轻轻点头。');break;
+    case 'painting':
+      spend(9);gain('art',ri(6,10),240);
+      done('🖌 落笔成一支晚荷，纸还湿着。');break;
+    case 'yaji':
+      spend(12);gain('charm',ri(5,9),240);G.money+=ri(10,30);tryMeet('feng');
+      done('🍶 雅集上觥筹交错，你被人多看了几眼。');break;
+    case 'gossip':
+      spend(7);gain('learn',ri(2,5),240);tryMeet('cha');
+      done('👂 茶楼里听了一耳朵的江湖事。');break;
+    case 'tea':
+      G.sp=cl(G.sp+8,0,100);
+      done('🍵 一盏雨前茶，苦后回甘。');break;
+    case 'intel':
+      spend(11);G.money+=ri(60,110);gain('sword',ri(3,6),240);gain('learn',ri(2,4),240);tryMeet('an');
+      done('🕵 一份密信换了银子，也换来一次对视。');break;
+    case 'kill':
+      spend(18);G.money+=ri(150,300);gain('sword',ri(6,11),240);
+      var dmg=ri(6,18);G.hp=cl(G.hp-dmg,1,999);
+      if(G.hp<=1)addLog('🩸 这一趟险些回不来，血浸了半幅袖子。','bd');
+      done('🗡 刀锋落定时，你听见自己的心跳。');break;
+    case 'train':
+      spend(12);gain('sword',ri(7,12),240);G.hp=cl(G.hp+3,0,100);G.learn=cl(G.learn-ri(1,2),0,240);
+      done('⚔ 一招一式练到日头偏西，衣裳全湿了，书页上的字倒生疏了些。');break;
+    case 'buyw':
+      G.money-=180;gain('sword',ri(10,18),240);
+      done('🗡 挑了柄趁手的剑，剑鞘上有旧划痕。');break;
+    case 'listen':
+      spend(8);gain('charm',ri(3,6),240);tryMeet('chun');
+      done('🏮 隔着一层纱，有人把旧曲唱得很慢。');break;
+    case 'dance':
+      spend(12);gain('charm',ri(6,10),240);gain('art',ri(4,8),240);
+      done(G.sex==='m'?'💃 一曲舞终，你在帘外起身，记住的是她最后一个转身。':'💃 一段舞练下来，脚踝发软，身段却更轻了。');break;
+    case 'herb':
+      spend(10);G.herb+=ri(2,5);gain('learn',ri(1,3),240);G.money+=ri(5,15);
+      done('🌿 背篓里装满草药，山风里有草木的清苦味。');break;
+    case 'tame':
+      spend(12);gain('charm',ri(2,5),240);gain('exp',ri(4,8),300);
+      if(G.pets.length<4&&ri(1,3)===1){
+        var tn=pk(['青狐','雪兔','苍猿','灵鹮']);
+        G.pets.push({name:tn,kind:'灵兽',full:100,mood:70});
+        addLog('🦊 一头'+tn+'跟了你一路，最后蹲在你门口。','gd');
+      }
+      done('🦊 你蹲在林间与生灵对视良久，谁也没先动。');break;
+    case 'breathe':
+      spend(12);gain('exp',ri(9,16),300);gain('ling',ri(4,8),200);
+      done('⛰ 崖风过耳，灵气沿脊背缓缓上行。');break;
+    case 'ruin':
+      spend(6); startRuin(); return;
+    case 'sectjob':
+      sectJob(); return;
+    case 'enterpalace':
+      spend(6); enterPalace(); return;
+    case 'jianghu':
+      spend(10); enterJianghu(); return;
+    case 'pl_greet':
+      spend(6); G.clout=cl(G.clout+ri(4,9),0,100);
+      done('🏯 你按时去请安，跪得膝盖发麻，也得了一句「起吧」。');break;
+    case 'pl_ally':
+      spend(7); gain('charm',ri(3,6),240); G.clout=cl(G.clout+ri(2,5),0,100);
+      done('🏯 你给掌事姑姑递了一包桂花糖，她脸上的褶子松了些。');break;
+    case 'pl_plot':
+      plPlot(); return;
+    case 'pl_rest':
+      G.sp=cl(G.sp+14,0,100); G.clout=Math.max(0,G.clout-1);
+      done('🏯 你在廊下坐了一整个下午，宫墙的影子一寸寸挪过去。');break;
+    case 'pl_wife':
+      plTakeWife(); return;
+    case 'pl_mianhou':
+      plTakeMale(); return;
+    case 'xialine':
+      enterXia(); return;
+    case 'xia_hear':
+      spend(6);gain('learn',ri(2,4),240);G.clout=cl(G.clout+ri(2,5),0,100);
+      done('👂 说书人压着嗓子讲了一桩旧案，你只听见「无人敢管」四个字。');break;
+    case 'xia_help':
+      spend(10);
+      if(ri(1,100)<=68){
+        G.sword=cl(G.sword+ri(3,6),240);G.clout=cl(G.clout+ri(3,7),0,100);G.money+=ri(20,80);
+        done('⚖ 你一脚踢翻那条长凳，事主跪下磕头，你把人扶起来就走。');
+      }else{
+        G.hp=cl(G.hp-ri(8,18),1,100);G.clout=cl(G.clout+ri(1,3),0,100);
+        done('⚖ 对面四个人，你放倒两个，肋下挨了一棍。');
+      }break;
+    case 'xia_swear':
+      spend(8);gain('charm',ri(3,6),240);G.clout=cl(G.clout+ri(2,6),0,100);
+      done('🍶 破庙里摔碗为誓，酒洒在林冲之的旧匾上。');break;
+    case 'dancerline':
+      enterDancer(); return;
+    case 'dc_prac':
+      spend(12);gain('art',ri(6,11),240);gain('charm',ri(4,8),240);
+      done('🩰 一支舞练到脚背发红，铜镜里那个人终于不像刚进楼的丫头。');break;
+    case 'dc_show':
+      spend(14);G.money+=ri(80,260);G.clout=cl(G.clout+ri(2,6),0,100);gain('charm',ri(2,5),240);
+      done('🎭 你跳到一半，二楼雅座的帘子被人掀开了。');break;
+    case 'dc_tempt':
+      spend(16);G.money+=ri(150,400);G.clout=cl(G.clout+ri(1,4),0,100);
+      if(G.clout>0&&ri(1,100)<=30)G.clout=cl(G.clout-ri(1,4),0,100);
+      done('🌹 你把酒盏递过去，指尖在他手背上停了一瞬。');break;
+    case 'dc_married':
+      spend(18);G.money+=ri(200,500);G.charm=cl(G.charm+ri(3,6),240);darkGain(ri(8,16));
+      done('🖤 他家里那位来过楼里，站在廊下看了你很久，什么也没说。');break;
+    case 'joinsect':
+      joinSect(); return;
+    case 'sc_meditate':
+      spend(8);gain('exp',ri(7,13),300);gain('ling',ri(3,7),240);
+      done('🧘 你坐到日影从檐角移开，山风穿过衣袖，凉的。');break;
+    case 'sc_spell':
+      spend(14);gain('exp',ri(12,22),300);gain('ling',ri(5,10),240);
+      done('✨ 指尖亮起一点白光，散了。第七次才稳住。');break;
+    case 'sc_alchemy':
+      if(G.lingzhi<1){toast('灵植不足。');return;}
+      G.lingzhi--;spend(16);gain('exp',ri(16,30),300);G.life=(G.life||0)+1;
+      done('🔥 丹成时炉盖跳了一下，你听见自己的心跳比它更响。');break;
+    case 'bg_hire':
+      if(G.money<500){toast('银两不足。');return;}
+      G.money-=500;G.guard=1;
+      done('🥷 那人接过银子只说了一句「白日你见不到我」，就走了。');break;
+    case 'vow':
+      pledgeVow(); return;
+    case 'payquiet':
+      payQuiet(); return;
+    case 'pl_poison':
+      plPoison(); return;
+    case 'pl_scar':
+      plScar(); return;
+    case 'pl_miscarry':
+      plMiscarry(); return;
+    case 'dk_frame':
+      spend(12);G.money+=ri(100,260);darkGain(ri(5,10));
+      done('🧷 那桩脏最后落在别人头上，你站在人群里，跟着摇头。');break;
+    case 'dk_silence':
+      spend(16);G.money+=ri(200,400);G.hp=cl(G.hp-ri(10,20),1,100);darkGain(ri(14,22));
+      done('🪦 井口盖上新石板，第二天那里就长草了。');break;
+    case 'wash_buy':
+      if(G.money<600){toast('银两不足。');return;}
+      G.money-=600;G.wash=(G.wash||0)+1;
+      done('⚗ 道人把丹递过来，只说了一句：疼是疼的，忍一忍。');break;
+    case 'wash_use':
+      washUse(); return;
+    case 'pq_dress':
+      spend(5);gain('charm',ri(3,6),240);
+      done(G.sex==='m'?'🎩 你把衣冠理了又理，镜子里的人比刚进宫时稳了些。':'💄 你把眉描了又描，铜镜里的人渐渐不像从前那个丫头。');break;
+    case 'pq_sew':
+      spend(6);gain('art',ri(4,8),240);G.money+=ri(8,20);
+      done(G.sex==='m'?'✍ 你替贵人抄完几封信，管事看了，说字还算稳。':'🧵 一针一线绣完一只荷包，管事姑姑看了，说手还算稳。');break;
+    case 'pq_letter':
+      gain('learn',ri(2,4),240);G.sp=cl(G.sp+4,0,100);
+      done('✉ 家书写到一半停住，墨迹洇开一小团，像院里的槐影。');break;
+    case 'pq_rest':
+      G.sp=cl(G.sp+16,0,100);
+      done('🛏 你早早吹了灯，帐子一放，宫墙就隔在外面了。');break;
+    case 'pb_duty':
+      spend(8);G.money+=ri(30,70);G.clout=cl(G.clout+ri(1,4),0,100);
+      done('🧹 一桶水从东廊提到西廊，掌事姑姑点了个头。');break;
+    case 'pb_rule':
+      spend(7);gain('learn',ri(4,8),240);gain('charm',ri(2,5),240);
+      done('📜 你把手叠在腹前，一步步走完那条廊，脚跟没出一点声。');break;
+    case 'pb_ledger':
+      spend(9);
+      if(ri(1,100)<=78){
+        G.money+=ri(40,90);
+        done('🧾 账上多了几笔说不清的名目，你也分到一份。');
+      }else{
+        G.clout=cl(G.clout-ri(6,14),0,100);
+        done('🧾 对牌对不上，管事把账本摔在你脚边。');
+      }break;
+    case 'pb_ally':
+      spend(7);gain('charm',ri(3,6),240);G.clout=cl(G.clout+ri(2,5),0,100);
+      done('🤝 你给掌事姑姑递了一包桂花糖，她脸上的褶子松了些。');break;
+    case 'gb_patrol':
+      spend(9);G.money+=ri(20,50);G.clout=cl(G.clout+ri(2,5),0,100);
+      done('🗡 你把宫墙走了一遍又一遍，檐角的灯一盏盏灭下去。');break;
+    case 'gb_drill':
+      spend(10);gain('sword',ri(4,8),240);
+      done('⚔ 校场上刀风凌厉，收势时手心全是汗。');break;
+    case 'gb_mates':
+      spend(6);gain('charm',ri(2,5),240);G.clout=cl(G.clout+ri(1,3),0,100);
+      done('🍶 几个同伍围着火盆喝酒，说来说去都是当值的事。');break;
+    case 'gb_reward':
+      spend(4);G.money+=ri(40,90);
+      done('💰 上头赏下一份银子，同伍里有人拍了拍你的肩。');break;
+    case 'pc_affairs':
+      spend(8);G.money+=ri(80,200);
+      done('🏮 你把府里的账翻了一遍，管家站在一旁，汗都下来了。');break;
+    case 'pc_court':
+      spend(9);G.clout=cl(G.clout+ri(4,8),0,100);
+      done('🤝 一场茶叙下来，朝里又有人肯替你说话了。');break;
+    case 'pc_banquet':
+      if(G.money<120){toast('银两不足。');return;}
+      G.money-=120;spend(10);G.clout=cl(G.clout+ri(3,7),0,100);gain('charm',ri(2,5),240);
+      done('🍶 席上推杯换盏，谁坐哪一席，你心里都有数。');break;
+    case 'pc_memorial':
+      spend(8);G.clout=cl(G.clout+ri(3,7),0,100);gain('learn',ri(2,4),240);
+      done('📜 折子递进去，第二日就有人来递话。');break;
+    case 'ab_drill':
+      spend(11);gain('sword',ri(5,9),240);
+      done('⚔ 风沙里操练了一整日，甲片里全是沙。');break;
+    case 'ab_patrol':
+      spend(10);G.money+=ri(30,70);G.clout=cl(G.clout+ri(2,5),0,100);
+      done('🐎 你沿着边墙巡了一程，远处有狼烟，幸而是旧痕。');break;
+    case 'ab_mates':
+      spend(6);gain('charm',ri(2,5),240);G.clout=cl(G.clout+ri(1,3),0,100);
+      done('🍶 同袍分了一碗酒，说活着回来就算赢。');break;
+    case 'ab_merit':
+      spend(8);G.clout=cl(G.clout+ri(3,8),0,100);
+      done('📜 军功折子递上去，营里看你的眼神不一样了。');break;
+    case 'cb_gift':
+      if(G.money<60){toast('银两不足。');return;}
+      G.money-=60;spend(6);G.clout=cl(G.clout+ri(3,7),0,100);
+      done('💰 一包银子递过去，六局的人笑着把门让开了。');break;
+    case 'cb_spy':
+      spend(6);gain('learn',ri(2,4),240);G.clout=cl(G.clout+ri(2,5),0,100);
+      done('👂 六局的消息传得快，你只听了一半，就明白了一半。');break;
+    case 'cb_ally':
+      spend(7);gain('charm',ri(3,6),240);G.clout=cl(G.clout+ri(2,5),0,100);
+      done('🤝 你赏了宫人一包糖，她往后见了你，头低得更真了些。');break;
+    case 'pg_flower':
+      spend(4);gain('charm',ri(3,6),240);
+      done('🌸 你在牡丹丛边站了一会儿，风把香送进衣袖里。');break;
+    case 'pg_dew':
+      spend(6);G.herb+=ri(1,2);gain('charm',2,240);
+      if(ri(1,100)<=12){
+        G.treasure.push({n:'花下拾到的旧耳坠',v:110});
+        addLog('💎 花根下埋着半只旧耳坠，像是谁丢了很多年。','gold');
+      }
+      done('💧 天没亮你就蹲在花下，用瓷瓶接了一小口露水。');break;
+    case 'pg_swing':
+      G.sp=cl(G.sp+10,0,100);gain('charm',ri(2,4),240);
+      done('🎋 秋千荡起来，'+(G.sex==='m'?'衣角':'裙角')+'扫过花枝，你笑出声又赶紧收住。');break;
+    case 'pg_eaves':
+      spend(5);gain('learn',ri(2,4),240);
+      if(ri(1,100)<=75){
+        G.clout=cl(G.clout+ri(2,6),0,100);
+        done('👂 花墙后有人低声说话，你把那个名字记在了心里。');
+      }else{
+        G.clout=cl(G.clout-ri(3,8),0,100);
+        done('👂 你听得太入神，被巡人撞见，只好说是来折花的。');
+      }break;
+    case 'pm_pulse':
+      spend(3);G.hp=cl(G.hp+ri(8,15),0,100);
+      done('💊 太医隔着帕子搭脉，问睡得如何，你答得含糊。');break;
+    case 'pm_herb':
+      if(G.money<20){toast('银两不足。');return;}
+      G.money-=20;G.herb+=ri(2,4);
+      done('🌿 司药按证取药，纸包上写了三味，其余的不肯多说。');break;
+    case 'pm_learn':
+      spend(6);gain('learn',ri(3,6),240);G.herb+=1;
+      done('📖 你把三味药的性子背了下来，苦味在舌尖绕了很久。');break;
+    case 'pt_sutra':
+      spend(8);gain('learn',ri(4,7),240);gain('exp',ri(3,6),300);
+      if(ri(1,100)<=10){
+        gain('learn',ri(6,10),240);
+        addLog('📜 经卷夹层里滑出一张旧纸，只写着一行没头没尾的话。','gold');
+      }
+      done('📿 一卷经抄到落款，殿外的钟正好响了一声。');break;
+    case 'pt_incense':
+      spend(4);G.clout=cl(G.clout+ri(2,5),0,100);
+      done('🕯 你上了一炷香，没求什么，只把心里那个名字念了一遍。');break;
+    case 'pt_talk':
+      spend(5);gain('charm',ri(2,5),240);gain('learn',ri(2,4),240);
+      done('🍵 老太妃说了半日旧事，末了一句是：别信眼前的热闹。');break;
+    case 'pc_bribe':
+      coldOut(); return;
+    case 'pc_endure':
+      if(ri(1,100)<=15){
+        G.treasure.push({n:'墙缝里的半只玉镯',v:90});
+        addLog('💎 你从墙缝里摸出半只玉镯，断口很旧。','gold');
+      }
+      coldStay(); return;
+    case 'pc_wait':
+      G.sp=cl(G.sp+12,0,100);G.hp=cl(G.hp-2,1,100);
+      done('🌙 又一天过去，墙头的草比昨日高了一点。');break;
+    case 'jh_fight':
+      jhFight(); return;
+    case 'jh_ally':
+      spend(8); gain('charm',ri(3,6),240); G.clout=cl(G.clout+ri(1,4),0,100);
+      done('🍶 你在破庙里与几个江湖人分了一坛酒，谁也没问谁的来路。');break;
+    case 'jh_challenge':
+      jhChallenge(); return;
+    case 'dao':
+      spend(10);gain('exp',ri(11,18),300);gain('ling',ri(4,9),200);tryMeet('guan');
+      done('☯ 玄真讲了半日清静，你心里落下一片空明。');break;
+    case 'dan':
+      spend(14);
+      if(G.lingzhi>0){
+        G.lingzhi--;G.pill=(G.pill||0)+1;
+        gain('exp',ri(22,34),300);gain('ling',ri(8,14),200);G.hp=cl(G.hp+ri(8,15),0,100);
+        done('🔥 灵植入炉，丹成时炉火一跳，满室都是清苦的香。');
+      }else{
+        G.herb=Math.max(0,G.herb-2);G.pill=(G.pill||0)+1;
+        gain('exp',ri(14,22),300);gain('ling',ri(5,10),200);G.hp=cl(G.hp+ri(5,10),0,100);
+        done('🔥 丹成时炉火一跳，满室都是暖香。');
+      }break;
+    case 'root':
+      testRoot();return;
+    case 'seed':
+      G.money-=60;G.seeds+=3;
+      done('🌱 你在摊前挑了三枚灵植种子，卖种子的老人多看了你一眼。');break;
+    case 'sellherb':
+      var hg=G.herb*9;G.money+=hg;G.herb=0;
+      done('🌿 一筐草药换了'+hg+'两，药铺掌柜称得很仔细。');break;
+    case 'auction':
+      var sum=0,nm=G.treasure.length;
+      for(var ti=0;ti<G.treasure.length;ti++)sum+=G.treasure[ti].v;
+      G.treasure=[];G.money+=sum;
+      done('🏺 你把'+nm+'件旧物送上拍卖台，落槌声里得了'+sum+'两。');break;
+    case 'haggle':
+      spend(4);G.money-=40;
+      if(ri(1,100)<=45){
+        var tt=pk(TREASURE_POOL);
+        G.treasure.push({n:tt.n,v:tt.v});
+        addLog('🔍 你从摊子底下摸出一'+tt.n+'，摊主脸色变了又变。','gold');
+        done('🔍 四十两买了个不起眼的旧物，你笑而不语。');
+      }else{
+        done('🔍 翻了半天，摊子上尽是些唬人的假货。');
+      }break;
+    case 'inquiry':
+      spend(6);gain('learn',ri(2,4),240);G.money+=ri(5,20);
+      done('👂 你听明白了：城南收草药，城北收旧器，赶早不如赶巧。');break;
+    case 'acc':
+      G.money-=220;
+      var ap=[{n:'温玉小佩',k:'charm',v:8},{n:'旧铜剑穗',k:'sword',v:7},
+              {n:'残页书签',k:'learn',v:9},{n:'青瓷小炉',k:'exp',v:12},
+              {n:'素银镯',k:'charm',v:6},{n:'打磨过的灵珠',k:'ling',v:10}];
+      var aa=pk(ap);
+      G.acc.push(aa);
+      gain(aa.k,aa.v,999);
+      done('📿 你从旧货堆里挑出'+aa.n+'，佩在身上，'+({charm:'风仪',sword:'武艺',learn:'文墨',exp:'修为',ling:'灵力'}[aa.k])+'涨了'+aa.v+'。');break;
+    case 'night':
+      nightEgg(); return;
+    default: break;
+  }
+  elemChance(id);
+  tryMeet(G.page);
+}
+
+/* ================= 黑化值 ================= */
+function npcDark(id){return (G.ndark&&G.ndark[id])||0;}
+function npcDarkMult(id){
+  var p=(NPCS[id]&&NPCS[id].pers)||'';
+  return /病娇|疯批|狂气|地雷|暴躁/.test(p)?2:1;
+}
+function addNpcDark(id,v){
+  if(!G.ndark)G.ndark={};
+  if(!G.flags)G.flags={};
+  if(!NPCS[id]||NPCS[id].nr)return;
+  G.ndark[id]=cl((G.ndark[id]||0)+v,0,100);
+  if(G.ndark[id]>=100){
+    if(!G.flags.npcDarkPending){
+      G.flags.npcDarkPending=id;
+      addLog('🖤 '+NPCS[id].name+'的眼神彻底沉了下去。','bd');
+    }
+  }else if(G.flags.npcDarkPending===id){
+    delete G.flags.npcDarkPending;
+  }
+}
+function darkestNpc(){
+  if(!G.ndark)return null;
+  var best=null,bv=54;
+  for(var id in G.ndark){
+    if(!G.met[id]||!NPCS[id]||NPCS[id].nr||NPCS[id].follow)continue;
+    if(G.ndark[id]>bv){bv=G.ndark[id];best=id;}
+  }
+  return best;
+}
+function npcDarkEnd(id){
+  if(G.ended)return;
+  G.flags.npcDark=id;
+  endGame();
+}
+function evNpcDark(id){
+  if(!id||!NPCS[id])return;
+  var n=NPCS[id],he=n.g==='m'?'他':(n.g==='f'?'她':'他');
+  openModal('🖤 '+n.name,'<div class="story-text">'+
+    '<p>'+n.name+'站在门外，不知道站了多久。'+he+'手里攥着一样东西，攥得指节发白。</p>'+
+    '<p class="secret">「你身边人太多了。」'+he+'说，「我不喜欢。」</p>'+
+    '<p class="tiny">黑化 '+npcDark(id)+' / 100</p></div>'+
+    '<div class="pair-row"><button class="buy primary" onclick="darkSoothe(\''+id+'\')">把话说软</button>'+
+    '<button class="buy" onclick="darkPush(\''+id+'\')">把界限划清</button></div>');
+  addLog('🖤 '+n.name+'最近看你的眼神，越来越不对。','bd');
+}
+function darkSoothe(id){
+  G.npcs[id]=cl((G.npcs[id]||0)+6,0,100);
+  addNpcDark(id,-ri(10,18));
+  addLog('🖤 你把语气放软，'+NPCS[id].name+'攥着的手松了一点。','pink');
+  closeModal();toast('暂时安抚住了');render();
+}
+function darkPush(id){
+  addNpcDark(id,ri(6,12));
+  G.npcs[id]=cl((G.npcs[id]||0)-ri(2,5),0,100);
+  addLog('🖤 你把话说得很清楚，'+NPCS[id].name+'脸上的笑一点点收了回去。','bd');
+  closeModal();toast('界限划清了');render();
+}
+/* ================= 相遇与情缘 ================= */
+function tryMeet(place){
+  var ids=NPC_IDS.filter(function(k){return NPCS[k].place===place;});
+  if(!ids.length)return;
+  var id=ids[0];
+  if(G.met[id])return;
+  if(ri(1,100)>38)return;
+  G.met[id]=true;
+  var n=NPCS[id];
+  if(!G.ndark)G.ndark={};
+  if(/病娇|疯批/.test(n.pers||''))G.ndark[id]=ri(10,18);
+  else if(/狂气|地雷|暴躁/.test(n.pers||''))G.ndark[id]=ri(4,9);
+  addLog(n.ic+' 你在'+PLACES[place].name+'遇见了'+n.name+'——'+n.tag+'。','gd2');
+  toast('遇见 '+n.name);
+  if(G.page==='people')render();
+}
+function peopleActs(){
+  var out=[];
+  var ids=Object.keys(NPCS);
+  for(var i=0;i<ids.length;i++){
+    var id=ids[i], n=NPCS[id];
+    if(!G.met[id])continue;
+    if(n.follow){
+      out.push({id:'none',ic:n.ic,t1:n.name+'（随从）',t2:n.tag,t3:'已收编'});
+      continue;
+    }
+    var f=(G.npcs[id]||0);
+    if(n.nr){
+      out.push({id:'none',ic:n.ic,t1:n.name,t2:n.tag,t3:'宫中长辈，只可敬着'});
+      continue;
+    }
+    var mine=(G.married===id)||((G.wives||[]).indexOf(id)>=0);
+    var st=mine?'已结为夫妻':(f>=100?'情定':(f>=60?'心意已通':(f>=25?'可约':'尚浅')));
+    var dk=npcDark(id);
+    out.push({id:'date_'+id,ic:n.ic,t1:(dk>=70?'⚠ ':'')+'邀约 '+n.name,
+      t2:n.tag+'　性格 '+(n.pers||'难测')+'　好感 '+f+'/100'+(dk>0?'　黑化 '+dk+'/100':''),t3:st});
+    out.push({id:'gift_'+id,ic:'🎁',t1:'赠礼 '+n.name,t2:'银两-60，好感+9',t3:'银两-60'});
+    var canWed=(f>=100&&!mine&&(G.sex==='m'?(G.wives||[]).length<4:!G.married));
+    if(canWed){
+      out.push({id:'wed_'+id,ic:'🏮',t1:(G.sex==='m'?'娶 '+n.name+' 为妻':'与 '+n.name+' 成婚'),
+        t2:'红烛高张，从此两姓一家',t3:'银两-800',
+        cond:function(){return G.money>=800;}});
+    }
+  }
+  if(!out.length)out.push({id:'none',ic:'🌫',t1:'尚无相识之人',t2:'去茶楼、风雅楼等处走走，或许会遇见谁',t3:''});
+  return out;
+}
+/* 婚礼与洞房：写意留白，不作露骨描摹 */
+function wedWho(id){
+  id=id.replace('wed_','');
+  if(!NPCS[id])return;
+  if(G.money<800){toast('银两不足。');return;}
+  if((G.npcs[id]||0)<100){toast('情分未到，不可强求。');return;}
+  if(!G.wives)G.wives=[];
+  var male=(G.sex==='m');
+  if(male){
+    if(G.wives.indexOf(id)>=0){toast('她已是你的妻。');return;}
+    if(G.wives.length>=4){toast('院里再住不下更多人了。');return;}
+  }else if(G.married){toast('你已有家室。');return;}
+  G.money-=800;
+  if(male)G.wives.push(id); else G.married=id;
+  if(!G.married)G.married=id;
+  if(G.lovers.indexOf(id)<0)G.lovers.push(id);
+  if(!G.ndark)G.ndark={};
+  G.ndark[id]=0;
+  if(G.flags.npcDarkPending===id)delete G.flags.npcDarkPending;
+  var _oth=G.lovers.filter(function(x){return x!==id&&NPCS[x];});
+  for(var _oi=0;_oi<_oth.length;_oi++)addNpcDark(_oth[_oi],ri(6,12)*npcDarkMult(_oth[_oi]));
+  var rank=male?G.wives.length:1;
+  addLog(male?'🏮 红烛又起，'+NPCS[id].name+'成了你院里的第'+rank+'位娘子。'
+             :'🏮 红烛高张，你与'+NPCS[id].name+'拜了天地，从此两姓一家。','pink');
+  var n=NPCS[id];
+  var t='<div class="story-panel"><div class="story-title">'+n.name+'</div><div class="story-text">'+
+    '<p>红烛烧到一半，窗纸被雨声敲得发软。</p>'+
+    '<p>'+n.name+'坐在灯下，指尖绕着衣角，谁也没有先开口。</p>'+
+    '<p>「往后的日子，还长。」你听见自己这样说。</p>'+
+    '<p>对方笑了一下，抬手把灯拨暗——</p>'+
+    '<p class="secret">后来的事，只有窗外的雨知道。</p>'+
+    '<p class="tiny">洞房花烛，此处留白。</p>'+
+    '</div></div>';
+  openModal(male?'娶 妻':'结 为 夫 妻',t);
+  render();
+}
+
+/* ================= 十八岁强制相亲 ================= */
+var _cands=[];
+function forceMatch(){
+  if(!G||G.ended)return;
+  if(G.career&&G.career!=='folk')return;
+  if(G.lovers.length>0)return;
+  if(G.flags&&G.flags.pending)return;
+  if(G.vow){
+    if(G.vowPaid)return;
+    if(G.money>=10000){
+      G.money-=10000;G.vowPaid=true;
+      addLog('💰 你把一万两推过去，族老数了三遍，把庚帖收回了袖子。','gold');
+      toast('万金买了个清静');
+      render();return;
+    }
+    addLog('🏮 族老又来了：「不嫁不娶，老了谁管你？」你把话咽了回去。','pink');
+    toast('长辈又在催婚');
+    render();return;
+  }
+  var want=G.sex==='m'?'f':'m';
+  var pool=MATCH_NPCS.filter(function(x){return x.g===want;});
+  pool=pool.slice().sort(function(){return Math.random()-0.5;});
+  _cands=pool.slice(0,3);
+  G.flags.pending=true;
+  var child=G.sex==='m'?'他':'她';
+  var intro;
+  if(G.mode==='self'){
+    intro='十八岁了，仍没个着落。族中长辈堵在门口，媒人把庚帖拍在桌上——这桩亲事，由不得你再拖。';
+  }else{
+    intro='孩子十八了，仍无人家。你以'+(G.mode==='mom'?'母亲':'父亲')+'的身份，替'+child+'应下了这桩亲事。此后山高水远，便是'+child+'自己的路了。';
+  }
+  var h='<div class="story-text"><p>'+intro+'</p>'+
+    '<p class="tiny">可从中择一人，也可一力推却——只是长辈不会就此罢休。若日后攒够万金，方能买个清静。</p></div>';
+  for(var i=0;i<_cands.length;i++){
+    var c=_cands[i];
+    h+='<button class="buy" style="width:100%;text-align:left;margin-top:8px" onclick="acceptMatch('+i+')">'+
+       c.ic+'　<b>'+c.name+'</b>　'+c.tag+'</button>';
+  }
+  h+='<button class="buy" style="width:100%;margin-top:10px;border-color:#8a5a6a;color:#e0a0b0" onclick="refuseMatch()">这一桩，我不应</button>';
+  openModal('强 制 相 亲',h);
+  addLog('🏮 媒人登门，庚帖已下——十八岁，该成家了。','pink');
+  toast('长辈替你定下了亲事');
+  render();
+}
+function refuseMatch(){
+  G.flags.pending=false;_cands=[];
+  closeModal();
+  G.vow=true;
+  addLog('🕯 你把庚帖推了回去，说：这一桩我不应。','pink');
+  toast('长辈不会就此罢休');
+  render();
+}
+function acceptMatch(i){
+  var c=_cands[i];
+  if(!c)return;
+  var id=c.id;
+  G.met[id]=true;
+  G.npcs[id]=55;
+  if(!NPCS[id])NPCS[id]={name:c.name,g:c.g,tag:c.tag,place:c.place,ic:c.ic||'🏮'};
+  if(G.lovers.indexOf(id)<0)G.lovers.push(id);
+  G.flags.pending=false;
+  _cands=[];
+  addLog('🏮 花轿抬进门，'+c.name+'成了这家的'+(G.sex==='m'?'媳妇':'夫婿')+'。','pink');
+  document.getElementById('overlay').classList.remove('show');
+  toast('亲事已定：'+c.name);
+  render();
+}
+function dateWho(id){
+  id=id.replace('date_','');
+  var n=NPCS[id];
+  var f=G.npcs[id]||0;
+  if(f<25){toast('交情尚浅，贸然相邀不妥。');return;}
+  if(G.sp<14){toast('精力不足，今日不宜赴约。');return;}
+  spend(14);
+  f=cl(f+ri(8,14),0,100);
+  G.npcs[id]=f;
+  addNpcDark(id,-1);
+  var _oth=G.lovers.filter(function(x){return x!==id&&NPCS[x];});
+  for(var _oi=0;_oi<_oth.length;_oi++)addNpcDark(_oth[_oi],ri(1,3)*npcDarkMult(_oth[_oi]));
+  gain('charm',ri(2,4),240);
+  var tier=f>=100?3:(f>=70?2:(f>=45?1:0));
+  openDateScene(id,tier);
+  G.actionsToday++;
+  if(f>=60&&G.lovers.indexOf(id)<0){G.lovers.push(id);}
+  render();
+}
+function giftWho(id){
+  id=id.replace('gift_','');
+  if(G.money<60){toast('银两不足。');return;}
+  G.money-=60;
+  G.npcs[id]=cl((G.npcs[id]||0)+9,0,100);
+  addNpcDark(id,-ri(1,3));
+  addLog('🎁 你送了'+NPCS[id].name+'一件小物，对方收下时指尖顿了顿。','pink');
+  render();
+}
+var DATE_TEXT={
+  shen:[
+    '茶楼三楼，他把茶盏推到你面前，指节停在半空。<br>「江南的雨，你怕不怕？」<br>你摇头，他便笑了。',
+    '他讲起南边的货船，讲到一半忽然停下，只看着你。<br>「这些话，我没跟别人说过。」<br>楼下的说书声正好压过你的心跳。',
+    '他解开袖口一枚旧玉，塞进你手心。<br>「这不是商人的东西。」<br>你还没问，他已经起身，衣角擦过你的手腕，很轻。',
+    '他卸了那身商贾的皮，眉宇间竟有几分庙堂的冷。<br>「若有一天我换个身份来见你——你还敢不敢这样看着我？」<br>烛火晃了晃，谁也没退开。'
+  ],
+  xiao:[
+    '城墙根下，他把外袍解下来罩在你肩上。<br>「夜里凉。」<br>衣裳上有铁与草的味道，你忽然不敢抬头。',
+    '他说起北边的事，说到一半就哑了，最后只道：<br>「我这条命，一直是自己的。」<br>话落，他把剑往你这边挪了半寸。',
+    '他替你挡了一刀，手臂划开一道口子。<br>你替他上药时，他一直看着你，看得你手都乱了。',
+    '「我这辈子不娶。」他说得很平静，却伸手把你被风吹乱的头发别到耳后。<br>「除非有人愿意跟着我走。」'
+  ],
+  xuan:[
+    '道观后山，雾从脚边漫上来。<br>「你根骨好，可惜心不静。」<br>他说这话时，指尖隔着衣袖按住你的脉门。',
+    '他教你辨药，指尖在叶脉上停了很久，才想起该收回手。<br>「草木不骗人。」他顿了顿，「人会。」',
+    '炉火映着他的脸，竟显出几分少年气。<br>「我在山上等你许多年了。」<br>你问等谁，他笑而不答。',
+    '他忽然握住你的手腕，把你的掌心贴在自己胸口。<br>「你听听，这里并不清静。」<br>雾散了一半，你听见的不是道心，是心跳。'
+  ],
+  wanyue:[
+    '风雅楼最里的一间，她替你调了一根弦。<br>「这根音太低，要往上抬一点。」<br>她的手覆在你手背上，教你用力。',
+    '她问你今日去过哪里，听你说完，才慢慢道：<br>「我在这里等的，多半是些不回头的人。」<br>说完她自己也怔了一下。',
+    '一曲罢，她抬头看你，眼里有水色。<br>「你听得出我弹错的地方吗？」<br>你听出来了，却没舍得说。',
+    '她靠得很近，几乎贴上你的额。<br>「我这一生只替一个人弹琴。」<br>琴音断在半途，谁都没有去接。'
+  ],
+  qingwu:[
+    '暗阁后巷，她替你擦掉脸上的血。<br>「你不该来这种地方。」<br>纱布绕上第三圈时，她的呼吸乱了。',
+    '她把一枚短刃放在你手里，只说：<br>「夜里走路，手里别空着。」<br>转身时又补一句，「也别仗着它逞强。」',
+    '她把匕首塞进你手里，又从你身后环过来，教你握的位置。<br>「杀人的时候，别闭眼。」<br>她的下巴抵着你肩背。',
+    '「我这条命值不了几个钱。」她说得很轻，却把你的手按在自己心口。<br>「你要的话，就拿去。」'
+  ],
+  baiheng:[
+    '纱帐后她唱完最后一句，抬手替你续了茶。<br>「公子/姑娘是第一个不催我喝酒的人。」',
+    '她问起你院里的事，听到老槐树时笑了笑：<br>「我很久没见一棵会开花的树了。」',
+    '她把一支旧钗放在你掌心。<br>「这个不卖。」<br>指尖在你手心停了一会儿才收回。',
+    '灯影摇红，她忽然吹熄了半盏灯。<br>「剩下的这半盏，只给一个人留。」<br>你听见衣料摩擦的轻响。'
+  ],
+  yelan:[
+    '灯下的人看不清面目，只递来一杯温酒。<br>「二十岁这年，你来了。」',
+    '他替你把窗掩上，说夜风伤人，声音低得几乎听不见。<br>你回头时，他已经在看你。',
+    '一只手落在你后颈，很稳，也很凉。<br>「别回头看。」',
+    '灯灭之后，他还在。<br>你听见自己的呼吸，也听见他的。<br>「这一局，我不打算让。」'
+  ],
+  hanlie:[
+    '宫墙下他按着刀站得笔直，话少得像块石头。<br>你走过时，他往阴影里让了半步。',
+    '他忽然开口：「这条道夜里不安稳。」<br>此后每晚，他都比别人早到一刻。',
+    '他把刀解下来放在地上，像是卸了半条命。<br>「在你跟前，我不想带着这个。」',
+    '他伸手把你拢进墙的阴影里，气息乱得不像个侍卫。<br>「我这条命是宫里的。」他顿了顿，「心不是。」'
+  ],
+  shenminglan:[
+    '太医隔着帕子搭脉，问一句答一句，眼睛始终没敢抬。',
+    '他留下一个小小的药包，纸上写着「夜里咳就用」。<br>那字写得极端正。',
+    '他替你收了袖口，指尖碰到手腕，立刻像被烫了一样缩回去。<br>「失礼。」',
+    '他忽然抬头看你，看了很久。<br>「医者不该有的心思，我有了。」<br>药炉的火噼啪一声。'
+  ],
+  liucaier:[
+    '她笑着分你半块点心，话说得又甜又软。<br>你总觉得那笑后头还藏着什么。',
+    '她凑近替你理了理衣领，声音轻飘飘的：<br>「这宫里，只有我是真心待你。」',
+    '她忽然抓住你的手腕，指甲陷进去一点。<br>「你要是也去争那个位子——我可不依。」',
+    '她把脸埋在你肩头，笑得发抖。<br>「要么你就一直赢，要么我们就一起完。」<br>你分不清那是撒娇还是威胁。'
+  ]
+};
+function openDateScene(id,tier){
+  var arr=DATE_TEXT[id]||[
+    '你们隔着一张桌子坐着，茶换了三回，话仍不多。',
+    '临走时对方多送了半条街，什么也没说。',
+    '夜里落雨，对方起身关窗，顺手替你披了件外衣。',
+    '有一晚对方握住你的手，很久没有松开，指尖是温的。'
+  ];
+  var txt=arr[Math.min(tier,arr.length-1)];
+  txt=txt.split('公子/姑娘').join(G.sex==='m'?'公子':'姑娘');
+  var html='<div class="story-panel"><div class="story-title">'+NPCS[id].name+'</div>'+
+    '<div class="story-text">'+txt+'</div></div>';
+  if(tier>=2)html+='<div class="tiny" style="margin-top:8px">好感 '+G.npcs[id]+' / 100</div>';
+  var _dk=npcDark(id);
+  if(_dk>=40)html+='<div class="tiny" style="margin-top:4px">黑化 '+_dk+' / 100</div>';
+  openModal('相 见',html);
+}
+
+/* ================= 20 岁彩蛋 ================= */
+function nightEgg(){
+  if(!G.egg){toast('今夜无人。');return;}
+  if(G.flags.night1){
+    openModal('夜半','<div class="story-text"><p>灯已熄了，桌上只剩一只空杯。</p><p class="secret">他说：来日方长。</p></div>');
+    return;
+  }
+  G.flags.night1=true;
+  G.met.yelan=true; G.npcs.yelan=45;
+  spend(8);
+  addLog('🪔 夜半有人叩门，灯下站着一个看不清脸的人。','secret');
+  var t='<div class="story-text">';
+  t+='<p>三更，院门响了三下，不轻不重，像早知道你还醒着。</p>';
+  t+='<p>灯芯被风压低，来客的轮廓在光里浮起又沉下。</p>';
+  t+='<p class="secret">「二十岁。」他念了一遍你的年纪，「我等这一天，等了很久。」</p>';
+  t+='<p>他伸手，指尖从你鬓角掠过，把一缕散下来的头发别到耳后，动作慢得像在写一个字。</p>';
+  t+='<p>「从今夜起，你若要修仙，我不拦；你若要游戏人间——」</p>';
+  t+='<p class="secret">他顿了很久，声音低下去：「我陪你玩到最后一局。」</p>';
+  t+='<p>灯灭了。你只记得掌心被握了一下，很轻，却烫。</p>';
+  t+='</div>';
+  openModal('🕯 夜 阑','<div class="story-panel"><div class="story-title">彩蛋 · 二十岁</div>'+t+'</div>');
+  G.lovers.push('yelan');
+  render();
+}
+
+/* ================= 路上冲突 ================= */
+/* 灵宠吃得饱，才有力气替你挡一下 */
+function petBonus(){
+  var b=0;
+  for(var i=0;i<G.pets.length;i++){ if((G.pets[i].full==null?100:G.pets[i].full)>=50)b+=6; }
+  return b;
+}
+function battlePower(){return G.sword*2+Math.floor(G.exp/2)+Math.floor(G.charm/4)+petBonus()+(G.guard?14:0);}
+function maybeConflict(){
+  if(!G||G.ended)return;
+  if(G.flags.pending)return;
+  if(document.getElementById('overlay').classList.contains('show'))return;
+  if(G.totalDays-(G.flags.evCd||-99)<18)return;
+  if(ri(1,100)>38)return;
+  G.flags.evCd=G.totalDays;
+  var power=battlePower();
+  if(ri(1,2)===1)banditEvent(power); else dudeEvent(power);
+}
+function banditEvent(power){
+  var s=ri(60,230);
+  var who=pk(['一伙蒙面人','三个带刀的汉子','一个独眼的强盗']);
+  if(power<s){
+    var loss=Math.floor(G.money*ri(15,28)/100);
+    G.money-=loss;G.hp=cl(G.hp-ri(5,15),1,100);
+    addLog('🩸 你在山道上遇劫，被'+who+'抢去'+loss+'两，还挨了两下。','bd');
+    if(G.totalDays<=360){
+      G.robFail=(G.robFail||0)+1;
+      if(G.robFail>=3){
+        addLog('🩸 这是第三次。那伙人认得了你，也懒得再问。','bd');
+        deathEnd('bandit');
+        return;
+      }
+      if(G.robFail===2)addLog('🩸 又是那伙人。他们看你的眼神，像在记一张脸。','bd');
+    }
+    openModal('山 道 遇 劫','<div class="story-text"><p>'+who+'横在路中，刀背磕着石头。</p>'+
+      '<p>你掂了掂自己的斤两，终究没能挣开。</p>'+
+      '<p class="em">你被抢去'+loss+'两，气血也亏了些。</p>'+
+      '<p class="tiny">武艺与修为长进后，可再来讨回。'+
+      (G.totalDays<=360&&G.robFail?'<br>这条山道，你已经栽了'+G.robFail+'回。':'')+'</p></div>');
+    render();return;
+  }
+  openModal('山 道 遇 劫','<div class="story-text">'+
+    '<p>'+who+'横在路中，刀背磕着石头，要你留下买路钱。</p>'+
+    '<p>你缓缓抽出兵器。对方看清你的手，往后退了半步。</p>'+
+    '<p class="tiny">你的战力 '+power+'　对方 '+s+'</p></div>'+
+    '<div class="pair-row"><button class="buy primary" onclick="banditFight()">强抢回去</button>'+
+    '<button class="buy" onclick="banditTake()">把人留下</button></div>'+
+    '<button class="buy" style="width:100%" onclick="banditPeace()">劝和，各走各的路</button>');
+  render();
+}
+function banditFight(){
+  var cash=ri(90,280);
+  G.money+=cash;
+  if(ri(1,100)<=40){var t=pk(TREASURE_POOL);G.treasure.push({n:t.n,v:t.v});}
+  G.hp=cl(G.hp-ri(2,9),1,100);gain('sword',ri(2,5),240);
+  addLog('🗡 你反手夺了刀，反倒从强盗身上搜出'+cash+'两。','gold');
+  closeModal();toast('反抢成功');render();
+}
+function banditTake(){
+  G.followers=(G.followers||0)+1;
+  var fid='fu'+G.totalDays+'_'+ri(10,99);
+  NPCS[fid]={name:pk(['阿豹','黑七','老刀','石三','独眼陈']),g:'?',
+    tag:'被你收编的散匪，如今替你看门',place:'home',ic:'🗡',follow:true};
+  G.met[fid]=true;
+  addLog('🗡 你没杀他，只把刀收了：「往后替我看门。」','gd2');
+  closeModal();toast('收编了一名随从');render();
+}
+function banditPeace(){
+  G.charm=cl(G.charm+ri(3,6),0,240);gain('exp',ri(2,4),300);
+  G.money+=ri(0,40);
+  addLog('🍵 你收了对方的刀，请他喝了碗酒，各走各的路。','gd2');
+  closeModal();toast('化干戈为玉帛');render();
+}
+function dudeEvent(power){
+  var s=ri(45,190);
+  var nm=pk(['一位锦袍公子','骑马的小侯爷','油头粉面的少爷']);
+  if(power<s){
+    var loss=ri(20,80);
+    G.money=Math.max(0,G.money-loss);G.hp=cl(G.hp-ri(2,8),1,100);
+    addLog('😖 '+nm+'当众折辱你，你忍着没还手，银子也被讹去'+loss+'两。','bd');
+    openModal('当 街 受 辱','<div class="story-text"><p>'+nm+'的马蹄溅了你一身泥，还要你当街赔罪。</p>'+
+      '<p>围观的人很多，没有一个开口。</p>'+
+      '<p class="em">你忍下了这口气，银子也少了'+loss+'两。</p>'+
+      '<p class="tiny">等你的武艺压得过他，再来打这脸。</p></div>');
+    render();return;
+  }
+  openModal('当 街 相 逢','<div class="story-text">'+
+    '<p>'+nm+'的马蹄溅了你一身泥，还要你当街赔罪。</p>'+
+    '<p>围观的人很多。你往前走了一步。</p>'+
+    '<p class="tiny">你的战力 '+power+'　对方 '+s+'</p></div>'+
+    '<div class="pair-row"><button class="buy primary" onclick="dudeHit()">当场打脸</button>'+
+    '<button class="buy" onclick="dudeBear()">算了，忍下</button></div>');
+  render();
+}
+function dudeHit(){
+  var cash=ri(50,150);
+  G.money+=cash;G.charm=cl(G.charm+ri(3,6),0,240);gain('exp',ri(3,6),300);
+  G.hp=cl(G.hp-ri(0,5),1,100);
+  addLog('👊 你一掌拍翻了他的马鞍，围观的人笑出了声，他还得赔你'+cash+'两。','gold');
+  closeModal();toast('当众打脸，痛快');render();
+}
+function dudeBear(){
+  gain('exp',ri(2,5),300);
+  addLog('😶 你低头让开了路，心里把这一笔记下了。','');
+  closeModal();toast('暂且忍下');render();
+}
+
+/* ================= 秘境探幽：一层层往下，见好就收 ================= */
+var _ruin=null;
+function startRuin(){
+  _ruin={d:0,money:0,herb:0,exp:0,ling:0,treasure:[],hurt:0};
+  ruinLayer();
+}
+function ruinLayer(){
+  if(!_ruin)return;
+  var cost=4+(_ruin.d+1)*2;
+  if(G.hp<=12){ ruinStop('气血见底，再走下去要出事。'); return; }
+  if(G.sp<cost){ ruinStop('精力见底，你扶着石壁退了出来。'); return; }
+  _ruin.d++;
+  var d=_ruin.d, r=ri(1,100), msg='', gained='';
+  if(r<=10+Math.min(25,d*4)){
+    var s=45+d*16, pw=battlePower();
+    if(pw<s){
+      var dmg=ri(4,9)+d*2;
+      G.hp=cl(G.hp-dmg,1,100); _ruin.hurt+=dmg;
+      msg='岩缝里蹿出一头石甲兽，你侧身避过，肩头仍被划开一道口子。';
+      gained='气血 -'+dmg;
+    }else{
+      var ex=6+d*2; _ruin.exp+=ex;
+      msg='一头石甲兽扑来，被你按在石壁上，散成一地碎石。';
+      gained='修为 +'+ex;
+    }
+  }else if(r<=32){
+    var t=pk(TREASURE_POOL); _ruin.treasure.push(t);
+    msg='洞壁上嵌着一'+t.n+'，你抠下来，指腹被划了一道。';
+    gained='宝物 '+t.n;
+  }else if(r<=52){
+    var m=ri(20,45)+d*14; _ruin.money+=m;
+    msg='石缝里积着一层碎灵石，你一把一把收进袋里。';
+    gained='银两 +'+m;
+  }else if(r<=72){
+    var hb=ri(2,4)+d; _ruin.herb+=hb;
+    msg='阴湿处生着一丛药草，你连根拔起，泥还滴着水。';
+    gained='草药 +'+hb;
+  }else if(r<=88){
+    var ex2=ri(6,11)+d*2, li=ri(3,7)+d;
+    _ruin.exp+=ex2; _ruin.ling+=li;
+    msg='此处灵气比外头稠，你盘膝坐了一阵，耳里嗡嗡作响。';
+    gained='修为 +'+ex2+'　灵力 +'+li;
+  }else{
+    msg='这一层什么也没有，只有水声从更深处传上来。';
+    gained='空手';
+  }
+  G.sp=cl(G.sp-cost,0,100);
+  var loot='银两 '+_ruin.money+'　草药 '+_ruin.herb+'　修为 '+_ruin.exp+'　灵力 '+_ruin.ling+'　宝物 '+_ruin.treasure.length+' 件';
+  var next=4+(d+1)*2;
+  var h='<div class="story-text">'+
+    '<p class="hl">第 '+d+' 层</p>'+
+    '<p>'+msg+'</p>'+
+    '<p class="tiny">'+gained+'　精力 -'+cost+'</p>'+
+    '<p class="tiny">已得：'+loot+'</p>'+
+    '<p class="tiny">你的战力 '+battlePower()+(petBonus()?'（灵宠助战 +'+petBonus()+'）':'')+'</p></div>'+
+    '<div class="pair-row"><button class="buy primary" onclick="ruinLayer()">再深一层（精力 -'+next+'）</button>'+
+    '<button class="buy" onclick="ruinStop()">见好就收</button></div>';
+  openModal('秘 境 · 探 幽',h);
+  render();
+}
+function ruinStop(why){
+  if(!_ruin)return;
+  G.money+=_ruin.money; G.herb+=_ruin.herb;
+  gain('exp',_ruin.exp,300); gain('ling',_ruin.ling,200);
+  for(var i=0;i<_ruin.treasure.length;i++)G.treasure.push(_ruin.treasure[i]);
+  var loot='银两 '+_ruin.money+'、草药 '+_ruin.herb+'、修为 '+_ruin.exp+'、灵力 '+_ruin.ling+'、宝物 '+_ruin.treasure.length+' 件';
+  if(_ruin.d===0){
+    addLog('🕳 你在洞口站了一会儿，终究没有下去。','');
+  }else{
+    addLog('🕳 你从秘境退回地面，带出'+loot+'。','gold');
+    if(_ruin.hurt)addLog('🩸 这一趟伤得不轻，气血亏了'+_ruin.hurt+'。','bd');
+    G.actionsToday++;
+  }
+  _ruin=null;
+  closeModal();
+  if(why)toast(why);
+  render();
+  if(G.sp<10)setTimeout(forceSleep,600);
+}
+
+/* ================= 拜入仙门后：领宗门差事 ================= */
+function sectJob(){
+  if(!G.flags.sect){toast('你尚未拜入仙门。');return;}
+  if(G.sp<14){toast('精力不足，下山走不动。');return;}
+  if(G.totalDays-(G.flags.jobCd||-99)<20){toast('上一桩差事才交，山门还没派新的。');return;}
+  G.flags.jobCd=G.totalDays;
+  spend(14); G.actionsToday++;
+  var chance=45+Math.min(30,Math.floor(G.exp/12));
+  if(ri(1,100)<=chance){
+    var m=ri(80,160),e=ri(10,20),l=ri(5,10),gotPill=ri(1,100)<=35;
+    G.money+=m;gain('exp',e,300);gain('ling',l,200);
+    if(gotPill)G.pill=(G.pill||0)+1;
+    addLog('📜 你替'+G.flags.sect+'跑了一趟差事，回来时袋里有'+m+'两。','gd2');
+    openModal('宗 门 差 事','<div class="story-text">'+
+      '<p>差事不大：把一叠符纸送到山下的镇子，替山门换些香油钱。</p>'+
+      '<p>回来时天色擦黑，守门师兄验过令牌，扔给你一只钱袋。</p>'+
+      '<p class="hl">银两 +'+m+'　修为 +'+e+'　灵力 +'+l+(gotPill?'　丹药 +1':'')+'</p></div>'+
+      '<button class="buy primary" style="width:100%" onclick="closeModal();render()">收下</button>');
+  }else{
+    var dmg=ri(6,14);
+    G.hp=cl(G.hp-dmg,1,100);gain('exp',ri(4,9),300);
+    addLog('📜 差事办砸了，你在山道上滚了半身泥，回来挨了一顿训。','bd');
+    openModal('差 事 办 砸','<div class="story-text">'+
+      '<p>半路遇上山雨，符纸湿了大半。执事看了你一眼，什么也没说。</p>'+
+      '<p class="tiny">气血 -'+dmg+'，但你记住了这条山路。</p></div>'+
+      '<button class="buy" style="width:100%" onclick="closeModal();render()">退下</button>');
+  }
+  render();
+}
+
+/* ================= 命途：宫斗 / 江湖 ================= */
+var PAL_RANKS=['秀女','才人','贵人','嫔','妃','贵妃','皇后'];
+var JH_RANKS=['江湖散人','小有名气','一方豪杰','名动四方','武林副盟主','武林盟主'];
+
+function enterPalace(){
+  if(G.sex==='f'){
+    G.career='palace';G.cStage=0;G.clout=ri(8,16);G.role='concubine';G.page='pal_quarter';
+    addLog('🏯 你随采选的车马入了宫门，朱墙在身后合上。','pink');
+    openModal('入 宫','<div class="story-text">'+
+      '<p>宫门在身后合上，铜环响了一声，像把什么东西关住了。</p>'+
+      '<p>管事姑姑上下打量你：「进了这道门，命就不是自己的了。」</p>'+
+      '<p class="hl">你成了新入宫的秀女。</p></div>'+
+      '<button class="buy primary" style="width:100%" onclick="closeModal();render()">低头应下</button>');
+  }else{
+    openModal('投 效 王 庭','<div class="story-text">'+
+      '<p>王庭在招人。招兵的木牌下排着长队，内廷的偏门也开着。</p>'+
+      '<p>走哪一道门，往后就是哪一种命。</p></div>'+
+      '<div class="pair-row"><button class="buy primary" onclick="epGuard()">走正门，当带刀侍卫</button>'+
+      '<button class="buy" onclick="epEunuch()">进内廷当差</button></div>'+
+      '<button class="buy" style="width:100%" onclick="epArmy()">去边军，搏一个功名</button>');
+  }
+  render();
+}
+function epGuard(){
+  G.career='palace';G.cStage=0;G.role='guard';G.clout=ri(10,20);G.page='pal_quarter';
+  if(ri(1,100)<=25){
+    G.role='eunuch';
+    addLog('🏯 你被查出过错，押进内廷净了身。醒来时天还没亮。','bd');
+    openModal('内 廷','<div class="story-text"><p>醒来以后，你摸到腰侧裹着的白布，半天没说话。</p>'+
+      '<p>从今往后，你只能在内廷里挣一条路。</p><p class="tiny">身份：内侍</p></div>'+
+      '<button class="buy" style="width:100%" onclick="closeModal();render()">活下去</button>');
+  }else{
+    addLog('🏯 你佩上了腰刀，成了宫门前的带刀侍卫。','gd2');
+    openModal('带 刀 侍 卫','<div class="story-text"><p>刀是新的，鞘口还带着蜡。</p>'+
+      '<p>同伍的人拍你肩：「宫里的规矩，比刀还利。」</p></div>'+
+      '<button class="buy primary" style="width:100%" onclick="closeModal();render()">握紧刀柄</button>');
+  }
+  render();
+}
+function epEunuch(){
+  G.career='palace';G.cStage=0;G.role='eunuch';G.clout=ri(6,14);G.page='pal_quarter';
+  addLog('🏯 你进了内廷当差，从此只在宫墙里走路。','bd');
+  openModal('内 廷 当 差','<div class="story-text"><p>净身那日，你在偏房里躺了三天。</p>'+
+    '<p>再站起来时，你成了内廷里最不起眼的一个小太监。</p><p class="tiny">身份：内侍</p></div>'+
+    '<button class="buy primary" style="width:100%" onclick="closeModal();render()">把腰弯下去</button>');
+  render();
+}
+function epArmy(){
+  if(ri(1,100)<=30){
+    G.career='palace';G.role='prince';G.money+=1500;G.clout=ri(20,30);G.page='pal_quarter';
+    addLog('🏯 边军一战，你提着一颗首级回营，圣旨下来：封王。','gold');
+    openModal('封 王','<div class="story-text"><p>捷报传回京里，第二个月圣旨就到了。</p>'+
+      '<p>你穿着新裁的蟒袍，站在自己的王府门前，忽然不知道该先迈哪只脚。</p>'+
+      '<p class="hl">身份：亲王</p></div>'+
+      '<button class="buy primary" style="width:100%" onclick="closeModal();render()">跨进门槛</button>');
+  }else{
+    G.role='army';
+    gain('sword',ri(8,14),240);G.money+=ri(100,240);
+    addLog('🏯 你在边军熬了下来，身上多了两道疤。','');
+    openModal('边 军','<div class="story-text"><p>风沙刮了整整一个冬天，你学会了在马上睡觉。</p>'+
+      '<p class="tiny">武艺与银两都有长进，命途仍是人间。</p></div>'+
+      '<button class="buy" style="width:100%" onclick="closeModal();render()">继续走下去</button>');
+  }
+  render();
+}
+function enterJianghu(){
+  G.career='martial';G.cStage=0;G.clout=ri(4,10);G.role='wanderer';
+  addLog('🗡 你把院门锁上，背着剑走进了江湖。','gd2');
+  openModal('闯 荡 江 湖','<div class="story-text"><p>渡口的酒旗被风吹得歪斜，船家在喊客。</p>'+
+    '<p>你摸了摸剑柄，忽然觉得天大地大。</p><p class="tiny">命途：江湖</p></div>'+
+    '<button class="buy primary" style="width:100%" onclick="closeModal();render()">上船</button>');
+  render();
+}
+function plPlot(){
+  if(G.chill){toast('身在冷宫，先设法出去。');return;}
+  if(G.sp<12){toast('精力不足，落不了子。');return;}
+  spend(12);
+  var r=ri(1,100);
+  if(r<=58){
+    G.clout=cl(G.clout+ri(6,14),0,100);
+    if(G.cStage<6&&G.clout>=45&&ri(1,100)<=55){
+      G.cStage++;
+      addLog('🏯 风波过后，你晋为'+PAL_RANKS[G.cStage]+'。','pink');
+    }else addLog('🏯 你布的局收得干净，谁也没抓到把柄。','gd2');
+    toast('这一局，你在上风');
+  }else if(r<=85){
+    G.clout=cl(G.clout-ri(10,20),0,100);
+    addLog('🏯 你的局被人拆了，反过来成了别人的话柄。','bd');
+    toast('被人拆了台');
+  }else{
+    if(palaceDeathRisk(2))return;
+    G.chill=true;G.cStage=0;G.clout=0;
+    addLog('🏯 一纸旨意下来，你被挪进了冷宫。','bd');
+    toast('被打入冷宫');
+  }
+  G.actionsToday++;render();
+}
+function jhFight(){
+  if(G.sp<12){toast('精力不足，上不了台。');return;}
+  spend(12);
+  var s=ri(60,160);
+  if(battlePower()>=s){
+    G.clout=cl(G.clout+ri(6,12),0,100);gain('sword',ri(3,6),240);G.money+=ri(20,60);
+    addLog('🥊 擂台上一记横扫，对手摔下台去，满场叫好。','gd2');
+  }else{
+    G.hp=cl(G.hp-ri(4,10),1,100);G.clout=cl(G.clout+ri(1,4),0,100);
+    addLog('🥊 你被打下擂台，爬起来时满嘴是土，还是站直了。','bd');
+  }
+  G.actionsToday++;render();
+}
+/* 亲王纳妾 */
+var CONCUBINE_POOL=[
+  ['柳含烟','性子软，见人先低头'],['周小满','会管事，账算得极清'],
+  ['许清和','爱笑，爱吃甜'],['程素娘','话不多，针线极好'],
+  ['温阿蘅','爱听戏，也能唱两句'],['苏合','怯生生的，眼睛却很亮']
+];
+function plTakeWife(){
+  if(G.money<300){toast('银两不足。');return;}
+  if((G.wives||[]).length>=4){toast('王府里住不下更多人了。');return;}
+  var cand=CONCUBINE_POOL.filter(function(x){return !NPCS['qp_'+x[0]];});
+  if(!cand.length){toast('一时寻不到合适的人。');return;}
+  G.money-=300;
+  var pick=pk(cand);var id='qp_'+pick[0];
+  NPCS[id]={name:pick[0],g:'f',tag:pick[1],place:'cha',ic:'🏮'};
+  if(!G.wives)G.wives=[];
+  G.wives.push(id);
+  if(!G.married)G.married=id;
+  if(G.lovers.indexOf(id)<0)G.lovers.push(id);
+  addLog('🏮 王府里又添了一位'+pick[0]+'，媒人收了银子就走了。','pink');
+  openModal('纳 妾','<div class="story-text">'+
+    '<p>'+pick[0]+'低着头进来，手里攥着一方帕子。</p>'+
+    '<p>「妾身……给王爷请安。」</p>'+
+    '<p class="tiny">身份：亲王　妻室 '+G.wives.length+' 位</p></div>'+
+    '<button class="buy primary" style="width:100%" onclick="closeModal();render()">让她起来</button>');
+  render();
+}
+/* 女王养面首 */
+var MIANSHOU_POOL=[
+  ['沈砚秋','写得一手好字，话很少'],['陆云生','会吹笛，眼睛不老实'],
+  ['裴行之','生得极好，脾气也好'],['顾长离','会算账，也会说笑话'],
+  ['谢明川','骑马很快，笑起来像个少年'],['江砚白','会画眉，画得比谁都细']
+];
+function plTakeMale(){
+  if(G.money<200){toast('银两不足。');return;}
+  if((G.mianshou||[]).length>=4){toast('宫里住不下了。');return;}
+  var cand=MIANSHOU_POOL.filter(function(x){return !NPCS['mh_'+x[0]];});
+  if(!cand.length){toast('一时寻不到合适的人。');return;}
+  G.money-=200;
+  var pick=pk(cand);var id='mh_'+pick[0];
+  NPCS[id]={name:pick[0],g:'m',tag:pick[1],place:'cha',ic:'🕯'};
+  if(!G.mianshou)G.mianshou=[];
+  G.mianshou.push(id);
+  if(G.lovers.indexOf(id)<0)G.lovers.push(id);
+  addLog('🕯 偏殿添了一盏灯，'+pick[0]+'从此住了下来。','pink');
+  openModal('偏 殿','<div class="story-text">'+
+    '<p>'+pick[0]+'站在灯下，衣襟还带着夜里的凉气。</p>'+
+    '<p>「陛下。」他唤了一声，就没再说别的。</p>'+
+    '<p class="tiny">身份：女帝　面首 '+G.mianshou.length+' 人</p></div>'+
+    '<button class="buy primary" style="width:100%" onclick="closeModal();render()">把灯拨亮些</button>');
+  render();
+}
+function jhChallenge(){
+  if(G.sp<16){toast('精力不足。');return;}
+  spend(16);
+  var s=ri(160,240);
+  if(battlePower()>=s){
+    G.flags.mengzhu=true;G.clout=100;G.cStage=5;
+    addLog('🏆 你与盟主对了三十招，最后一剑停在他喉前一寸。他把令牌递了过来。','gold');
+    openModal('武 林 盟 主','<div class="story-text">'+
+      '<p>旧盟主把令牌放在桌上，推到你面前。</p>'+
+      '<p>「江湖没什么好，也没什么不好。」他说，「你接了，就得管。」</p>'+
+      '<p class="hl">从今日起，你是武林盟主。</p></div>'+
+      '<button class="buy primary" style="width:100%" onclick="closeModal();render()">接过令牌</button>');
+  }else{
+    G.hp=cl(G.hp-ri(8,18),1,100);
+    addLog('🏆 你连盟主三招都没接住，被人抬下台，台下的笑声很响。','bd');
+    toast('还差得远');
+  }
+  G.actionsToday++;render();
+}
+
+/* ================= 黑化 · 支线命途 ================= */
+function darkGain(n){
+  if(!G||!n)return;
+  var old=G.dark||0;
+  G.dark=cl(old+n,0,100);
+  if(old<40&&G.dark>=40)addLog('🖤 心里有什么东西，裂开了一道缝。','bd');
+  if(old<70&&G.dark>=70)addLog('🖤 你已经很久没有为谁心疼过了。','bd');
+  if(old<100&&G.dark>=100)addLog('🖤 你终于成了宫里最不该惹的那种人。','bd');
+}
+function enterXia(){
+  if(G.sp<8){toast('精力不足。');return;}
+  spend(8);
+  G.career='xia';G.cStage=0;G.clout=Math.max(G.clout||0,6);G.role='wanderer';G.flags.xia=true;
+  addLog('⚖ 你把包袱往肩上一甩，走出了镇门。','gold');
+  openModal('侠 客','<div class="story-text"><p>镇口老槐底下，有人被按在地上打。</p><p>你放下包袱，只问了一句：谁先动的手。</p><p class="hl">从此江湖上多了一个多管闲事的人。</p></div><button class="buy primary" style="width:100%" onclick="closeModal();render()">走下去</button>');
+  render();
+}
+function enterDancer(){
+  if(G.sp<9){toast('精力不足。');return;}
+  spend(9);
+  G.career='dancer';G.cStage=0;G.clout=Math.max(G.clout||0,8);G.role='dancer';
+  addLog('💃 春楼的灯挑起来，你在镜前把第一支舞跳完了。','pink');
+  openModal('舞 姬','<div class="story-text"><p>管事看了你半晌，说：身段是好的，心要沉。</p><p>你点头，把名字报了上去。</p><p class="hl">从今夜起，你便是这楼里的人了。</p></div><button class="buy primary" style="width:100%" onclick="closeModal();render()">开始</button>');
+  render();
+}
+function joinSect(){
+  if(G.sp<10){toast('精力不足。');return;}
+  spend(10);
+  var r=G.root||'';
+  var ok=(r.indexOf('天')>=0||r.indexOf('双')>=0)?true:(ri(1,100)<=45);
+  if(ok){
+    G.career='sect';G.cStage=1;G.flags.sect=G.flags.sect||'云岫宗';G.role='disciple';
+    addLog('☯ 山门开了。你跪在石阶上，听完了那一段清规。','gold');
+    openModal('仙 门','<div class="story-text"><p>执事看了你的灵根，把名录推过来：写名字。</p><p>「入了这门，先学做人，再学做仙。」</p><p class="hl">你是云岫宗的人了。</p></div><button class="buy primary" style="width:100%" onclick="closeModal();render()">叩首</button>');
+  }else{
+    addLog('☯ 执事把你的手推回来：「根骨太浊，回去吧。」','bd');
+    toast('山门未开');
+  }
+  render();
+}
+function pledgeVow(){
+  G.vow=true;
+  addLog('🕯 你在祠堂前立了誓：此生不嫁不娶，只为自己活。','pink');
+  toast('此后长辈仍会催');
+  render();
+}
+function payQuiet(){
+  if(G.money<10000){toast('银两不足万金。');return;}
+  G.money-=10000;G.vowPaid=true;
+  addLog('💰 一万两摆上桌，族老数了三遍，终于把庚帖收了回去。','gold');
+  toast('万金买了个清静');
+  render();
+}
+function plPoison(){
+  if(G.herb<1&&G.money<120){toast('既无药也无银。');return;}
+  if(G.herb>0)G.herb--;else G.money-=120;
+  spend(10);
+  var r=ri(1,100);
+  if(r<=62){
+    G.clout=cl(G.clout+ri(8,16),0,100);darkGain(ri(6,12));
+    addLog('🧪 那碗汤端进去，第二日西边就挂了白。','bd');
+    toast('无人疑到你身上');
+  }else if(r<=85){
+    darkGain(ri(4,8));G.clout=cl(G.clout-ri(6,12),0,100);
+    addLog('🧪 药味重了一点，掌事姑姑端着碗闻了很久，最终什么也没说。','bd');
+  }else{
+    G.chill=true;darkGain(ri(10,16));
+    addLog('🧪 有人在碗底验出了东西，你被拖去了冷宫。','bd');
+  }
+  render();
+}
+function plScar(){
+  if(G.money<150){toast('银两不足。');return;}
+  G.money-=150;spend(12);
+  var r=ri(1,100);
+  if(r<=58){
+    G.clout=cl(G.clout+ri(10,18),0,100);darkGain(ri(10,18));
+    addLog('🕳 那日之后，御花园里再没听见她笑。','bd');
+  }else{
+    darkGain(ri(6,10));G.clout=cl(G.clout-ri(8,16),0,100);G.hp=cl(G.hp-ri(10,20),1,100);
+    addLog('🕳 动手的人被当场拿下，你在廊下听了半夜的哭声。','bd');
+  }
+  render();
+}
+function plMiscarry(){
+  if(G.clout<30){toast('圣宠不足。');return;}
+  spend(14);
+  var r=ri(1,100);
+  if(r<=55){
+    G.clout=cl(G.clout+ri(12,20),0,100);darkGain(ri(14,22));
+    addLog('🩸 东宫那夜乱了一整晚，天亮时所有人都闭着嘴。','bd');
+  }else if(r<=82){
+    darkGain(ri(8,14));G.clout=cl(G.clout-ri(10,18),0,100);
+    addLog('🩸 事情没成，却有人记住了你的脸。','bd');
+  }else{
+    G.chill=true;darkGain(ri(16,24));
+    addLog('🩸 有人供出了你，你在冷宫门口看见了今年的第一场雪。','bd');
+  }
+  render();
+}
+/* 宫中被害：下毒 / 毁容 / 小产 */
+function palaceDeathRisk(extra){
+  if(G.ended)return false;
+  if(G.sex!=='f'||G.career!=='palace'||G.role!=='concubine')return false;
+  if(G.flags.queen||G.flags.taihou||G.chill)return false;
+  var risk=3+(extra||0)+(G.hp<=25?9:0)+(G.cStage>=4?3:0);
+  if(ri(1,100)<=risk){deathEnd('palace');return true;}
+  return false;
+}
+function palaceHarmed(){
+  var kind=pk(['poison','scar','miscarry']);
+  var t='';
+  if(kind==='poison'){
+    t='<p>你的汤碗里浮着一层极淡的白沫。你端起来，闻了闻。</p><p class="tiny">有人在等你喝下去。</p>';
+  }else if(kind==='scar'){
+    t='<p>廊下迎面来个小宫女，手里捧着一盏刚沏的茶。</p><p>她抬头看你的那一眼，太快了，快得不像失手。</p>';
+  }else{
+    t='<p>你醒得比平日早。帐子外有脚步声，停在你床边，很久没有动。</p><p class="tiny">被角被人掀开过。</p>';
+  }
+  openModal('🖤 有人要动你', '<div class="story-text">'+t+'</div>'+
+    '<button class="buy primary" style="width:100%;margin-top:8px" onclick="harmFace(\''+kind+'\')">当面揭穿</button>'+
+    '<button class="buy" style="width:100%;margin-top:8px" onclick="harmBear(\''+kind+'\')">忍下来，记着</button>');
+  addLog('🖤 宫里有人对你动了手。','bd');
+}
+function harmFace(kind){
+  closeModal();
+  if(ri(1,100)<=50){
+    G.clout=cl(G.clout+ri(8,16),0,100);darkGain(ri(3,7));
+    addLog('🖤 你当着众人的面把碗摔了，指了那个人的名字。她跪下了。','gold');
+  }else{
+    G.clout=cl(G.clout-ri(6,14),0,100);G.hp=cl(G.hp-ri(6,14),1,100);
+    if(palaceDeathRisk(3))return;
+    addLog('🖤 你说得太多，反倒成了那个「疑心重」的人。','bd');
+  }
+  render();
+}
+function harmBear(kind){
+  closeModal();
+  G.hp=cl(G.hp-ri(8,18),1,100);darkGain(ri(6,14));
+  if(palaceDeathRisk(kind==='poison'?7:0))return;
+  if(kind==='scar'&&ri(1,100)<=55){
+    G.charm=cl(G.charm-ri(6,14),0,240);
+    addLog('🖤 那道口子留在了脸上。你照镜子的时候，学会了不看太久。','bd');
+  }else if(kind==='miscarry'&&ri(1,100)<=40){
+    G.hp=cl(G.hp-ri(10,20),1,100);
+    addLog('🖤 孩子没有保住。你一个人躺了三天，没有人敢来瞧。','bd');
+  }else{
+    addLog('🖤 你什么都没说，把这件事折好，收进心里。','bd');
+  }
+  render();
+}
+
+/* ================= 时间 ================= */
+function advanceDay(){ advance(1); }
+function advanceMonth(){ advance(ri(26,30)); }
+function advanceYear(){ advance(360); }
+function advance(n){
+  if(!G||G.ended)return;
+  for(var i=0;i<n;i++){
+    G.day++; G.totalDays++;
+    G.sp=cl(G.sp+2,0,100);
+    if(i%10===0){G.hp=cl(G.hp+1,0,100);}
+    if(G.day>30){G.day=1;G.month++;}
+    if(G.month>12){G.month=1;G.year++;G.age++;
+      if(G.age>=18&&G.lovers.length===0&&G.flags.matchYear!==G.age){
+        G.flags.matchYear=G.age;
+        setTimeout(forceMatch,600);
+      }
+    }
+    if(G.age>=30){endGame();return;}
+  }
+  for(var _pk=G.pets.length-1;_pk>=0;_pk--){
+    var pt=G.pets[_pk];
+    if(pt.mood===undefined)pt.mood=70;
+    pt.full=Math.max(0,(pt.full===undefined?100:pt.full)-n);
+    if(pt.full<=0){
+      pt.starve=(pt.starve||0)+n;
+      if(pt.starve>=12){
+        addLog('🐾 '+pt.name+'饿得皮包骨，某天清晨自己走了，门口留下一串脚印。','bd');
+        G.pets.splice(_pk,1);continue;
+      }
+    }else pt.starve=0;
+    if(pt.full>0&&pt.full<=25){addLog('🐾 '+pt.name+'饿得直叫，蹭着你的腿。记得喂它。','bd');}
+    /* 心情值逐日下滑，饿着滑得更快 */
+    pt.mood=cl(pt.mood-n*(pt.full<=25?2:1),0,100);
+    if(pt.mood<=25){
+      addLog('🐾 '+pt.name+'缩在墙角，一整天不声不响，'+({猫:'连尾巴都不肯摇',狗:'连骨头都不看一眼',兔:'耳朵一直耷着',小狐:'眼里没了光',灵兽:'伏着不动'}[pt.kind]||'没什么精神')+'。','bd');
+      /* 抑郁到极点，有概率离家出走 */
+      if(ri(1,100)<=(pt.mood<=8?12:4)*n){
+        addLog('🐾 天亮时院门开着，'+pt.name+'不见了。你在巷口找了三天，只捡到它常趴的那块石头。','bd');
+        G.pets.splice(_pk,1);
+      }
+    }
+  }
+  G.actionsToday=0; G.plotsDone=0;
+  spawnFx(G.month);
+  addLog('⏳ 又过了'+n+'日，'+seasonLine(),'gd2');
+  render();
+  maybeConflict();
+  maybeStoryEvent();
+  maybeCareerEvent();
+}
+/* ================= 人物突发事件 ================= */
+var _rvA=null,_rvB=null,_sdN=null;
+function maybeStoryEvent(){
+  if(!G||G.ended)return;
+  if(G.flags.npcDarkPending){npcDarkEnd(G.flags.npcDarkPending);return;}
+  if(G.flags.pending)return;
+  if(document.getElementById('overlay').classList.contains('show'))return;
+  if(G.totalDays-(G.flags.stCd||-999)<10)return;
+  if(ri(1,100)>55)return;
+  G.flags.stCd=G.totalDays;
+  var pool=[];
+  if(spouseIds().length)pool.push('nbr','nbr','inlaw','poach');
+  if(G.lovers.length>=2)pool.push('rv','rv');
+  if(G.root&&G.age>=14)pool.push('sect','sect');
+  if(G.pets.length)pool.push('petsick');
+  var _dk=darkestNpc(); if(_dk)pool.push('ndark','ndark');
+  pool.push('lost');
+  pool.push('sud','sud');
+  var k=pk(pool);
+  if(k==='nbr')evNeighbor();
+  else if(k==='inlaw')evInlaw();
+  else if(k==='rv')evRival();
+  else if(k==='sect')evSect();
+  else if(k==='petsick')evPetSick();
+  else if(k==='lost')evLost();
+  else if(k==='poach')evPoach();
+  else if(k==='ndark')evNpcDark(_dk);
+  else evSudden();
+}
+
+/* ================= 命途事件 ================= */
+function maybeCareerEvent(){
+  if(!G||G.ended)return;
+  if(!G.career||G.career==='folk'||G.career==='exile')return;
+  if(G.flags.pending)return;
+  if(document.getElementById('overlay').classList.contains('show'))return;
+  if(G.totalDays-(G.flags.carCd||-999)<18)return;
+  if(ri(1,100)>42)return;
+  G.flags.carCd=G.totalDays;
+  if(G.dark>=60&&ri(1,100)<=25){darkEvent();return;}
+  if(G.career==='palace'&&!G.chill&&G.role==='concubine'&&G.cStage>=2&&ri(1,100)<=30){palaceHarmed();return;}
+  if(G.career==='palace')palaceEvent();
+  else if(G.career==='martial')jhEvent();
+  else if(G.career==='xia')xiaEvent();
+  else if(G.career==='dancer')dancerEvent();
+  else if(G.career==='sect')sectEvent();
+}
+function darkEvent(){
+  openModal('🖤 夜半，有人递来一盏灯','<div class="story-text">'+
+    '<p>来的那个人看不清脸，只把一盏灯放在桌上。</p>'+
+    '<p>「往前走一步，你想要的就都有了。」他说，「代价你自己清楚。」</p></div>'+
+    '<div class="pair-row"><button class="buy primary" onclick="darkAccept()">接过灯</button>'+
+    '<button class="buy" onclick="darkRefuse()">吹灭它</button></div>');
+}
+function darkAccept(){
+  closeModal();darkGain(ri(8,15));G.money+=ri(200,600);
+  addLog('🖤 你接过那盏灯。灯芯是黑的，烧起来却很亮。','bd');
+  render();
+}
+function darkRefuse(){
+  closeModal();G.dark=cl(G.dark-ri(6,12),0,100);
+  addLog('🖤 你吹灭了灯，屋子里黑了很久，才慢慢看清东西。','gd2');
+  render();
+}
+function xiaEvent(){
+  openModal('⚖ 街 口','<div class="story-text"><p>街口一个恶少正拽着卖菜老翁的领子。</p><p>围了一圈人，没有一个动。</p></div>'+
+    '<div class="pair-row"><button class="buy primary" onclick="xiaAct()">上前</button>'+
+    '<button class="buy" onclick="xiaWait()">先看着</button></div>');
+}
+function xiaAct(){
+  closeModal();
+  if(ri(1,100)<=70){
+    G.sword=cl(G.sword+ri(2,5),240);G.clout=cl(G.clout+ri(3,7),0,100);G.money+=ri(10,60);
+    addLog('⚖ 你把人拦住，恶少看了你一眼，松了手。','gold');
+  }else{
+    G.hp=cl(G.hp-ri(6,16),1,100);G.clout=cl(G.clout+ri(2,4),0,100);
+    addLog('⚖ 你挨了两拳，但那老翁的菜保住了。','bd');
+  }
+  render();
+}
+function xiaWait(){
+  closeModal();darkGain(4);
+  addLog('⚖ 你站着看完，什么也没做。走的时候，谁也没看你。','bd');
+  render();
+}
+function dancerEvent(){
+  openModal('💃 席 上','<div class="story-text"><p>楼下来了一位贵客，点名要你单独陪一席。</p><p>管事在你耳边说：这人不该得罪。</p></div>'+
+    '<div class="pair-row"><button class="buy primary" onclick="dancerGo()">去</button>'+
+    '<button class="buy" onclick="dancerNo()">推了</button></div>');
+}
+function dancerGo(){
+  closeModal();G.money+=ri(200,600);gain('charm',ri(2,5),240);darkGain(ri(3,8));
+  addLog('💃 那一席喝到三更，谁也没提明日。','pink');
+  render();
+}
+function dancerNo(){
+  closeModal();G.clout=cl(G.clout+ri(2,6),0,100);
+  addLog('💃 推了那一席，管事摔了帘子。你照旧跳你的舞。','gd2');
+  render();
+}
+function sectEvent(){
+  openModal('☯ 山 中','<div class="story-text"><p>同门师兄在山门拦住你，说要讨教一手。</p><p>他眼里有你熟悉的，不甘心。</p></div>'+
+    '<div class="pair-row"><button class="buy primary" onclick="sectFight()">应下</button>'+
+    '<button class="buy" onclick="sectYield()">拱手退让</button></div>');
+}
+function sectFight(){
+  closeModal();
+  if(G.exp>=60||ri(1,100)<=45){gain('exp',ri(10,20),300);G.clout=cl(G.clout+ri(2,5),0,100);
+    addLog('☯ 他退了三步，拱手说：是我输了。','gold');
+  }else{G.hp=cl(G.hp-ri(8,16),1,100);addLog('☯ 你被打翻在石阶下，他把手递了过来。','bd');}
+  render();
+}
+function sectYield(){
+  closeModal();gain('exp',ri(3,7),300);G.clout=cl(G.clout+ri(1,3),0,100);
+  addLog('☯ 你退了一步，他反倒不好意思再说什么。','gd2');
+  render();
+}
+function palaceEvent(){
+  if(G.chill){evCold();return;}
+  if(G.sex==='f'){
+    if(G.cStage>=6&&ri(1,100)<=55){evThrone();return;}
+    if(G.cStage<=1&&G.clout<35&&ri(1,100)<=45){evHeqin();return;}
+    var k=ri(1,3);
+    if(k===1)evPalFavor();
+    else if(k===2)evPalSlander();
+    else evPalBanquet();
+  }else{
+    if(G.role==='guard')evGuardDuty();
+    else if(G.role==='eunuch')evEunuchPower();
+    else if(G.role==='army')evArmyEvent();
+    else evPrinceEvent();
+  }
+}
+function jhEvent(){
+  if(ri(1,2)===1){
+    openModal('踢 馆','<div class="story-text"><p>邻镇来了个踢馆的，指名要会一会本地好手。</p>'+
+      '<p>馆里的人都看向你。</p></div>'+
+      '<div class="pair-row"><button class="buy primary" onclick="jhAccept()">应战</button>'+
+      '<button class="buy" onclick="jhDecline()">拱手认输</button></div>');
+  }else{
+    openModal('江 湖 邀 约','<div class="story-text"><p>有人递来一张帖子，请你去城外破庙一叙，说是"有一桩旧账要清"。</p>'+
+      '<p>帖上没有落款，只有一枚血色指印。</p></div>'+
+      '<div class="pair-row"><button class="buy primary" onclick="jhGo()">赴约</button>'+
+      '<button class="buy" onclick="jhNo()">把帖子烧了</button></div>');
+  }
+}
+function jhAccept(){
+  if(ri(1,100)<=55+(G.sword>=120?20:0)){
+    G.clout=cl(G.clout+ri(8,15),0,100);gain('sword',ri(3,6),240);
+    addLog('🗡 你一掌震退了踢馆的人，馆里摆了三桌酒。','gd2');
+    toast('踢馆的走了');
+  }else{
+    G.hp=cl(G.hp-ri(6,14),1,100);
+    addLog('🗡 你被踢馆的人撂倒，馆主扶你起来，什么也没说。','bd');
+    toast('输了');
+  }
+  closeModal();render();
+}
+function jhDecline(){
+  G.clout=cl(G.clout-3,0,100);gain('learn',ri(2,4),240);
+  addLog('🗡 你拱手认输，倒省了一场皮肉之苦。','');
+  closeModal();render();
+}
+function jhGo(){
+  if(ri(1,100)<=50){
+    G.money+=ri(60,180);G.clout=cl(G.clout+ri(4,9),0,100);
+    addLog('🗡 破庙里等你的是一场旧仇，你活着出来了，袋里还多了些银钱。','gold');
+  }else{
+    G.hp=cl(G.hp-ri(8,18),1,100);
+    addLog('🗡 破庙里埋伏了三个人，你带着一身伤翻墙走了。','bd');
+  }
+  closeModal();render();
+}
+function jhNo(){
+  gain('exp',ri(2,5),300);
+  addLog('🗡 你把帖子丢进灶膛，火苗舔了两下就没了。','');
+  closeModal();render();
+}
+
+/* 宫中：和亲 */
+function evHeqin(){
+  openModal('和 亲','<div class="story-text">'+
+    '<p>北边的使团进了京，点名要一位宫里的女子。</p>'+
+    '<p>名册翻到你这一页时，殿里静了一瞬。</p></div>'+
+    '<div class="pair-row"><button class="buy" onclick="heqinGo()">奉命远嫁</button>'+
+    '<button class="buy" onclick="heqinRefuse()">设法留在宫里</button></div>');
+  addLog('🏯 和亲的名册传到了你这一页。','pink');
+}
+function heqinGo(){
+  G.career='exile';G.flags.sentAway=true;G.money+=800;gain('charm',6,240);G.page='home';
+  addLog('🏯 你披上嫁衣，车马出了城门，再没回头。','pink');
+  closeModal();toast('远嫁和亲');render();
+}
+function heqinRefuse(){
+  if(G.money>=80&&ri(1,100)<=50){
+    G.money-=80;G.clout=cl(G.clout+ri(4,10),0,100);
+    addLog('🏯 你托人把名字从名册上抹了，代价是欠下一份人情。','');
+    toast('留了下来');
+  }else{
+    G.chill=true;G.cStage=0;G.clout=0;
+    addLog('🏯 名册没抹掉，人却先被挪进了冷宫。','bd');
+    toast('被打入冷宫');
+  }
+  closeModal();render();
+}
+/* 宫中：冷宫 */
+function evCold(){
+  openModal('冷 宫','<div class="story-text">'+
+    '<p>冷宫的墙比别处高，草从砖缝里长出来。</p>'+
+    '<p>送饭的人把碗放下就走，连头也不回。</p></div>'+
+    '<div class="pair-row"><button class="buy" onclick="coldOut()">托人递话，设法翻身</button>'+
+    '<button class="buy" onclick="coldStay()">就这样熬着</button></div>');
+}
+function coldOut(){
+  if(G.money<60){toast('银两不足，递不出去话。');return;}
+  G.money-=60;
+  if(ri(1,100)<=45){
+    G.chill=false;G.cStage=1;G.clout=ri(10,25);
+    addLog('🏯 你从冷宫的侧门被接了出去，天光照得眼睛发疼。','gd2');
+    toast('熬出头了');
+  }else{
+    addLog('🏯 话递出去，没有回音，只有一碗更凉的饭。','bd');
+    toast('没有人应');
+  }
+  closeModal();render();
+}
+function coldStay(){
+  gain('exp',ri(4,9),300);gain('learn',ri(3,6),240);
+  addLog('🏯 你在冷宫里把一部旧书翻烂了，心倒静了。','');
+  closeModal();render();
+}
+/* 宫中：得宠 */
+function evPalFavor(){
+  openModal('圣 宠','<div class="story-text">'+
+    '<p>夜里传了牌子，指名要你。</p>'+
+    '<p>宫人替你把衣角理了三遍，谁也没说话。</p></div>'+
+    '<div class="pair-row"><button class="buy primary" onclick="palFavorGo()">去</button>'+
+    '<button class="buy" onclick="palFavorNo()">称病推了</button></div>');
+}
+function palFavorGo(){
+  G.clout=cl(G.clout+ri(10,20),0,100);
+  if(G.cStage<6&&G.clout>=50&&ri(1,100)<=45){
+    G.cStage++;addLog('🏯 一夜之后，你晋为'+PAL_RANKS[G.cStage]+'。','pink');
+  }
+  addLog('🏯 那盏灯亮到很晚，你在窗下站了很久。','pink');
+  closeModal();toast('圣宠正浓');render();
+}
+function palFavorNo(){
+  G.clout=cl(G.clout-ri(3,8),0,100);gain('charm',2,240);
+  addLog('🏯 你推说身子不适，牌子上换了别人的名字。','');
+  closeModal();render();
+}
+/* 宫中：构陷 */
+function evPalSlander(){
+  openModal('构 陷','<div class="story-text">'+
+    '<p>妆奁里多了一只不属于你的镯子，偏偏在查验前被人翻了出来。</p>'+
+    '<p>堂上的人都在等你开口。</p></div>'+
+    '<div class="pair-row"><button class="buy primary" onclick="palSlapBack()">反咬回去</button>'+
+    '<button class="buy" onclick="palSlapBear()">认下，求个轻罚</button></div>');
+}
+function palSlapBack(){
+  if((G.charm+G.learn)>=110||ri(1,100)<=40){
+    G.clout=cl(G.clout+ri(5,12),0,100);gain('charm',ri(3,6),240);
+    addLog('🏯 你一句一句把话头拧回去，最后跪下的是别人。','gd2');
+    toast('反将一军');
+  }else{
+    if(palaceDeathRisk(2))return;
+    G.chill=true;G.cStage=0;G.clout=0;
+    addLog('🏯 你说得越多，越像心虚，最后被挪进了冷宫。','bd');
+    toast('被打入冷宫');
+  }
+  closeModal();render();
+}
+function palSlapBear(){
+  G.clout=cl(G.clout-ri(8,16),0,100);
+  if(G.cStage>0)G.cStage--;
+  addLog('🏯 你认了罚，跪在殿外两个时辰，膝盖肿了。','bd');
+  closeModal();render();
+}
+/* 宫中：宴上挑衅 */
+function evPalBanquet(){
+  openModal('宫 宴','<div class="story-text">'+
+    '<p>宫宴上，一位得宠的妃嫔举杯，笑吟吟地要你当众作一首诗。</p>'+
+    '<p>满殿的人都停了筷子。</p></div>'+
+    '<div class="pair-row"><button class="buy primary" onclick="palBanquetPoem()">提笔就作</button>'+
+    '<button class="buy" onclick="palBanquetToast()">举杯敬回去，把话岔开</button></div>');
+}
+function palBanquetPoem(){
+  if(G.learn>=70){
+    G.clout=cl(G.clout+ri(8,15),0,100);gain('charm',ri(4,7),240);
+    addLog('🏯 一首诗落笔，殿上安静了片刻，随后有人先鼓了掌。','gd2');
+    toast('满殿皆惊');
+  }else{
+    G.clout=cl(G.clout-ri(4,9),0,100);gain('learn',ri(2,4),240);
+    addLog('🏯 你写的诗不出彩，被人笑着揭过，手心全是汗。','bd');
+  }
+  closeModal();render();
+}
+function palBanquetToast(){
+  G.clout=cl(G.clout+ri(3,7),0,100);gain('charm',ri(2,5),240);
+  addLog('🏯 你举杯敬回去，一句话把满殿的话头都岔开了。','gd2');
+  closeModal();render();
+}
+/* 宫中：凤位之上 */
+function evThrone(){
+  openModal('凤 位 之 上','<div class="story-text">'+
+    '<p>皇帝病重，殿外的灯一盏盏亮到天明。</p>'+
+    '<p>有人跪着来请你拿主意。</p></div>'+
+    '<div class="pair-row"><button class="buy" onclick="throneDowager()">垂帘听政，做太后</button>'+
+    '<button class="buy" onclick="throneQueen()">登基称制，做女王</button></div>'+
+    '<button class="buy" style="width:100%" onclick="closeModal()">退回殿里，什么也不接</button>');
+}
+function throneDowager(){
+  G.flags.taihou=true;G.clout=100;
+  addLog('🏯 帘子后面多了一把椅子，往后十年，朝堂上先听你的。','gold');
+  closeModal();toast('垂帘听政');render();
+}
+function throneQueen(){
+  if(G.charm<100){toast('威望不足，压不住朝堂。');return;}
+  G.flags.queen=true;G.clout=100;G.cStage=6;
+  addLog('🏯 你穿着十二章的礼服走上殿，玉阶下的百官跪了一片。','gold');
+  closeModal();toast('登基称制');render();
+}
+/* 宫中：侍卫夜巡 */
+function evGuardDuty(){
+  openModal('夜 巡','<div class="story-text">'+
+    '<p>三更巡到西墙，墙头有影子一闪。</p>'+
+    '<p>拔刀要快，喊人也要快。</p></div>'+
+    '<div class="pair-row"><button class="buy primary" onclick="guardChase()">追上去</button>'+
+    '<button class="buy" onclick="guardCall()">先喊人</button></div>');
+}
+function guardChase(){
+  if(G.sword>=90||ri(1,100)<=50){
+    G.clout=cl(G.clout+ri(14,24),0,100);G.money+=ri(60,140);
+    addLog('🏯 你按住了一个翻墙的人，腰间搜出半张宫图。','gold');
+    toast('立了一功');
+    if(G.clout>=80&&G.role==='guard'&&ri(1,100)<=45){
+      G.role='prince';G.money+=1200;
+      addLog('🏯 圣上赐了宅子，你从侍卫变成了王爷。','gold');
+      closeModal();openModal('封 王','<div class="story-text"><p>圣旨念到"封"字时，你还没反应过来。</p>'+
+        '<p class="hl">身份：亲王</p></div>'+
+        '<button class="buy primary" style="width:100%" onclick="closeModal();render()">谢恩</button>');
+      render();return;
+    }
+  }else{
+    G.hp=cl(G.hp-ri(6,14),1,100);
+    addLog('🏯 你追出去，被人在肩头划了一刀，人影不见了。','bd');
+    toast('吃了亏');
+  }
+  closeModal();render();
+}
+function guardCall(){
+  G.clout=cl(G.clout+ri(4,9),0,100);
+  addLog('🏯 你一声喊，半宫的人都醒了，影子也跑了。','');
+  closeModal();render();
+}
+/* 宫中：内廷 */
+function evEunuchPower(){
+  openModal('内 廷','<div class="story-text">'+
+    '<p>掌印的位置空着。几拨人都在等，谁先动谁先死。</p>'+
+    '<p>有人半夜来敲你的门，递上一串钥匙。</p></div>'+
+    '<div class="pair-row"><button class="buy primary" onclick="eunuchTake()">接下钥匙</button>'+
+    '<button class="buy" onclick="eunuchNo()">退回去</button></div>');
+}
+function eunuchTake(){
+  if(G.money>=100&&ri(1,100)<=55){
+    G.money-=100;G.role='chief';G.clout=100;G.cStage=5;
+    addLog('🏯 你把钥匙攥在手里，第二天，内廷的人都改口叫你一声"公"。','gold');
+    toast('掌了印');
+  }else{
+    G.clout=cl(G.clout-ri(10,20),0,100);
+    addLog('🏯 钥匙接了，事却漏了风声，你被罚去刷了三个月的地。','bd');
+    toast('漏了风声');
+  }
+  closeModal();render();
+}
+function eunuchNo(){
+  G.clout=cl(G.clout+ri(2,5),0,100);gain('learn',ri(2,4),240);
+  addLog('🏯 你把钥匙推回去，那人在门口站了很久才走。','');
+  closeModal();render();
+}
+/* 宫中：亲王 */
+function evPrinceEvent(){
+  openModal('王 府','<div class="story-text">'+
+    '<p>王府的门客越来越多，有人劝你争一争那个位置。</p>'+
+    '<p>也有人劝你守住这一府的人。</p></div>'+
+    '<div class="pair-row"><button class="buy primary" onclick="princePlot()">暗中布局</button>'+
+    '<button class="buy" onclick="princeKeep()">守好王府</button></div>');
+}
+function princePlot(){
+  if(ri(1,100)<=45){
+    G.clout=cl(G.clout+ri(10,20),0,100);G.money+=ri(200,600);
+    addLog('🏯 你在朝中结了几个人，风向渐渐朝你这边偏。','gd2');
+    toast('朝中风向变了');
+  }else{
+    G.clout=cl(G.clout-ri(10,20),0,100);G.money=Math.max(0,G.money-200);
+    addLog('🏯 你的手伸得太长，被人参了一本，府里冷清了半月。','bd');
+    toast('被人参了');
+  }
+  closeModal();render();
+}
+function princeKeep(){
+  gain('charm',ri(3,6),240);
+  addLog('🏯 你闭了门，陪府里的人吃了一顿安稳饭。','pink');
+  closeModal();render();
+}
+/* 宫中：边军 */
+function evArmyEvent(){
+  openModal('边 关','<div class="story-text">'+
+    '<p>边墙外起了风，探马回报说远处有骑影。</p>'+
+    '<p>是带人出去看看，还是先报上去，得你拿主意。</p></div>'+
+    '<div class="pair-row"><button class="buy primary" onclick="armyFight()">带人出去看看</button>'+
+    '<button class="buy" onclick="armyReport()">先报上去</button></div>');
+}
+function armyFight(){
+  if(G.sword>=70||ri(1,100)<=50){
+    G.clout=cl(G.clout+ri(8,16),0,100);G.money+=ri(40,100);
+    addLog('🏯 你带人追出十里，赶跑了一队探马。','gold');
+    toast('守住了一阵');
+  }else{
+    G.hp=cl(G.hp-ri(6,14),1,100);
+    addLog('🏯 那队人比想象中多，你退回来时折了两个弟兄。','bd');
+    toast('退回来了');
+  }
+  closeModal();render();
+}
+function armyReport(){
+  G.clout=cl(G.clout+ri(2,6),0,100);
+  addLog('🏯 你把军情报上去，上头夸了一句稳妥。','gd2');
+  closeModal();render();
+}
+/* 有人挖墙脚 */
+function evPoach(){
+  var sp=spouseIds();
+  if(!sp.length)return;
+  var id=sp[0],nm=NPCS[id].name;
+  openModal('有 人 挖 墙 脚','<div class="story-text">'+
+    '<p>近来总有人在'+nm+'面前献殷勤，街坊都看在眼里。</p>'+
+    '<p>今日那人竟托人送了一盒胭脂来。</p></div>'+
+    '<div class="pair-row"><button class="buy primary" onclick="poachFace()">当着人把话说清</button>'+
+    '<button class="buy" onclick="poachGift()">送'+nm+'一样更好的</button></div>'+
+    '<button class="buy" style="width:100%" onclick="poachTrust()">不问，由'+nm+'自己处置</button>');
+  addLog('🏮 有人在打你家'+nm+'的主意。','pink');
+}
+function poachFace(){
+  var sp=spouseIds();
+  if(!sp.length){closeModal();return;}
+  if(G.charm>=80||ri(1,100)<=50){
+    G.npcs[sp[0]]=cl((G.npcs[sp[0]]||0)+8,0,100);
+    addLog('🏮 你把话摆到明面上，那人讪讪地收了胭脂走了。','gd2');
+    toast('把话说清了');
+  }else{
+    G.npcs[sp[0]]=cl((G.npcs[sp[0]]||0)-6,0,100);
+    addNpcDark(sp[0],ri(4,8)*npcDarkMult(sp[0]));
+    addLog('🏮 你话说得重了，'+NPCS[sp[0]].name+'反倒替外人说了句公道话。','bd');
+    toast('话说重了');
+  }
+  closeModal();render();
+}
+function poachGift(){
+  if(G.money<120){toast('银两不足。');return;}
+  var sp=spouseIds();
+  if(!sp.length){closeModal();return;}
+  G.money-=120;G.npcs[sp[0]]=cl((G.npcs[sp[0]]||0)+10,0,100);
+  addNpcDark(sp[0],-3);
+  addLog('🏮 你闭口不提胭脂，只把一支旧钗插在'+NPCS[sp[0]].name+'发间。','pink');
+  closeModal();toast('人心定了');render();
+}
+function poachTrust(){
+  var sp=spouseIds();
+  if(!sp.length){closeModal();return;}
+  if(ri(1,100)<=70){
+    G.npcs[sp[0]]=cl((G.npcs[sp[0]]||0)+6,0,100);
+    addLog('🏮 你什么也没问，'+NPCS[sp[0]].name+'自己把胭脂退了回去。','pink');
+  }else{
+    G.npcs[sp[0]]=cl((G.npcs[sp[0]]||0)-4,0,100);
+    addNpcDark(sp[0],ri(5,10)*npcDarkMult(sp[0]));
+    addLog('🏮 你什么也没问，'+NPCS[sp[0]].name+'却以为你不在意。','bd');
+  }
+  closeModal();render();
+}
+
+/* 婚后：街坊上门找茬 */
+function evNeighbor(){
+  var sp=spouseIds();
+  if(!sp.length)return;
+  var name=NPCS[sp[0]].name;
+  var word=(G.sex==='m')?'娘子':'夫君';
+  var sc=pk([
+    '隔壁张婶堵在门口，说你家'+word+'晾的衣裳滴了她家一墙水。',
+    '巷口王嫂拉着人嚼舌，说你家'+word+'出身不正，配不上这院子。',
+    '邻家汉子把柴垛堆到你门前，说这块地原本是他家的。',
+    '对门婆子端着一只破碗上门，说你家'+word+'欠她三十文，要当众讨。'
+  ]);
+  var h='<div class="story-text"><p>'+sc+'</p>'+
+    '<p>院门敞着，街坊已围了半圈。'+name+'站在你身侧，手指在袖里悄悄收紧。</p>'+
+    '<p class="tiny">这一回，退与不退，都有人看着。</p></div>'+
+    '<div class="pair-row"><button class="buy" onclick="evNbrGive()">递八十两，笑着送客</button>'+
+    '<button class="buy" onclick="evNbrRetort()">当街驳回去</button></div>'+
+    '<button class="buy" style="width:100%" onclick="evNbrSpouse()">让'+name+'出面</button>';
+  addLog('🏮 街坊上门寻事，院门口围了半圈人。','pink');
+  openModal('邻 里 寻 事',h);
+}
+function evNbrGive(){
+  if(G.money<80){toast('银两不足。');return;}
+  G.money-=80;gain('charm',2,240);
+  addLog('🏮 你递了银子，对方捏着钱走了，嘴里仍不干净。','');
+  closeModal();toast('破财免灾');render();
+}
+function evNbrRetort(){
+  if((G.charm+G.sword)>=110){
+    gain('charm',ri(4,7),240);gain('exp',ri(3,6),300);
+    addLog('🏮 你一句一句驳回去，围看的人反倒替你说了话。','gd2');
+    toast('街坊哑口无言');
+  }else{
+    G.charm=cl(G.charm-3,0,240);G.hp=cl(G.hp-2,1,100);
+    addLog('🏮 你话说得急，被人挑出错处，落了下风。','bd');
+    toast('反被人拿住了话柄');
+  }
+  closeModal();render();
+}
+function evNbrSpouse(){
+  var sp=spouseIds();
+  if(!sp.length){closeModal();return;}
+  var id=sp[0];
+  G.npcs[id]=cl((G.npcs[id]||0)+7,0,100);
+  G.money=Math.max(0,G.money-20);
+  addLog('🏮 '+NPCS[id].name+'把门一关，三句话说得街坊散了。','pink');
+  closeModal();toast('家事有人担');render();
+}
+
+/* 婚后：亲家上门借钱 */
+function evInlaw(){
+  var sp=spouseIds();
+  if(!sp.length)return;
+  var id=sp[0],nm=NPCS[id].name;
+  var side=(G.sex==='m')?'岳家':(G.mode==='self'?'婆家':'亲家');
+  var who=pk(['表舅','远房婶娘','内侄','族里三叔']);
+  var h='<div class="story-text">'+
+    '<p>'+nm+'的'+side+'来了个'+who+'，坐在堂屋不肯走，开口就要借一百五十两做本钱。</p>'+
+    '<p>'+nm+'没说话，只把手里的针线停了。</p></div>'+
+    '<div class="pair-row"><button class="buy" onclick="evInGive()">借，给足面子</button>'+
+    '<button class="buy" onclick="evInNo()">婉言推回去</button></div>'+
+    '<button class="buy" style="width:100%" onclick="evInTalk()">拉着'+nm+'一道商量</button>';
+  addLog('🏮 '+side+'的人上门，堂屋里坐了半个时辰。','pink');
+  openModal('亲 家 借 钱',h);
+}
+function evInGive(){
+  if(G.money<150){toast('银两不足。');return;}
+  var sp=spouseIds();G.money-=150;
+  if(!sp.length){closeModal();render();return;}
+  G.npcs[sp[0]]=cl((G.npcs[sp[0]]||0)+8,0,100);
+  addLog('🏮 银子递出去，'+NPCS[sp[0]].name+'低着头，轻轻说了句谢。','pink');
+  closeModal();toast('亲家满意');render();
+}
+function evInNo(){
+  var sp=spouseIds();
+  if(!sp.length){closeModal();render();return;}
+  G.npcs[sp[0]]=cl((G.npcs[sp[0]]||0)-6,0,100);
+  gain('charm',ri(1,3),240);
+  addLog('🏮 你把话婉转说尽，人走了，'+NPCS[sp[0]].name+'半天没出声。','');
+  closeModal();toast('人走了，屋里安静得过分');render();
+}
+function evInTalk(){
+  var sp=spouseIds();
+  if(!sp.length){closeModal();return;}
+  G.money=Math.max(0,G.money-60);
+  G.npcs[sp[0]]=cl((G.npcs[sp[0]]||0)+4,0,100);
+  gain('exp',ri(3,6),300);
+  addLog('🏮 你与'+NPCS[sp[0]].name+'关起门来算了一夜账，只借出六十两。','gd2');
+  closeModal();toast('两人站在了一处');render();
+}
+
+/* 修罗场：两位心悦之人撞在一处 */
+function evRival(){
+  var pool=G.lovers.filter(function(k){return NPCS[k]&&!NPCS[k].follow;});
+  if(pool.length<2)return;
+  var a=pk(pool),b=pk(pool),g=0;
+  while(b===a&&g++<20)b=pk(pool);
+  if(b===a)return;
+  _rvA=a;_rvB=b;
+  var A=NPCS[a].name,B=NPCS[b].name;
+  var h='<div class="story-text">'+
+    '<p>院门口，'+A+'和'+B+'撞了个正着。</p>'+
+    '<p>一个提着酒，一个空着手，谁也不先开口。风把两人的衣角吹到了一处。</p>'+
+    '<p class="secret">「'+(G.sex==='m'?'她是谁？':'他是谁？')+'」</p>'+
+    '<p>你站在门槛上，忽然觉得这院子小得过分。</p></div>'+
+    '<div class="pair-row"><button class="buy" onclick="evRvPick()">先送'+A+'回去</button>'+
+    '<button class="buy" onclick="evRvBoth()">两个都留下喝茶</button></div>'+
+    '<button class="buy" style="width:100%" onclick="evRvOpen()">把话说开</button>';
+  addLog('🏮 两位心悦之人撞在一处，门口一时没人说话。','pink');
+  openModal('修 罗 场',h);
+}
+function evRvPick(){
+  G.npcs[_rvA]=cl((G.npcs[_rvA]||0)+8,0,100);
+  G.npcs[_rvB]=cl((G.npcs[_rvB]||0)-8,0,100);
+  addNpcDark(_rvB,ri(6,12)*npcDarkMult(_rvB));
+  addNpcDark(_rvA,-2);
+  gain('charm',3,240);
+  addLog('🏮 你先送了'+NPCS[_rvA].name+'回去，另一人站在原地没动。','pink');
+  closeModal();toast('有人欢喜，有人沉默');render();
+}
+function evRvBoth(){
+  if(G.money<100){toast('银两不足，摆不起这桌茶。');return;}
+  G.money-=100;
+  G.npcs[_rvA]=cl((G.npcs[_rvA]||0)+5,0,100);
+  G.npcs[_rvB]=cl((G.npcs[_rvB]||0)+5,0,100);
+  addNpcDark(_rvA,ri(2,5));
+  addNpcDark(_rvB,ri(2,5));
+  addLog('🏮 你煮了一壶茶，三个人坐到月上中天，谁也没提方才那句问。','pink');
+  closeModal();toast('暂时相安');render();
+}
+function evRvOpen(){
+  gain('exp',ri(8,14),300);gain('charm',ri(3,6),240);
+  var add=(G.charm>=90)?3:1;
+  G.npcs[_rvA]=cl((G.npcs[_rvA]||0)+3+add,0,100);
+  G.npcs[_rvB]=cl((G.npcs[_rvB]||0)+3+add,0,100);
+  addNpcDark(_rvA,-ri(8,14));
+  addNpcDark(_rvB,-ri(8,14));
+  addLog('🏮 你把话摊在桌上说完，谁也没走，茶却凉了。','gd2');
+  closeModal();toast('话说开了');render();
+}
+
+/* 测过灵根后：仙门来邀，或仙门打脸 */
+function evSect(){
+  if(!G.root)return;
+  var top=(G.root==='天灵根'||G.root==='双灵根');
+  var sect=pk(['青云宗','流云宗','太玄门','白石剑派']);
+  G.flags.lastSect=sect;
+  if(top){
+    var h='<div class="story-text">'+
+      '<p>'+sect+'的人踏着晨雾到了院门口，衣上有云纹，腰间佩玉。</p>'+
+      '<p>为首者看了看你，又看了看院里那半畦菜地，忽然收了三分傲气。</p>'+
+      '<p class="hl">「'+G.root+'，可入我'+sect+'。」</p></div>'+
+      '<div class="pair-row"><button class="buy primary" onclick="evSectJoin()">拜入'+sect+'</button>'+
+      '<button class="buy" onclick="evSectNo()">婉拒，先守着院子</button></div>';
+    addLog('☁ '+sect+'的人登门，说你的灵根难得。','gd2');
+    openModal('仙 门 来 邀',h);
+  }else{
+    var s=ri(70,230);
+    G.flags.sectPow=s;
+    var h2='<div class="story-text">'+
+      '<p>街口被人拦住，一个'+sect+'外门弟子斜着眼打量你。</p>'+
+      '<p class="em">「'+G.root+'？也敢谈修仙。」</p>'+
+      '<p>他把剑往地上一插，周围立刻围了一圈人。</p>'+
+      '<p class="tiny">你的战力 '+battlePower()+'　对方 '+s+'</p></div>'+
+      '<div class="pair-row"><button class="buy primary" onclick="evSectFight()">当场讨个说法</button>'+
+      '<button class="buy" onclick="evSectBear()">忍下这口气</button></div>'+
+      '<button class="buy" style="width:100%" onclick="evSectBribe()">递一百二十两，把这页翻过去</button>';
+    addLog('☁ 仙门弟子当街讥你根骨，围观的人越来越多。','pink');
+    openModal('仙 门 打 脸',h2);
+  }
+}
+function evSectJoin(){
+  var sect=G.flags.lastSect||'仙门';
+  G.flags.sect=sect;
+  gain('exp',ri(30,46),300);gain('ling',ri(16,26),200);gain('charm',ri(4,8),240);
+  addLog('☁ 你拜入'+sect+'，山门在云里，回望人间只余一线炊烟。','gd2');
+  closeModal();toast('拜入'+sect);render();
+}
+function evSectNo(){
+  gain('charm',ri(4,7),240);gain('exp',ri(4,8),300);
+  addLog('☁ 你婉拒了仙门，回头把院里的水缸添满。','gd2');
+  closeModal();toast('人间也很值得');render();
+}
+function evSectFight(){
+  var s=G.flags.sectPow||120;
+  if(battlePower()>=s){
+    gain('exp',ri(16,28),300);gain('charm',ri(6,11),240);G.money+=ri(40,120);
+    addLog('☁ 你接了他一剑，反手把人逼退三步。围观的人哄然叫好。','gold');
+    openModal('当 场 打 脸','<div class="story-text">'+
+      '<p>剑锋相撞，他退了三步，鞋跟在青石上刮出白痕。</p>'+
+      '<p>「'+G.root+'。」你把剑收回鞘里，「够不够谈修仙？」</p>'+
+      '<p class="hl">围观的人散了，也记住了一个名字。</p></div>'+
+      '<button class="buy primary" style="width:100%" onclick="closeModal();render()">收剑</button>');
+  }else{
+    var dmg=ri(8,16);
+    G.hp=cl(G.hp-dmg,1,100);gain('exp',ri(5,10),300);gain('sword',ri(1,3),240);
+    addLog('☁ 你被一剑逼退，掌心震得发麻，却把那一招记在了心里。','bd');
+    openModal('技 不 如 人','<div class="story-text">'+
+      '<p>剑光擦着肩过去，你退了半步，血从虎口渗出来。</p>'+
+      '<p>他收剑入鞘，笑了一声走了。</p>'+
+      '<p class="tiny">气血 -'+dmg+'，但你看清了那一剑的路数。日后可再来。</p></div>'+
+      '<button class="buy" style="width:100%" onclick="closeModal();render()">记下这一剑</button>');
+  }
+  render();
+}
+function evSectBear(){
+  gain('exp',ri(3,7),300);gain('charm',ri(2,5),240);
+  addLog('☁ 你把话咽下去，转身走了，背后笑声跟了半条街。','');
+  closeModal();toast('忍一时，风平浪静');render();
+}
+function evSectBribe(){
+  if(G.money<120){toast('银两不足。');return;}
+  G.money-=120;gain('exp',ri(2,5),300);
+  addLog('☁ 一百二十两递过去，围观的人散了，只当看了场热闹。','');
+  closeModal();toast('花钱消灾');render();
+}
+
+/* 突发小事 */
+function evSudden(){
+  var met=Object.keys(NPCS).filter(function(k){return G.met[k]&&!NPCS[k].follow;});
+  var kind=ri(1,5);
+  if(kind===1&&met.length){
+    _sdN=pk(met);
+    var nm=NPCS[_sdN].name;
+    openModal('檐 下 避 雨','<div class="story-text">'+
+      '<p>雨来得急，你在檐下撞见'+nm+'，半边肩都湿了。</p>'+
+      '<p>'+nm+'看见你，愣了一下，往旁边挪了半步，把伞下让出一块地方。</p></div>'+
+      '<div class="pair-row"><button class="buy primary" onclick="evSdUmbrella()">把伞递过去</button>'+
+      '<button class="buy" onclick="evSdStay()">并肩等到雨停</button></div>');
+  }else if(kind===2){
+    _sdN=null;
+    openModal('夜 半 叩 门','<div class="story-text">'+
+      '<p>三更，院门响了两下。门外没有人，只有一只漆匣放在石阶上。</p>'+
+      '<p>匣子没锁，缝里透出一点旧铜的凉气。</p></div>'+
+      '<div class="pair-row"><button class="buy primary" onclick="evSdOpen()">打开看看</button>'+
+      '<button class="buy" onclick="evSdLeave()">原样放回去</button></div>');
+  }else if(kind===3){
+    _sdN=met.length?pk(met):null;
+    var nm2=_sdN?NPCS[_sdN].name:'一个面熟的人';
+    openModal('旧 人 求 助','<div class="story-text">'+
+      '<p>'+nm2+'托人带话，说周转不开，想借一百二十两，三个月内还。</p>'+
+      '<p>你想起从前受过的一点情分。</p></div>'+
+      '<div class="pair-row"><button class="buy primary" onclick="evSdLend()">借出去</button>'+
+      '<button class="buy" onclick="evSdRefuse()">婉言推了</button></div>');
+  }else if(kind===4){
+    openModal('街 口 赌 局','<div class="story-text">'+
+      '<p>街口围着一圈人，骰子在粗瓷碗里转，庄家抬眼冲你笑。</p>'+
+      '<p class="tiny">「押五十两，赢了翻倍。」</p></div>'+
+      '<div class="pair-row"><button class="buy primary" onclick="evSdBet()">押五十两</button>'+
+      '<button class="buy" onclick="evSdWalk()">转身走开</button></div>');
+  }else{
+    evAccident();return;
+  }
+  addLog('🌧 院里出了点意料之外的事。','');
+}
+/* 突发事故：惊马 */
+function evAccident(){
+  openModal('突 发 事 故','<div class="story-text">'+
+    '<p>街口的马车忽然惊了，车夫死死拽着缰绳，车轮已经歪向人群。</p>'+
+    '<p>一个孩子蹲在路中间，还没反应过来。</p></div>'+
+    '<div class="pair-row"><button class="buy" onclick="accDodge()">先护住自己</button>'+
+    '<button class="buy primary" onclick="accSave()">冲过去拉开孩子</button></div>');
+  addLog('⚠ 街上出了事故，人群一下乱了。','bd');
+}
+function accDodge(){
+  closeModal();
+  if(ri(1,100)<=60){
+    addLog('⚠ 你侧身避开，车轮擦着衣角过去。','gd2');
+    toast('躲开了');
+  }else{
+    G.hp=cl(G.hp-ri(4,10),1,100);
+    addLog('⚠ 你躲得慢了一步，被车辕刮倒。','bd');
+    toast('受了点伤');
+  }
+  render();
+}
+function accSave(){
+  closeModal();
+  var ok=G.sword>=40||ri(1,100)<=55;
+  G.charm=cl(G.charm+ri(4,8),240);
+  if(ok){
+    G.hp=cl(G.hp-ri(2,6),1,100);
+    if(ri(1,100)<=50)G.money+=ri(20,80);
+    addLog('⚠ 你扑过去把孩子抱开，车夫勒住马，围观的人替你叫好。','gold');
+    toast('救下了人');
+  }else{
+    G.hp=cl(G.hp-ri(8,16),1,100);
+    addLog('⚠ 你护住了孩子，自己的腿却被车轮碾过。','bd');
+    toast('救人受了伤');
+  }
+  render();
+}
+function evSdUmbrella(){
+  if(_sdN){G.npcs[_sdN]=cl((G.npcs[_sdN]||0)+7,0,100);}
+  gain('charm',2,240);
+  addLog('🌂 你把伞塞过去，自己淋了半程，倒觉得这雨声好听。','pink');
+  closeModal();toast('檐下有人记得');render();
+}
+function evSdStay(){
+  G.sp=cl(G.sp-4,0,100);
+  if(_sdN){G.npcs[_sdN]=cl((G.npcs[_sdN]||0)+5,0,100);}
+  addLog('🌧 两个人并肩站着，雨停了才各走各的。','pink');
+  closeModal();toast('雨停了');render();
+}
+function evSdOpen(){
+  var t=pk(TREASURE_POOL);
+  G.treasure.push({n:t.n,v:t.v});
+  addLog('📦 匣子里是一只'+t.n+'，底下压着半张烧过的纸。','gold');
+  closeModal();toast('得了一件旧物');render();
+}
+function evSdLeave(){
+  gain('learn',ri(2,3),240);
+  addLog('📦 你把匣子原样放回石阶，翌日再看，已经不见了。','');
+  closeModal();toast('有些东西不该收');render();
+}
+function evSdLend(){
+  if(G.money<120){toast('银两不足。');return;}
+  G.money-=120;gain('charm',ri(3,5),240);
+  if(_sdN){G.npcs[_sdN]=cl((G.npcs[_sdN]||0)+4,0,100);}
+  addLog('💸 银子递出去，那人连声道谢，走得很快。','');
+  closeModal();toast('算是还了一段旧情');render();
+}
+function evSdBet(){
+  if(G.money<50){toast('银两不足。');return;}
+  G.money-=50;
+  if(ri(1,100)<=45){
+    var w=ri(80,190);G.money+=w;
+    addLog('🎲 骰子停下，庄家的笑僵在脸上。你赢了'+w+'两。','gold');
+    toast('赢了 '+w+' 两');
+  }else{
+    addLog('🎲 骰子翻了个面，五十两被庄家收走，人群散了。','bd');
+    toast('输了五十两');
+  }
+  closeModal();render();
+}
+function evSdWalk(){
+  gain('exp',ri(1,3),300);
+  addLog('🎲 你从人群外走过去，没有回头。','');
+  closeModal();render();
+}
+function evSdRefuse(){
+  gain('exp',ri(2,4),300);
+  G.charm=cl(G.charm-2,0,240);
+  addLog('💸 你把话说得客气，门也就关上了。','');
+  closeModal();render();
+}
+
+/* 给灵宠取名 */
+function openPetName(){
+  if(!G.pets.length){toast('院里没有灵宠。');return;}
+  var h='<div class="story-text"><p>名字是要跟着它一辈子的，喊顺了口，它才认。</p></div>';
+  if(G.pets.length>1){
+    h+='<div class="tiny">选一只：</div><select id="petPick" class="qty-input">'+
+      G.pets.map(function(p,i){return '<option value="'+i+'">'+p.name+'（'+p.kind+'）</option>';}).join('')+
+      '</select>';
+  }
+  h+='<div class="tiny" style="margin-top:10px">新名字：</div>'+
+    '<input type="text" id="petName" class="qty-input" maxlength="6" value="'+G.pets[0].name+'">'+
+    '<button class="buy primary" style="width:100%;padding:12px;margin-top:12px" onclick="setPetName()">定 下 名 字</button>';
+  openModal('给 灵 宠 取 名',h);
+}
+function setPetName(){
+  var el=document.getElementById('petName');
+  var nm=(el?el.value:'').trim();
+  if(!nm){toast('名字不能是空的');return;}
+  if(nm.length>6)nm=nm.substring(0,6);
+  var sel=document.getElementById('petPick');
+  var i=sel?(parseInt(sel.value,10)||0):0;
+  var p=G.pets[i];
+  if(!p){closeModal();return;}
+  var old=p.name;
+  p.name=nm; p.mood=cl((p.mood===undefined?70:p.mood)+5,0,100);
+  addLog('🏷 '+old+'从此叫'+nm+'了，你喊了两声，它还真回头。','gd2');
+  closeModal();toast('取名成功');render();
+}
+
+/* 灵宠生病：得靠丹药或灵植 */
+var _sickPet=null;
+function evPetSick(){
+  if(!G.pets.length)return;
+  _sickPet=pk(G.pets);
+  var n=_sickPet.name;
+  openModal('灵 宠 抱 恙','<div class="story-text">'+
+    '<p>'+n+'蜷在檐下，一整天没动，连你端来的水也不碰。</p>'+
+    '<p>它的耳朵烫得厉害，眼睛半睁着看你。</p></div>'+
+    '<div class="pair-row"><button class="buy primary" onclick="evPetHeal()">碾一枚丹药喂它</button>'+
+    '<button class="buy" onclick="evPetHerb()">掰半株灵植，慢慢调</button></div>'+
+    '<button class="buy" style="width:100%" onclick="evPetWait()">守它一夜，看能不能撑过去</button>');
+  addLog('🐾 '+n+'病了，趴在檐下不肯动。','bd');
+}
+function evPetHeal(){
+  if(!_sickPet){closeModal();return;}
+  if(G.pill<=0){toast('囊中没有丹药。');return;}
+  G.pill--; _sickPet.full=100; _sickPet.starve=0;
+  addLog('🐾 丹药化在温水里，'+_sickPet.name+'舔了两口，夜里终于睡了。','gd2');
+  closeModal();toast('灵宠缓过来了');render();
+}
+function evPetHerb(){
+  if(!_sickPet){closeModal();return;}
+  if(G.lingzhi<=0){toast('没有灵植可用。');return;}
+  G.lingzhi--;
+  if(ri(1,100)<=60){
+    _sickPet.full=100; _sickPet.starve=0;
+    addLog('🌱 灵植的汁水喂下去，'+_sickPet.name+'打了个喷嚏，站起来蹭你的手。','gd2');
+    closeModal();toast('慢慢调过来了');
+  }else{
+    _sickPet.full=cl((_sickPet.full||0)-10,1,100);
+    addLog('🌱 灵植只压住了一半，'+_sickPet.name+'还是没精神。','');
+    closeModal();toast('还没好透，得再想办法');
+  }
+  render();
+}
+function evPetWait(){
+  if(!_sickPet){closeModal();return;}
+  var p=_sickPet;
+  var weak=(p.full||0)<20||(p.starve||0)>=2;
+  if(ri(1,100)<=40){
+    p.full=100; p.starve=0;
+    addLog('🐾 天快亮时，'+p.name+'自己爬起来喝了水。','gd2');
+    closeModal();toast('它自己撑过来了');
+  }else if(ri(1,100)<=(weak?ri(25,35):15)){
+    var idx=G.pets.indexOf(p);
+    if(idx>=0)G.pets.splice(idx,1);
+    _sickPet=null;
+    G.charm=cl(G.charm-2,0,240);
+    addLog('🐾 天亮了，'+p.name+'一直没有醒。你在院后的老树下挖了个浅坑，把土盖严实了。','bd');
+    closeModal();toast('它没能撑过来');
+  }else{
+    p.full=cl((p.full||0)-15,1,100); p.starve=(p.starve||0)+2;
+    addLog('🐾 '+p.name+'撑过来了，只是瘦了一圈，见人也不叫了。','bd');
+    closeModal();toast('元气大伤，记得喂它');
+  }
+  render();
+}
+
+/* 邻家孩子走失 */
+var _lostKid='';
+function evLost(){
+  _lostKid=pk(['隔壁家的小子','巷尾的丫头','卖豆腐家的孩子']);
+  openModal('孩 子 走 失','<div class="story-text">'+
+    '<p>巷口乱成一团：'+_lostKid+'从午后就不见了，家里人喊哑了嗓子。</p>'+
+    '<p>天色一点点暗下去，河边的柳树影子里什么也看不清。</p></div>'+
+    '<div class="pair-row"><button class="buy primary" onclick="evLostFind()">自己去找</button>'+
+    '<button class="buy" onclick="evLostHire()">出八十两，雇人一起找</button></div>'+
+    '<button class="buy" style="width:100%" onclick="evLostIgnore()">这不是你的事</button>');
+  addLog('🌙 '+_lostKid+'走失了，巷口一片人声。','');
+}
+function evLostFind(){
+  if(ri(1,100)<=55){
+    G.charm=cl(G.charm+ri(5,9),0,240);gain('exp',ri(4,8),300);
+    addLog('🌙 你在河埠头找到了'+_lostKid+'，他抱着一只湿透的鞋，见你就哭了。','gd2');
+    closeModal();toast('孩子找回来了');
+  }else{
+    G.charm=cl(G.charm+2,0,240);G.sp=cl(G.sp-8,0,100);
+    addLog('🌙 你找到半夜也没见人影，回来时腿都僵了。','');
+    closeModal();toast('没找到，天亮了再说');
+  }
+  render();
+}
+function evLostHire(){
+  if(G.money<80){toast('银两不足。');return;}
+  G.money-=80;
+  G.charm=cl(G.charm+ri(6,10),0,240);
+  addLog('🌙 八十两撒出去，几拨人打着灯笼沿河找了一夜，孩子在后山睡着了。','gd2');
+  closeModal();toast('孩子平安回来了');render();
+}
+function evLostIgnore(){
+  G.charm=cl(G.charm-3,0,240);
+  addLog('🌙 你关上了门。夜里巷口的喊声断断续续，一直没停。','bd');
+  closeModal();toast('有些声音关不住');render();
+}
+
+function seasonLine(){  var m=G.month;
+  if(m===1)return '腊梅压雪，岁首宜守。';
+  if(m===2)return '河冰渐解，柳眼初开。';
+  if(m===3)return '桃花压枝，燕子在檐下衔泥。';
+  if(m===4)return '谷雨初霁，麦苗正抽穗。';
+  if(m===5)return '榴花照眼，风里有枇杷的甜。';
+  if(m===6)return '荷花半开，蝉声起得早。';
+  if(m===7)return '萤火满塘，夜里也热。';
+  if(m===8)return '桂子初飘，暑气将尽。';
+  if(m===9)return '菊黄蟹肥，天高云淡。';
+  if(m===10)return '霜降过后，柿子红透了。';
+  if(m===11)return '北风卷地，白草折尽。';
+  return '雪压断桥，炉火正温。';
+}
+
+/* ================= 结局 ================= */
+function attrTop(){
+  var a=[
+    {k:'learn',v:G.learn,tag:'以文立身'},
+    {k:'sword',v:G.sword,tag:'以武立身'},
+    {k:'art',v:G.art,tag:'以艺立身'},
+    {k:'charm',v:G.charm,tag:'风华为名'},
+    {k:'exp',v:Math.floor(G.exp*0.8),tag:'以道立身'}
+  ];
+  a.sort(function(x,y){return y.v-x.v;});
+  return a[0];
+}
+function deathEnd(reason){
+  if(G.ended)return;
+  var d={
+    bandit:{tag:'横死山道',text:'他们抢光了你的银子，却没打算放你走。山道上的那一夜很长，长到你没能等到天亮。<br><br>'+
+      '后来有人在沟底找到你，身上没有一块完整的地方。家里那半亩院子，从此再没有人扫过落叶。'},
+    palace:{tag:'深宫殒命',text:'那碗药还是进了口。太医赶来的时候，你已经说不出话，只看见帐子外的人影晃了晃，就散了。<br><br>'+
+      '宫里记下的死因只有两个字：病逝。你带来的那只旧箱子，第二日就被挪去了库房。'}
+  }[reason]||{tag:'早逝',text:'你没能走完这一生。'};
+  G.flags.death=d;
+  endGame();
+}
+function openEndingAsk(){
+  openModal('结束此生','<div class="story-text"><p>你要在此停下吗？</p>'+
+    '<p class="tiny">此时收笔，所见所历，将成一生。</p></div>'+
+    '<div class="pair-row"><button class="buy" onclick="closeModal()">再走一段</button>'+
+    '<button class="buy primary" onclick="closeModal();endGame()">就此收笔</button></div>');
+}
+function endGame(){
+  if(G.ended)return;
+  G.ended=true;
+  if(G.flags.death){
+    var d=G.flags.death;
+    var dhtml='<div class="story-panel"><div class="story-title">结局 · '+d.tag+'</div>'+
+      '<div class="story-text">'+
+      '<p class="hl">'+G.hero+'，'+(G.age)+'岁，此生止步。</p>'+
+      '<p>'+d.text+'</p>'+
+      '<p class="tiny">修为 '+G.exp+' · 武艺 '+G.sword+' · 文墨 '+G.learn+' · 技艺 '+G.art+' · 风仪 '+G.charm+'</p>'+
+      '</div></div>'+
+      '<button class="buy primary" style="width:100%" onclick="location.reload()">⭯ 重开一生</button>';
+    addLog('🕯 此生止于'+G.age+'岁。','bd');
+    openModal('结 局',dhtml);
+    return;
+  }
+  if(!G.flags.npcDark&&G.flags.npcDarkPending)G.flags.npcDark=G.flags.npcDarkPending;
+  if(G.flags.npcDark){
+    var _id=G.flags.npcDark, _n=NPCS[_id]||{name:'那个人',g:'?'};
+    var _nm=_n.name, _he=_n.g==='m'?'他':(_n.g==='f'?'她':'他');
+    var _rel=(G.married===_id||(G.wives||[]).indexOf(_id)>=0);
+    var _dtxt;
+    if(_rel){
+      _dtxt='红烛还在，门却从外头落了锁。钥匙被扔进井里，声音很轻。<br><br>'+
+        '往后的日子，院里只剩两个人，一张桌子，两副碗筷。你偶尔提起从前，'+_he+'就笑一笑，说：现在不是很好吗。';
+    }else if(G.lovers.indexOf(_id)>=0){
+      _dtxt='你终究没有只选'+_he+'一个人。那天夜里，'+_he+'把你带去了一个没有旁人的地方。<br><br>'+
+        '窗子糊得很厚，门外有落锁的声音。'+_he+'说：这样，就不会有人再来找你了。';
+    }else{
+      _dtxt=_he+'等了很多年，等到心一点点凉透。后来你听说，'+_he+'搬去了很远的地方；再后来，没有人见过'+_he+'。';
+    }
+    var _nhtml='<div class="story-panel"><div class="story-title">结局 · 黑化情缘 · '+_nm+'</div>'+
+      '<div class="story-text">'+
+      '<p class="hl">'+G.hero+'，'+(G.age)+'岁，故事停在这里。</p>'+
+      '<p>'+_dtxt+'</p>'+
+      '<p class="tiny">修为 '+G.exp+' · 武艺 '+G.sword+' · 文墨 '+G.learn+' · 技艺 '+G.art+' · 风仪 '+G.charm+'</p>'+
+      '</div></div>'+
+      '<button class="buy primary" style="width:100%" onclick="location.reload()">⭯ 重开一生</button>';
+    addLog('🖤 此生收笔，'+_nm+'的名字压在这一页上。','bd');
+    openModal('结 局',_nhtml);
+    return;
+  }
+  var tags=[];
+  if(G.flags.queen)tags.push('女帝临朝');
+  else if(G.flags.taihou)tags.push('垂帘太后');
+  else if(G.career==='exile'&&G.flags.sentAway)tags.push('和亲远嫁');
+  else if(G.career==='palace'&&G.chill)tags.push('深宫囚雀');
+  else if(G.role==='prince')tags.push('亲王');
+  else if(G.role==='chief')tags.push('内廷掌印');
+  else if(G.flags.mengzhu)tags.push('武林盟主');
+  else if(G.career==='martial')tags.push('江湖客');
+  else if(G.career==='xia')tags.push('侠客');
+  else if(G.career==='dancer')tags.push('一代舞姬');
+  else if(G.career==='sect')tags.push('仙门弟子');
+  if(G.dark>=85)tags.push('黑化到底');
+  else if(G.dark>=50)tags.push('心已染墨');
+  if(G.vow&&G.lovers.length===0&&(G.wives||[]).length===0)tags.push('独身一世');
+  if(G.exp>=200)tags.push('道心已成');
+  if(G.exp>=250)tags.push('一代散仙');
+  if(G.sword>=140)tags.push('江湖有名');
+  if(G.charm>=140)tags.push('风华绝代');
+  if(G.learn>=140)tags.push('文名满城');
+  var _at=attrTop();
+  if(_at.v>=120&&tags.indexOf(_at.tag)<0)tags.push(_at.tag);
+  if(G.lovers.length>=2)tags.push('人间圆满');
+  if((G.wives||[]).length>=2)tags.push('妻室成群');
+  if(G.children.length>0)tags.push('膝下有唤');
+  if(G.egg&&G.flags.night1)tags.push('灯下有人');
+  if(!tags.length)tags.push('平淡一生');
+
+  var main;
+  var careerMain='';
+  if(G.dark>=85){
+    careerMain='后来的人说起你，都不肯直呼名字。宫里的灯一盏盏灭下去，没有一盏是为别人留的。<br><br>'+
+      '你赢到最后，赢到没有人敢和你同桌吃饭。赏下去的恩，都带着钩；说出口的话，都留着半句。<br><br>'+
+      '某年冬天，你让人把院里的花全拔了，改种荆棘。花开的时候好看，可开过就败；荆棘不开花，却一直在。<br><br>'+
+      '你活得很久。久到后来，连你自己也记不清，是从哪一碗汤开始，心就硬了。';
+  }else if(G.flags.queen){
+    careerMain='你坐在那把椅子上，帘子没有放下来。百官跪在阶下，念折子的声音在殿里回响。散朝之后，偏殿的灯一直亮着——灯下有人替你研墨，也有人只是坐着。<br><br>'+
+      '头一年，朝臣背地里叫你「那个女人」。第三年，他们开始在折子里写「陛下圣明」。第七年，你出宫祭陵，车驾经过当年入宫那道门，朱漆已经旧了。<br><br>'+
+      '你没有回头看。回去的路上，你只说了一句：把西边那几株老槐，移两棵到御花园去。';
+  }else if(G.flags.taihou){
+    careerMain='皇帝走得早，新君年幼。你在帘子后面坐了十年，奏折先过你的手，再进那道门。起初他连字都认不全，后来学会了在朝会上顶你一句。<br><br>'+
+      '帘子撤下的那天，他亲自扶你起身，说了句「母后辛苦」。你笑着点头，回宫以后把那把椅子摸了一遍，才发现漆都磨掉了。<br><br>'+
+      '后来你搬到西宫，院里种了两株槐。春天开花时，你坐在树下听人念新折子，念到一半就睡着了。';
+  }else if(G.career==='exile'&&G.flags.sentAway){
+    careerMain='车队走了三个月，风沙停了又起。你嫁的那个人待你不坏，只是夜里你常梦见院里的老槐。后来你学会了那边的歌，唱给自己的孩子听。<br><br>'+
+      '第三年，中原来了使节，问你有没有话要带回去。你写了半页纸，最后又烧了，只说：告诉他们，我很好。<br><br>'+
+      '很多年以后，有商队从南边来，说你当年那道城里，槐花开得还是那样。';
+  }else if(G.career==='palace'&&G.chill){
+    careerMain='冷宫的草一年比一年高。送饭的人换了又换，没有人再叫你从前的名字。你学会了数砖缝里的光，数到第一千三百天时，春天又来了。<br><br>'+
+      '有一天，一个年轻的小宫女隔着门缝问你：「姐姐，外头是不是很热闹？」<br>你想了很久，说：也不见得。<br><br>'+
+      '后来你死在春天。人们在床下翻出一叠写满字的纸，全是家书，一封也没寄出去。';
+  }else if(G.role==='prince'){
+    careerMain='你在王府里过完了后面的日子。逢年过节，府门前停满车马，席上的人都在笑。散席之后，你一个人在廊下站着，想起当年边军的风沙。<br><br>'+
+      '你纳了几房妾室，孩子们在院里跑，管家追在后头。你有时候会叫错名字，他们也不恼，只笑。<br><br>'+
+      '有一年冬天，你把那柄旧刀从箱底翻出来，擦了一夜。第二天对儿子说：这是从前的朋友。';
+  }else if(G.role==='chief'){
+    careerMain='你从最不起眼的小太监熬到了掌印。宫里的事，一半要先问过你。只是每年净身那日，你都会一个人在屋里坐很久。<br><br>'+
+      '没有人敢小看你，连得宠的娘娘见了你也先笑。你把赏下来的东西一样样收好，从来没有送过人。<br><br>'+
+      '晚年你出宫养老，在城外买了个小院。院里不种花，只种了一株槐——和进宫前那株，一样的。';
+  }else if(G.flags.mengzhu){
+    careerMain='你执掌江湖十数年。令牌换过三回，来挑战的人一茬接一茬。最后你把令牌交出去，一个人背着旧剑下了山，谁也认不出你。<br><br>'+
+      '你在渡口开了间小小的面摊，江湖人从门前过，聊的还是当年那些事。有人说起「那位盟主」，你低头下面，什么也没接。<br><br>'+
+      '直到某天夜里，一个少年把剑放在你桌上，说：教我一招。';
+  }else if(G.career==='martial'){
+    careerMain='你在江湖上走了很多年。没有成为盟主，但码头、破庙、酒肆里，总有人记得你的名字。<br><br>'+
+      '你替人押过镖，替人挡过刀，也在雪夜里替陌生人守过一夜的马。你的剑换过两柄，伤添了七道。<br><br>'+
+      '最后你回到镇上，盘了间铺子。后生问你当年是不是很厉害，你说：一般。';
+  }else if(G.career==='xia'){
+    careerMain='你这一生没做过什么大事，只是见不得有人在眼前被欺负。<br><br>'+
+      '你替人讨过工钱，替寡妇挡过门，也在雪地里背过一个摔断腿的货郎。有人叫你侠士，你说别这么叫，怪不好意思。<br><br>'+
+      '老了以后你住在镇口，门槛被踩得很低。逢年过节，总有人拎着鸡蛋来，说当年多亏你。<br><br>'+
+      '你记不清那些人的脸了，只记得每一回，你都站了出来。';
+  }else if(G.career==='dancer'){
+    careerMain='你在春楼跳了很多年。灯一亮，你就是整座楼最好看的那一处。<br><br>'+
+      '有人为你赎身，你没应。有人替你写诗，你笑着收进箱底。后来楼拆了，你在原址站了很久，地砖上还有当年踩出来的浅印。<br><br>'+
+      '再后来你教几个小姑娘跳舞，教的第一支还是那支旧的。她们问你从前是不是很红，你说：还行。<br><br>'+
+      '灯还是那盏灯。你抬手的时候，影子比年轻时短了些。';
+  }else if(G.career==='sect'){
+    careerMain='你在云岫宗住了很多年。晨钟一响就起，夜里打坐到月落。<br><br>'+
+      '同门来了又走，有的下山入世，有的死在某场斗法里。你把他们的名字刻在崖壁上，刻到后来，手抖得厉害。<br><br>'+
+      '修为到了那一步，天地忽然静得吓人。你没有飞升，也没有回去，只坐在山门口看云。<br><br>'+
+      '有年轻弟子问你：到底有没有仙？你想了很久，说：你先活到我这岁数，再问。';
+  }
+  if(careerMain){
+    main=careerMain;
+  }else if((G.wives||[]).length>=2){
+    main='你终究一个也没舍下。院里的圆桌换了两回，逢年过节还是坐不下。几位娘子各有各的脾气，倒也把这一方院子过成了人间最热闹的去处。';
+  }else if(G.exp>=200&&G.lovers.length===0){
+    main='你把一生交给了山。最后一年，你在观澜道观后山闭关，出关那天，云从脚下过，山下的人已认不出你。';
+  }else if(G.wives&&G.wives.length===1){
+    main='你与'+NPCS[G.wives[0]].name+'守着这半亩小院。后来有人问起当年，你只说：一生很短，够爱一个人了。';
+  }else if(G.lovers.length>=2){
+    main='你没有选。或者说，你全都留住了。每年三月，院里的槐花一开，就有人从各地回来，坐在同一张桌子上喝茶，谁也不提当年。';
+  }else if(G.lovers.length===1){
+    main='你与'+NPCS[G.lovers[0]].name+'守着这半亩小院。后来有人问起当年，你只说：一生很短，够爱一个人了。';
+  }else if(G.children.length>0){
+    main='院里终年有饭菜香。你收养的孩子一个个长大，喊你的时候，声音从院子这头传到那头。';
+  }else{
+    if(_at.v>=80){
+      if(tags.indexOf(_at.tag)<0)tags.push(_at.tag);
+      if(_at.k==='learn'){
+        main='你这一生没留下什么了不得的功业，只留下几箱书。后来有人翻开，页边全是你的批注，密密麻麻，像另一个人在里面活过一遍。';
+      }else if(_at.k==='sword'){
+        main='你的名字最后留在几座小镇的茶馆里。说书人讲你当年如何一刀退敌，你听见了也不辩，只低头把碗里的面吃完。';
+      }else if(_at.k==='art'){
+        main='你留下的画和曲，比你的名字活得久。后来有人在旧铺子里翻出一幅未落款的画，看了很久，说：这个人心里一定有过很热闹的东西。';
+      }else if(_at.k==='charm'){
+        main='你走到哪里都有人愿意多看你一眼。到最后你才明白，被记住不难，难的是有人记得你怕冷、爱吃甜、夜里睡不安稳。';
+      }else{
+        main='你终究没有飞升。临终前你说，山上的云和院里的槐花，其实是同一种东西。听的人没懂，你也没有再解释。';
+      }
+    }else{
+      main='你既没有飞升，也没有留下什么惊人的名字。只是每年春天，院里花开得比谁都好。';
+    }
+  }
+  var extra='';
+  if(G.egg&&G.flags.night1){
+    extra+='<p class="secret">很多年后，你在灯下翻出那封无名信，火漆终于裂了。里面只有一句：<br>「人间这一局，你赢得很好看。」</p>';
+  }
+  if(G.flags.queen&&(G.mianshou||[]).length){
+    extra+='<p class="secret">偏殿那几盏灯，一直亮到你走的那年。史书上没写他们的名字，只在末尾添了一句：帝晚年好静，常与数人弈棋至夜半。</p>';
+  }
+  if(G.flags.taihou&&G.met&&G.met.hanlie){
+    extra+='<p class="secret">西宫的门禁松了许多年。有个老侍卫每晚都绕着那道墙走一圈，谁也没问过他是谁。</p>';
+  }
+  if((G.wives||[]).length>=3||(G.mianshou||[]).length>=3){
+    extra+='<p class="secret">后来有人在你的旧箱底翻出一本册子，记着每个人的生辰、爱吃的点心、怕的东西，一笔不落。</p>';
+  }
+  if(G.flags.mengzhu){
+    extra+='<p class="secret">那柄旧剑你一直挂在面摊后头，从不擦。有人问起，你只说：它还认得路。</p>';
+  }
+  if(G.flags.sentAway&&G.egg){
+    extra+='<p class="secret">你托商队带回一包花种。信中只有六个字：种在院里，别问。</p>';
+  }
+  if(G.met&&G.met.liucaier&&(G.npcs.liucaier||0)>=100){
+    extra+='<p class="secret">柳才人后来怎样，说法不一。有人说她出了宫，也有人说她一直留在那座宫里，替一个人守着半块点心。</p>';
+  }
+  if(G.met&&G.met.hanlie&&(G.npcs.hanlie||0)>=100&&!G.flags.queen&&!G.flags.taihou){
+    extra+='<p class="secret">宫墙下那把刀，最后挂在了你屋里的墙上。刀鞘很旧，刀口一直没钝。</p>';
+  }
+  if(G.met&&G.met.shenminglan&&(G.npcs.shenminglan||0)>=100){
+    extra+='<p class="secret">太医院旧档里夹着一张药方，字极端正。最后一味药，写的是「白头」。抓药的人看了很久，终究没敢问。</p>';
+  }
+  var html='<div class="story-panel"><div class="story-title">结局 · '+tags.join(' · ')+'</div>'+
+    '<div class="story-text">'+
+    '<p class="hl">'+G.hero+'，'+(G.age)+'岁收笔。</p>'+
+    '<p>'+main+'</p>'+extra+
+    '<p class="tiny">修为 '+G.exp+' · 武艺 '+G.sword+' · 文墨 '+G.learn+' · 技艺 '+G.art+' · 风仪 '+G.charm+'</p>'+
+    '</div></div>'+
+    '<button class="buy primary" style="width:100%" onclick="location.reload()">⭯ 重开一生</button>';
+  addLog('🌙 此生收笔。','gd2');
+  openModal('结 局',html);
+}
+
+/* ================= 弹窗 ================= */
+function openModal(title,html){
+  document.getElementById('modalTitle').textContent=title;
+  document.getElementById('modalBody').innerHTML=html;
+  document.getElementById('overlay').classList.add('show');
+}
+function closeModal(){
+  if(G&&G.flags&&G.flags.pending&&_cands.length){
+    acceptMatch(ri(0,_cands.length-1));
+    return;
+  }
+  document.getElementById('overlay').classList.remove('show');
+}
+/* 点击弹窗外空白处返回上一级 */
+document.getElementById('overlay').addEventListener('click',function(e){
+  if(e.target===this){
+    if(_ruin){ruinStop('你退出了秘境');return;}
+    closeModal();
+  }
+});
+/* Esc 也能关掉弹窗 */
+document.addEventListener('keydown',function(e){
+  if(e.key!=='Escape'&&e.keyCode!==27)return;
+  if(!document.getElementById('overlay').classList.contains('show'))return;
+  if(_ruin){ruinStop('你退出了秘境');return;}
+  closeModal();
+});
+/* 点击内容区空白处返回上一页 */
+document.addEventListener('click',function(e){
+  if(!G)return;
+  if(e.target.closest('.act')||e.target.closest('button')||e.target.closest('.modal')||
+     e.target.closest('input')||e.target.closest('select')) return;
+  var inMain=e.target.closest('.main');
+  if(!inMain) return;
+  if(e.target.closest('.log-body')) return;
+  goBack();
+});
+
+/* ================= 存档 ================= */
+var SAVE_KEY='xxhy_save_v1';
+var IDB_NAME='xxhy_db', IDB_STORE='save';
+var _saveTimer=null;
+
+/* 备档：IndexedDB，防 localStorage 单点写坏 */
+function idbOpen(cb){
+  try{
+    if(!window.indexedDB)return cb(null);
+    var rq=indexedDB.open(IDB_NAME,1);
+    rq.onupgradeneeded=function(e){
+      var db=e.target.result;
+      if(!db.objectStoreNames.contains(IDB_STORE))db.createObjectStore(IDB_STORE);
+    };
+    rq.onsuccess=function(e){cb(e.target.result);};
+    rq.onerror=function(){cb(null);};
+  }catch(e){cb(null);}
+}
+function idbPut(raw){
+  idbOpen(function(db){
+    if(!db)return;
+    try{
+      var tx=db.transaction(IDB_STORE,'readwrite');
+      tx.objectStore(IDB_STORE).put({raw:raw,at:Date.now()},'main');
+      tx.oncomplete=function(){try{db.close();}catch(e){}};
+    }catch(e){}
+  });
+}
+function idbGet(cb){
+  idbOpen(function(db){
+    if(!db)return cb(null);
+    try{
+      var tx=db.transaction(IDB_STORE,'readonly');
+      var rq=tx.objectStore(IDB_STORE).get('main');
+      rq.onsuccess=function(){cb(rq.result&&rq.result.raw?rq.result.raw:null);};
+      rq.onerror=function(){cb(null);};
+    }catch(e){cb(null);}
+  });
+}
+function writeSave(silent){
+  if(!G||G.ended)return false;
+  var raw;
+  try{G.savedAt=Date.now();raw=JSON.stringify({G:G});}catch(e){return false;}
+  var ok=false;
+  try{localStorage.setItem(SAVE_KEY,raw);ok=true;}catch(e){}
+  idbPut(raw);
+  if(!silent){
+    if(ok)toast('已存档');
+    else toast('本地存储不可用，已写入备档');
+  }
+  return ok;
+}
+function save(){ if(!G){toast('还没有开始这一生');return;} writeSave(false); }
+function autoSave(){
+  if(!G||G.ended)return;
+  clearTimeout(_saveTimer);
+  _saveTimer=setTimeout(function(){writeSave(true);},400);
+}
+/* 重开：保留旧档，回到开局界面 */
+function askRestart(){
+  openModal('重 开','<div class="story-text"><p>要重开这一生吗？</p>'+
+    '<p class="tiny">当前进度已自动保存，重开后仍可从开局界面「继续上一世」回到此刻。</p></div>'+
+    '<div class="pair-row"><button class="buy" onclick="closeModal()">继续这一生</button>'+
+    '<button class="buy primary" onclick="doRestart()">重 开</button></div>');
+}
+function doRestart(){
+  closeModal();
+  try{
+    if(G&&!G.ended){
+      G.savedAt=Date.now();
+      var _raw=JSON.stringify({G:G});
+      localStorage.setItem(SAVE_KEY,_raw);
+      idbPut(_raw);
+    }
+  }catch(e){}
+  G=null; PAGE_HIST=[];
+  document.getElementById('wrap').style.display='none';
+  document.getElementById('boot').style.display='flex';
+  bootScreen();
+}
+/* 把存档文本还原成游戏状态 */
+function applySave(raw){
+  var data=JSON.parse(raw);
+  G=data.G;
+  if(!G||typeof G!=='object')throw new Error('bad save');
+  G.ended=false;
+  if(!G.sex)G.sex='f';
+  if(!G.flags)G.flags={matchYear:0};
+  if(G.flags.death)delete G.flags.death;
+  if(G.flags.evCd===undefined)G.flags.evCd=-99;
+  if(!G.treasure)G.treasure=[];
+  if(!G.pets)G.pets=[];
+  if(!G.children)G.children=[];
+  if(!G.lovers)G.lovers=[];
+  if(!G.log)G.log=[];
+  if(G.seeds===undefined)G.seeds=1;
+  if(G.lingzhi===undefined)G.lingzhi=0;
+  if(G.root===undefined)G.root=null;
+  if(G.followers===undefined)G.followers=0;
+  if(G.married===undefined)G.married=null;
+  if(G.egg&&G.mode!=='self')G.egg=false;
+  if(!G.wives)G.wives=[];
+  if(!G.mianshou)G.mianshou=[];
+  if(!G.acc)G.acc=[];
+  if(!G.ndark)G.ndark={};
+  if(G.robFail===undefined)G.robFail=0;
+  if(G.pill===undefined)G.pill=0;
+  if(!G.career)G.career='folk';
+  if(G.cStage===undefined)G.cStage=0;
+  if(G.clout===undefined)G.clout=0;
+  if(G.chill===undefined)G.chill=false;
+  if(G.role===undefined)G.role='';
+  if(G.dark===undefined)G.dark=0;
+  if(G.vow===undefined)G.vow=false;
+  if(G.vowPaid===undefined)G.vowPaid=false;
+  if(G.guard===undefined)G.guard=0;
+  if(!G.elem)G.elem=[];
+  if(!G.elemTry)G.elemTry={};
+  if(G.wash===undefined)G.wash=0;
+  for(var _pi=0;_pi<G.pets.length;_pi++){if(G.pets[_pi].full===undefined)G.pets[_pi].full=100;if(G.pets[_pi].mood===undefined)G.pets[_pi].mood=70;}
+  if(G.flags.stCd===undefined)G.flags.stCd=-999;
+  PAGE_HIST=[];
+  document.getElementById('orb').style.display='flex';
+  document.getElementById('bootleaves').className='bootleaves ingame';
+  spawnBootLeaves(7);
+  document.getElementById('boot').style.display='none';
+  document.getElementById('wrap').style.display='flex';
+  spawnFx(G.month); render();
+  return true;
+}
+function loadGame(){
+  var raw=null;
+  try{raw=localStorage.getItem(SAVE_KEY);}catch(e){}
+  if(!raw)return rescueFromIdb();
+  try{return applySave(raw);}
+  catch(e){return rescueFromIdb();}
+}
+function rescueFromIdb(){
+  toast('本地存档不可用，正在从备档恢复…');
+  idbGet(function(raw){
+    if(!raw){toast('读档失败：没有可用存档');return;}
+    try{applySave(raw);toast('已从备档恢复');}
+    catch(e){toast('备档也损坏了，只能开新档');}
+  });
+  return false;
+}
+/* 导出 / 导入：一段文本，可存到别处 */
+function exportSave(){
+  if(!G){toast('还没有可导出的存档');return;}
+  try{
+    G.savedAt=Date.now();
+    var raw=JSON.stringify({G:G});
+    var txt='XHY-SAVE-1:'+btoa(unescape(encodeURIComponent(raw)));
+    var a=document.createElement('a');
+    a.href='data:text/plain;charset=utf-8,'+encodeURIComponent(txt);
+    a.download='修仙还是游戏人间-存档-'+new Date().toISOString().slice(0,10)+'.txt';
+    document.body.appendChild(a);a.click();a.remove();
+    toast('已导出存档，请收好文件');
+  }catch(e){toast('导出失败');}
+}
+function openImport(){
+  openModal('导 入 存 档','<div class="story-text"><p>把之前「导出」得到的整段文本粘进来，就能回到那一生。</p></div>'+
+    '<textarea id="impTxt" class="qty-input" style="height:120px;width:100%;resize:vertical" placeholder="XHY-SAVE-1:..."></textarea>'+
+    '<button class="buy primary" style="width:100%;padding:12px;margin-top:12px" onclick="doImport()">导 入</button>');
+}
+function doImport(){
+  var el=document.getElementById('impTxt');
+  var t=(el?el.value:'').trim();
+  if(!t){toast('内容为空');return;}
+  t=t.replace(/^XHY-SAVE-1:/,'').replace(/\s+/g,'');
+  var raw=null;
+  try{raw=decodeURIComponent(escape(atob(t)));}catch(e){toast('这段文本不是有效的存档');return;}
+  try{
+    closeModal();
+    applySave(raw);
+    try{localStorage.setItem(SAVE_KEY,raw);}catch(e){}
+    idbPut(raw);
+    toast('导入成功，已回到那一生');
+  }catch(e){toast('存档内容不完整，导入失败');}
+}
+
+/* ================= 开局 ================= */
+function spawnBootLeaves(n){
+  var box=document.getElementById('bootleaves');
+  if(!box)return;
+  var cols=[['#e4f2d6','#96c58c'],['#d6eabc','#84b87e'],['#cde2a6','#a3c67f'],['#dff0cd','#9cca93'],['#e8f3d2','#a9ce9a']];
+  var h='';
+  n=n||18;
+  for(var i=0;i<n;i++){
+    var c=cols[i%cols.length];
+    var w=ri(9,16), len=Math.round(w*ri(38,50)/10);
+    var blur=(i%4===0)?1:0;
+    h+='<span style="left:'+ri(0,99)+'%;width:'+w+'px;height:'+len+'px;'+
+      'background:linear-gradient(135deg,'+c[0]+','+c[1]+');'+
+      'opacity:'+(ri(45,88)/100)+';filter:blur('+blur+'px);'+
+      'animation:leafFall '+ri(13,26)+'s linear '+(0-ri(0,26))+'s infinite;"></span>';
+  }
+  box.innerHTML=h;
+}
+function bootScreen(){
+  var b=document.getElementById('boot');
+  var has=false, gapDays=0;
+  try{
+    var _raw=localStorage.getItem(SAVE_KEY);
+    has=!!_raw;
+    if(has){
+      try{
+        var _sv=JSON.parse(_raw);
+        if(_sv&&_sv.G&&_sv.G.savedAt)gapDays=Math.floor((Date.now()-_sv.G.savedAt)/86400000);
+      }catch(e){gapDays=999;}
+    }
+  }catch(e){}
+  document.getElementById('bootleaves').className='bootleaves bootbg';
+  spawnBootLeaves();
+  var h='<div class="boot-card">';
+  h+='<div class="logo">修仙还是游戏人间</div>';
+  h+='<div class="sub">一 念 入 世 · 一 念 出 世</div>';
+  h+='<div class="desc">十岁那年，你站在半亩小院里，<br>'+
+     '前头是一整座人间的热闹，<br>身后是一条清冷的山道。<br><br>'+
+     '你要以何种身份，走这一遭？</div>';
+  h+='<div class="btn-row">';
+  h+='<button class="btn-primary" onclick="chooseMode('+"'mom'"+')">做 母 亲</button>';
+  h+='<button class="btn-primary" onclick="chooseMode('+"'dad'"+')">做 父 亲</button>';
+  h+='<button class="btn-ghost" onclick="chooseMode('+"'self'"+')">我亲自入世</button>';
+  h+='</div>';
+  if(has){
+    h+='<div style="margin-top:16px"><button class="buy" onclick="loadGame()">继续上一世</button></div>';
+    if(gapDays>=7)
+      h+='<div class="hint" style="margin-top:10px">⚠ 距上次存档已 '+gapDays+' 天。浏览器或清理工具可能随时抹掉本地记录——请先导出存档，再继续。</div>';
+    else
+      h+='<div class="hint" style="margin-top:10px">存档只在这台设备的浏览器里。长期不回来可能被清理，建议每隔一阵导出一次。</div>';
+  }else{
+    h+='<div style="margin-top:16px"><button class="buy" onclick="rescueFromIdb()">🔁 从备档恢复</button></div>';
+    h+='<div class="hint" style="margin-top:10px">没有找到本地存档。若之前导出过，可点下方「导入存档」找回。</div>';
+  }
+  h+='<div style="margin-top:10px"><button class="buy" onclick="openImport()">📥 导入存档</button>'+
+     (has?'<button class="buy" onclick="exportSave()">📤 导出存档</button>':'')+'</div>';
+  h+='</div>';
+  b.innerHTML=h;
+}
+function chooseMode(mode){
+  var intro;
+  if(mode==='mom')intro='你决定以<b class="hl">母亲</b>的身份，养大这个孩子，看她长大、成人、远行。';
+  else if(mode==='dad')intro='你决定以<b class="hl">父亲</b>的身份，养大这个孩子，看她长大、成人、远行。';
+  else intro='你决定<b class="hl">亲自入世</b>，以自己的脚，走这一整段人生。';
+  var sexLabel=mode==='self'?'你的性别':'孩子的性别';
+  var html='<div class="story-text"><p>'+intro+'</p>'+
+    '<p>请取名，并定下起始年纪。</p></div>'+
+    '<input type="text" id="nameIn" class="qty-input" maxlength="6" value="苏晏宁">'+
+    '<div class="tiny" style="margin-top:12px">'+sexLabel+'：</div>'+
+    '<select id="sexIn" class="qty-input"><option value="f">女</option><option value="m">男</option></select>'+
+    '<div class="tiny" style="margin-top:10px">起始年龄（10 - 30）：</div>'+
+    '<input type="number" id="ageIn" class="qty-input" min="10" max="30" value="10">'+
+    '<div class="tiny" style="margin-top:6px">提示：十岁起，日子很长；也有人偏爱从别处开始。</div>'+
+    '<button class="buy primary" style="width:100%;padding:13px;margin-top:12px" onclick="startRun('+"'"+mode+"'"+')">开 始 此 生</button>';
+  openModal('入 世',html);
+}
+function startRun(mode){
+  var nm=(document.getElementById('nameIn').value||'').trim();
+  if(!nm){toast('请先取名');return;}
+  if(nm.length>6)nm=nm.substring(0,6);
+  var sexEl=document.getElementById('sexIn');
+  var sex=sexEl?sexEl.value:'f';
+  var age=parseInt(document.getElementById('ageIn').value,10);
+  if(isNaN(age)||age<10||age>30){toast('年龄请填 10 到 30');return;}
+  var egg=(age===20&&mode==='self');
+  closeModal();
+  document.getElementById('boot').style.display='none';
+  document.getElementById('bootleaves').className='bootleaves ingame';
+  spawnBootLeaves(7);
+  document.getElementById('wrap').style.display='flex';
+  document.getElementById('orb').style.display='flex';
+  newGame(mode,nm,age,egg,sex);
+  render();
+  if(egg){
+    setTimeout(function(){
+      var t='<div class="story-text">';
+      t+='<p>你从二十岁这年开始。</p>';
+      t+='<p>抽屉里的信还在，火漆未拆。</p>';
+      t+='<p class="secret">信封背面有一行小字：<br>「夜里有客，见灯莫慌。」</p>';
+      t+='<p class="tiny">这是只在「亲自入世」且二十岁开局时出现的彩蛋。小院里会多出一件可以做的事；父母视角不会出现。</p>';
+      t+='</div>';
+      openModal('🕯 彩 蛋','<div class="story-panel"><div class="story-title">二十岁 · 灯下有人</div>'+t+'</div>');
+    },420);
+  }else if(age>=18){
+    setTimeout(forceMatch,700);
+  }
+}
+
+/* ================= 启动 ================= */
+bootScreen();
+window.addEventListener('beforeunload',function(){try{if(G&&!G.ended)save();}catch(e){}});
+</script>
+</body>
+</html>
