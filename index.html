@@ -501,6 +501,7 @@ function spouseIds(){
 /* 命途身份 */
 function identityText(){
   if(!G)return '';
+  if(G.flags.hou)return '皇后';
   if(G.career==='palace'){
     if(G.flags.queen)return '女帝';
     if(G.flags.taihou)return '太后';
@@ -1555,8 +1556,25 @@ function wedWho(id){
     '<p class="secret">后来的事，只有窗外的雨知道。</p>'+
     '<p class="tiny">洞房花烛，此处留白。</p>'+
     '</div></div>';
+  if(!male&&id==='shen'){
+    t='<div class="story-panel"><div class="story-title">沈疏放</div><div class="story-text">'+
+      '<p>红烛烧到一半，院外忽然传来马蹄声，一声接一声，停在了门前。</p>'+
+      '<p>他没有起身，只把那枚一直戴着的玉扳指摘下来，放在你手心。</p>'+
+      '<p>「我姓沈，也姓萧。」他说得很轻，「当年在茶楼里我没骗你——我是做生意的，只是做的是天下这笔生意。」</p>'+
+      '<p>门外跪了一片人，喊的是「陛下」。</p>'+
+      '<p class="tiny">洞房花烛，此处留白。</p>'+
+      '</div></div>'+
+      '<div class="pair-row"><button class="buy primary" onclick="acceptHou()">随他回宫，做他的皇后</button>'+
+      '<button class="buy" onclick="closeModal();render()">留在人间</button></div>';
+    openModal('他 的 真 名',t);render();return;
+  }
   openModal(male?'娶 妻':'结 为 夫 妻',t);
   render();
+}
+function acceptHou(){
+  G.flags.hou=true;
+  addLog('🏯 你随他回了宫，朱墙在身后合上。凤位空着，他把冠亲手交到你手里。','gold');
+  closeModal();toast('凤位已定');render();
 }
 
 /* ================= 十八岁强制相亲 ================= */
@@ -3411,6 +3429,7 @@ function endGame(){
   else if(G.career==='dancer')tags.push('一代舞姬');
   else if(G.career==='sect')tags.push('仙门弟子');
   if(G.flags.queen&&G.married)tags.push('帝后并尊');
+  if(G.flags.hou&&!G.flags.queen)tags.push('帝后同心');
   if(G.dark>=85)tags.push('黑化到底');
   else if(G.dark>=50)tags.push('心已染墨');
   if(G.vow&&G.lovers.length===0&&(G.wives||[]).length===0)tags.push('独身一世');
@@ -3438,6 +3457,11 @@ function endGame(){
     careerMain='你坐在那把椅子上，帘子没有放下来。百官跪在阶下，念折子的声音在殿里回响。散朝之后，偏殿的灯一直亮着——灯下有人替你研墨，也有人只是坐着。<br><br>'+
       '头一年，朝臣背地里叫你「那个女人」。第三年，他们开始在折子里写「陛下圣明」。第七年，你出宫祭陵，车驾经过当年入宫那道门，朱漆已经旧了。<br><br>'+
       '你没有回头看。回去的路上，你只说了一句：把西边那几株老槐，移两棵到御花园去。';
+  }else if(G.flags.hou){
+    careerMain='红烛还没烧尽，门外就跪了一片人。你在那声「陛下」里，才真正明白自己嫁的是谁。<br><br>'+
+      '入宫那天，凤位上积了灰。他亲手把冠递到你手里，说：这宫里的事，从今日起你说了算。<br><br>'+
+      '头一年，六宫的人来请安，眼睛都在你脸上打转。第三年，你一句话能定一个人的去留，也能压下一场风波。第七年，你立在城楼上，看百官从他脚下走过，风把两位的衣角吹到一处。<br><br>'+
+      '史官落笔时，只写了四个字：「帝后同心」。';
   }else if(G.flags.taihou){
     careerMain='皇帝走得早，新君年幼。你在帘子后面坐了十年，奏折先过你的手，再进那道门。起初他连字都认不全，后来学会了在朝会上顶你一句。<br><br>'+
       '帘子撤下的那天，他亲自扶你起身，说了句「母后辛苦」。你笑着点头，回宫以后把那把椅子摸了一遍，才发现漆都磨掉了。<br><br>'+
