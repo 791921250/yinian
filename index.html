@@ -75,7 +75,8 @@ body.s-winter{background:#ecf1ee;}
 .hint.secret{color:#9b5a86;background:#faf0f6;border-color:#e2c3d8;}
 .acts{flex:1;min-height:0;overflow-y:auto;overflow-x:hidden;display:grid;
   grid-template-columns:repeat(auto-fill,minmax(168px,1fr));
-  gap:8px;align-content:start;overscroll-behavior:contain;}
+  gap:8px;align-content:start;overscroll-behavior:contain;
+  padding-bottom:92px;scroll-padding-bottom:92px;}
 .act{display:flex;gap:8px;align-items:flex-start;
   background:#fdfffb;border:1px solid #cfe2c9;border-radius:12px;
   padding:11px 13px 13px;text-align:left;cursor:pointer;font-family:inherit;
@@ -2675,7 +2676,7 @@ function throneDowager(){
   closeModal();toast('垂帘听政');render();
 }
 function throneQueen(){
-  if(G.charm<100){toast('威望不足，压不住朝堂。');return;}
+  if(G.charm<100){toast('魅力'+G.charm+'/100，压不住朝堂。');return;}
   G.flags.queen=true;G.clout=100;G.cStage=6;
   addLog('🏯 你穿着十二章的礼服走上殿，玉阶下的百官跪了一片。','gold');
   closeModal();toast('登基称制');render();
@@ -3409,6 +3410,7 @@ function endGame(){
   else if(G.career==='xia')tags.push('侠客');
   else if(G.career==='dancer')tags.push('一代舞姬');
   else if(G.career==='sect')tags.push('仙门弟子');
+  if(G.flags.queen&&G.married)tags.push('帝后并尊');
   if(G.dark>=85)tags.push('黑化到底');
   else if(G.dark>=50)tags.push('心已染墨');
   if(G.vow&&G.lovers.length===0&&(G.wives||[]).length===0)tags.push('独身一世');
@@ -3479,6 +3481,17 @@ function endGame(){
       '同门来了又走，有的下山入世，有的死在某场斗法里。你把他们的名字刻在崖壁上，刻到后来，手抖得厉害。<br><br>'+
       '修为到了那一步，天地忽然静得吓人。你没有飞升，也没有回去，只坐在山门口看云。<br><br>'+
       '有年轻弟子问你：到底有没有仙？你想了很久，说：你先活到我这岁数，再问。';
+  }
+  if(G.flags.queen&&G.married&&careerMain){
+    var _sp=NPCS[G.married]?NPCS[G.married].name:'那个人';
+    if(G.married==='shen'){
+      careerMain+='<br><br>散朝之后，偏殿从来不锁门。'+_sp+'早把江南商贾那身皮脱了，坐在灯下替你批那些批不完的折子。<br><br>'+
+        '你想起当年茶楼里他问的那句——「若有一天我换个身份来见你，你还敢不敢这样看着我？」如今你坐在龙椅上看着他，只回了一个字：敢。<br><br>'+
+        '史官写这一段，前后改了三次。最后落笔是四个字：「帝后同朝」。';
+    }else{
+      careerMain+='<br><br>登基那年，你把'+_sp+'娶进了宫。朝臣吵了三日，说自古没有这样的先例。你只把那本旧礼扔回给礼部，说：那就从我这朝起。<br><br>'+
+        '后来每逢散朝，龙椅旁边都摆着另一把椅子——不高，也不远，正好能看见彼此。';
+    }
   }
   if(careerMain){
     main=careerMain;
