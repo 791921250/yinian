@@ -501,7 +501,7 @@ function spouseIds(){
 /* 命途身份 */
 function identityText(){
   if(!G)return '';
-  if(G.flags.hou)return '皇后';
+  if(G.flags.hou&&!G.flags.queen)return '皇后';
   if(G.career==='palace'){
     if(G.flags.queen)return '女帝';
     if(G.flags.taihou)return '太后';
